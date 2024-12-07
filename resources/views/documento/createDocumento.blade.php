@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1><strong>Documento</strong><small> Nuevo registro</small></h1>
+<h1><strong>Documentos</strong><small> Nuevo registro</small></h1>
 @stop
 
 @section('content')
@@ -130,6 +130,10 @@
     </div>
 </div>
     
+@stop
+
+@section('footer')
+<p>Copyright © <?php echo date('Y') ?> <strong>Servicios de Salud de Coahuila de Zaragoza</strong></p>
 @stop
 
 @section('css')

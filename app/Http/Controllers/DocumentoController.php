@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DocumentoFirmado;
+use App\Mail\DocumentoParaFirma;
 use App\Models\Area;
 use App\Models\Documento;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class DocumentoController extends Controller
 {
@@ -218,6 +224,7 @@ class DocumentoController extends Controller
         $nombreFirma = $datosFirma->responsable;
         $siglasFirma = $datosFirma->siglas;
         $areaFirma = $datosFirma->nombre;
+        $correoFirma = $datosFirma->correo;
 
         // Consultamos el para label
         $paraLabel = Area::where('id',$request->para)->first();
@@ -270,6 +277,16 @@ class DocumentoController extends Controller
             $ultimo = 1; // Valor por defecto si no coincide con ningún tipo
         }
 
+        // Generar el código QR (puedes cambiar el contenido que quieres codificar)
+        //$qrCode = QrCode::size(500)->format('png')->generate('https://www.ejemplo.com/documento/' . $consecutivo);
+
+        // Crear un nombre único para el archivo de imagen QR
+        //$qrCodeFileName = 'qr_' . time() . '.png';
+
+        // Almacenar el código QR en la carpeta 'public/qrcodes'
+        //Storage::disk('public')->put('qrcodes/' . $qrCodeFileName, $qrCode);
+
+        // Generamos el nuevo objeto para guardar los datos
         $documento = new Documento();
 
         $documento->para = $request->para;
@@ -293,8 +310,13 @@ class DocumentoController extends Controller
         $documento->siglas = $siglasFirma;
         $documento->status = 1;
         $documento->status_label = "NUEVO";
+        $documento->status_firma = 0;
+        //$documento->qr = 'storage/qrcodes/' . $qrCodeFileName;
 
         $documento->save();
+
+        // Enviamos el correo de alerta sobre el nuevo evento
+        Mail::to($correoFirma)->send(new DocumentoParaFirma($documento));
 
         return redirect()->route('indexDocumento')->with('success', 'Folio asignado : ' . $documento->siglas . '/' . $documento->tipo . '/' . $documento->consecutivo . '/' . $documento->created_at->format('Y'));
 
@@ -326,5 +348,83 @@ class DocumentoController extends Controller
         ]);
     }
 
+    /**
+     * 
+     * 
+     * METODO PARA GENERAR EL PDF
+     * 
+     * 
+     */
+    public function pdf($id)
+    {
+        // Realizamos la consulta a la tabla Documento
+        $documento = Documento::find($id);
+
+        // Consultamos la firma del usuario asignado
+        $usuario = User::find($documento->firma);
+
+        // Generamos el documento
+        $pdf = PDF::loadView('documento.pdf', compact('documento','usuario'));
+
+        // Retornamos la vista con los elementos
+        return $pdf->stream('documento_' . $documento->id . '.pdf');
+    }
     
+    /**
+     * 
+     * 
+     * METODO PARA FIRMAR EL DOCUMENTO
+     * 
+     * 
+     */
+    public function firmar(Request $request)
+    {
+        // Capturamos el id
+        $id = $request->input('id');
+
+        // Buscamos en la tabla de documento con el id
+        $documento = Documento::where('id', $id)->first();
+
+        // Actualizamos el campo de status
+        $documento->status = '2';
+        $documento->status_label = 'FIRMADO';
+        $documento->status_firma = 1;
+
+        // Consultamos el correo del remitente
+        $remitente = User::find($documento->origen);
+
+        // Enviamos el correo al remitente
+         Mail::to($remitente->email)->send(new DocumentoFirmado($documento));
+
+        // Guardamos el registro
+        $documento->save();
+
+        // Regresamos al panel
+        return redirect()->route('indexDocumento', ['id' => $documento->id])
+            ->with('success', 'El documento ha sido firmado correctamente.');
+        
+    }
+
+    /**
+     * 
+     * 
+     * METODO PARA MOSTRAR LOS DOCUMENTOS PENDIENTES PARA FIRMAR
+     * 
+     * 
+     */
+    public function pendientesFirmar()
+    {
+        // Capturamos los datos del usuario que inicio sesion
+        $user = Auth::user();
+
+        // Consultamos los documentos asociados con el usuario que inicio sesion
+        $documentos = Documento::where('firma',$user->id_area)
+                    ->where('status_firma',0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        // Retornamos la vista con todos los valores
+        return view('documento.pendientesFirmarDocumento', compact('documentos'));
+
+    }
 }

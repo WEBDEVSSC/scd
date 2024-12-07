@@ -71,3 +71,12 @@ Route::post('admin/storeDocumento',[DocumentoController::class,'store'])->name('
 
 // Ruta para mostrrar los detalles del documento
 Route::get('admin/showDocumento/{id}',[DocumentoController::class,'show'])->name('showDocumento');
+
+// Ruta para generar el PDF
+Route::get('admin/pdfDocumento/{id}', [DocumentoController::class, 'pdf'])->name('pdfDocumento');
+
+// Ruta para foirmar el documento
+Route::post('admin/firmarDocumento', [DocumentoController::class, 'firmar'])->name('firmarDocumento');
+
+// Ruta para mostrar los documentos pendientes de firma
+Route::get('admin/pendientesFirmarDocumento',[DocumentoController::class, 'pendientesFirmar'])->name('pendientesFirmarDocumento');

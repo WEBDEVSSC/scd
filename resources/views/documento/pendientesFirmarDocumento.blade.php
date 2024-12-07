@@ -5,7 +5,7 @@
 @section('plugins.Sweetalert2', true)
 
 @section('content_header')
-<h1><strong>Documentos</strong><small> Panel de Control</small></h1>
+<h1><strong>Documentos</strong><small> Pendientes de firma</small></h1>
 @stop
 
 @section('content')

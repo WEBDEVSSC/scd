@@ -2,11 +2,30 @@
 
 @section('title', 'Dashboard')
 
+@section('plugins.Sweetalert2', true)
+
 @section('content_header')
 <h1><strong>Documento</strong><small> Detalles</small></h1>
 @stop
 
 @section('content')
+
+<!-- ---------------------------------------------------------------- -->
+
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: '¡Registro completado! ',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        });
+    });
+</script>
+@endif
+
+<!-- ---------------------------------------------------------------- -->
 
 <div class="card card-primary card-outline">
     <div class="card-body">
@@ -95,14 +114,27 @@
         
     </div>
     <div class="card-footer">
-        
-        @if ($documento->firma==$user->id_area)
-        
-            <div class="btn btn-info btn-sm">FIRMAR</div>
-          
+
+        <!-- VALIDAMOS EL STATUS DEL DOCUMENTO  -->
+        @if ($documento->status_firma == 0)
+
+            <!-- VALIDAMOS QUE EL USUARIO TENGA QUE FIRMAR -->
+            @if ($documento->firma==$user->id_area)
+
+                <form action="{{ route('firmarDocumento') }}" method="POST">
+
+                    @csrf
+
+                    <input type="hidden" name="id" value="{{$documento->id}}">
+
+                    <button type="submit" class="btn btn-success btn-sm">FIRMAR DOCUMENTO</button>
+
+                </form>
+
+            @endif
+            
         @endif
         
-
     </div>
 </div>
     
