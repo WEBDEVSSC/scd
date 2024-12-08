@@ -27,7 +27,7 @@
 
 <!-- ---------------------------------------------------------------- -->
 
-<div class="card card-purple card-outline">
+<div class="card card-info card-outline">
     <div class="card-body">
 
         <table class="table table-striped">
@@ -40,7 +40,6 @@
                     <th>RECEPTOR</th>
                     <th>FIRMA</th>
                     <th>ASUNTO</th>
-                    
                     <th></th>
                 </tr>
             </thead>
@@ -54,10 +53,9 @@
                         <td>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area }}</strong></small></strong></td>
                         <td>{{ $documento->firma_label }} <br> <small><strong>{{ $documento->firma_area }}</strong></small></strong></td>
                         <td>{{ $documento->asunto }}</td>
-                        
-                        <td><a href="{{ route('showDocumento', $documento->id) }}" class="btn btn-info">DETALLES</a></td>
-                        <td><a href="{{ route('pdfDocumento', $documento->id) }}" class="btn btn-danger" target="_blank">PDF</a></td>
-                          
+                        <td>
+                            <a href="{{ route('showDocumento', $documento->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
+                        </td> 
                     </tr>
                 @endforeach
             </tbody>
@@ -69,12 +67,12 @@
 @stop
 
 @section('footer')
-<p>Copyright © <?php echo date('Y') ?> <strong>Servicios de Salud de Coahuila de Zaragoza</strong></p>
+    @include('partials.footer')
 @stop
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <link rel="stylesheet" href="/css/admin_custom.css"> 
 @stop
 
 @section('js')

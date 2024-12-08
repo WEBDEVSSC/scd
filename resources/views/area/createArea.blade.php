@@ -79,6 +79,10 @@
     </form>
 @stop
 
+@section('footer')
+    @include('partials.footer')
+@stop
+
 @section('css')
     {{-- Add here extra stylesheets --}}
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}

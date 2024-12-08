@@ -3,15 +3,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1><strong>Area :: Dashboard</strong></h1>
+    <h1><strong>Areas</strong><small> Dashboard</small></h1>
 @stop
 
 @section('content')
-    <a href="{{ route('createArea') }}" class="btn btn-success">Nuevo registro</a>
-
     <div class="card card-primary card-outline">
         <div class="card-header">
-            <h3 class="card-title"><strong>Lista de registros</strong></h3>
+            <a href="{{ route('createArea') }}" class="btn btn-info float-right"><i class="fa-solid fa-plus" aria-hidden="true"></i> NUEVO REGISTRO</a>     
         </div> 
         <div class="card-body">
 
@@ -20,11 +18,11 @@
                 <tr>
                     <th>ID</th>
                     <th>Área</th>
-                    <th>Correo Not.</th>
+                    <th>Correo notificación</th>
                     <th>Responsable</th>
                     <th>Siglas</th>
                     <th>Tipo</th>
-                    <th>Acciones</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +51,7 @@
                         @endif
                     </td>
                     <td>
-                        
+                        <a href="{{ route('showUsuario', $area->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -62,6 +60,10 @@
     
         </div>
     </div>
+@stop
+
+@section('footer')
+    @include('partials.footer')
 @stop
 
 @section('css')

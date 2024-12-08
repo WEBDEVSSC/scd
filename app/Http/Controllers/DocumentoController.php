@@ -14,8 +14,16 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
+
+
 class DocumentoController extends Controller
 {
+    
+    public function generarQr()
+    {
+        
+    }
+    
     /**
      * 
      * 
@@ -277,15 +285,6 @@ class DocumentoController extends Controller
             $ultimo = 1; // Valor por defecto si no coincide con ningún tipo
         }
 
-        // Generar el código QR (puedes cambiar el contenido que quieres codificar)
-        //$qrCode = QrCode::size(500)->format('png')->generate('https://www.ejemplo.com/documento/' . $consecutivo);
-
-        // Crear un nombre único para el archivo de imagen QR
-        //$qrCodeFileName = 'qr_' . time() . '.png';
-
-        // Almacenar el código QR en la carpeta 'public/qrcodes'
-        //Storage::disk('public')->put('qrcodes/' . $qrCodeFileName, $qrCode);
-
         // Generamos el nuevo objeto para guardar los datos
         $documento = new Documento();
 
@@ -319,7 +318,7 @@ class DocumentoController extends Controller
         Mail::to($correoFirma)->send(new DocumentoParaFirma($documento));
 
         return redirect()->route('indexDocumento')->with('success', 'Folio asignado : ' . $documento->siglas . '/' . $documento->tipo . '/' . $documento->consecutivo . '/' . $documento->created_at->format('Y'));
-
+        
     }
 
     /**
@@ -377,7 +376,7 @@ class DocumentoController extends Controller
      * 
      * 
      */
-    public function firmar(Request $request)
+    public function firmar(Request $request, $id)
     {
         // Capturamos el id
         $id = $request->input('id');

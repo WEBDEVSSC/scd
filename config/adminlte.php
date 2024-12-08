@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
-    'title_prefix' => '',
+    'title' => 'SISDOC',
+    'title_prefix' => 'SISDOC | ',
     'title_postfix' => '',
 
     /*
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>SISDOC</b> | S.S.C.',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -303,7 +303,8 @@ return [
         [
             'text' => 'Areas',
             'url' => 'admin/indexArea',
-            'icon' => 'fa fa-archive',
+            'icon' => 'fa-solid fa-chalkboard-user',
+            
         ],
         [
             'text' => 'Usuarios',
@@ -314,18 +315,18 @@ return [
         [
             'text' => 'Nuevo registro',
             'url' => 'admin/createDocumento',
-            'icon' => 'fa fa-user',
+            'icon' => 'fa fa-check-circle',
         ],
         [
             'text' => 'Panel de Control',
             'url' => 'admin/indexDocumento',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fa fa-list-ul',
         ],
         [
-            'text' => 'Pendientes de Firmar',
+            'text' => 'Esperando firma',
             'url' => 'admin/pendientesFirmarDocumento',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+            'icon' => 'fa-solid fa-file-pen',
+        ]
     ],
 
     /*
@@ -430,6 +431,16 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'fontawesome' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
                 ],
             ],
         ],

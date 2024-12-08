@@ -28,6 +28,18 @@
 <!-- ---------------------------------------------------------------- -->
 
 <div class="card card-primary card-outline">
+    <div class="card-title">
+
+        <div class="card-header d-flex justify-content-end">
+            <a href="{{ route('indexDocumento') }}" class="btn btn-info ml-2">
+                <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
+            </a>
+            <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
+                <i class="fa fa-file" aria-hidden="true"></i> PDF
+            </a>
+        </div>
+
+    </div>
     <div class="card-body">
 
         <div class="row">
@@ -106,6 +118,10 @@
             <div class="col-md-3">
                 <p><strong>Registrado por</strong></p>
                 <p>{{ $capturo->name }}</p>
+                
+            </div>
+            <div class="col-md-3">
+                <img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario">
             </div>
         </div>
 
@@ -121,13 +137,13 @@
             <!-- VALIDAMOS QUE EL USUARIO TENGA QUE FIRMAR -->
             @if ($documento->firma==$user->id_area)
 
-                <form action="{{ route('firmarDocumento') }}" method="POST">
+                <form action="{{ route('firmarDocumento', $documento->id) }}" method="POST">
 
                     @csrf
 
                     <input type="hidden" name="id" value="{{$documento->id}}">
 
-                    <button type="submit" class="btn btn-success btn-sm">FIRMAR DOCUMENTO</button>
+                    <button type="submit" class="btn btn-info float-right"><i class="fa-solid fa-file-pen" aria-hidden="true"></i> FIRMAR DOCUMENTO</button>            
 
                 </form>
 
@@ -138,6 +154,10 @@
     </div>
 </div>
     
+@stop
+
+@section('footer')
+    @include('partials.footer')
 @stop
 
 @section('css')

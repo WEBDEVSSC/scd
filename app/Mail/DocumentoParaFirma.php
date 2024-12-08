@@ -24,7 +24,7 @@ class DocumentoParaFirma extends Mailable
     public function build()
     {
         return $this->markdown('emails.pendiente-para-firmar') 
-                    ->subject('Nuevo documento pendiente para firma')
+                    ->subject('Documento pendiente para firma')
                     ->from('soportewebssc@gmail.com', 'S.C.D.'); 
     }
 }

@@ -51,6 +51,15 @@ Route::post('admin/storeUsuario',[UsuarioController::class, 'store'])->name('sto
 // Ruta para mostrar los detalles del usuario
 Route::get('admin/showUsuario/{id}',[UsuarioController::class, 'show'])->name('showUsuario');
 
+// Ruta para editar los datos del usuario
+Route::get('admin/editUsuario/{id}',[UsuarioController::class, 'edit'])->name('editUsuario');
+
+// Ruta para actualizar los datos del usuario
+Route::put('admin/updateUsuario/{id}',[UsuarioController::class,'update'])->name('updateUsuario');
+
+// Ruta para eliminar un usuario
+Route::get('admin/deteleUser/{id}',[UsuarioController::class,'delete'])->name('deleteUsuario');
+
 
 /**
  * 

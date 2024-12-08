@@ -1,0 +1,1 @@
+<p><strong>SISDOC</strong>  Sistema de Documentación y Control<strong> | <small>Copyright © <?php echo date('Y'); ?> Servicios de Salud de Coahuila de Zaragoza </small></p>
