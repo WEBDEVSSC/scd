@@ -25,6 +25,6 @@ class DocumentoFirmado extends Mailable
     {
         return $this->markdown('emails.documento-firmado') 
                     ->subject('Documento firmado')
-                    ->from('soportewebssc@gmail.com', 'S.C.D.'); 
+                    ->from('soportewebssc@gmail.com', 'S.I.S.D.O.C.'); 
     }
 }

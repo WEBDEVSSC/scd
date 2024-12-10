@@ -294,38 +294,60 @@ return [
     */
 
     'menu' => [
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
-
-        // Sidebar items:
+        // Menu para Administradores
+        ['header' => 'Configuración'],
         [
             'text' => 'Areas',
             'url' => 'admin/indexArea',
             'icon' => 'fa-solid fa-chalkboard-user',
+            'can' => 'isAdmin',
             
         ],
         [
             'text' => 'Usuarios',
             'url' => 'admin/indexUsuario',
             'icon' => 'fa fa-user',
+            'can' => 'isAdmin', 
         ],
         ['header' => 'Documentos'],
+
+        // Menu para OPERATIVO 
+
         [
             'text' => 'Nuevo registro',
             'url' => 'admin/createDocumento',
             'icon' => 'fa fa-check-circle',
+            'can' => 'isOperativo', 
+        ],
+        [
+            'text' => 'Mis documentos',
+            'url' => 'admin/misDocumentos',
+            'icon' => 'fa-solid fa-folder-open',
+            'can' => 'isOperativo', 
+
+        ],
+
+        // Menu para Jefe de departamento
+
+        [
+            'text' => 'Nuevo registro',
+            'url' => 'admin/createDocumento',
+            'icon' => 'fa fa-check-circle',
+            'can' => 'isJefeDepartamento', 
         ],
         [
             'text' => 'Panel de Control',
             'url' => 'admin/indexDocumento',
             'icon' => 'fa fa-list-ul',
+            'can' => 'isJefeDepartamento', 
+
         ],
         [
             'text' => 'Esperando firma',
             'url' => 'admin/pendientesFirmarDocumento',
             'icon' => 'fa-solid fa-file-pen',
+            'can' => 'isJefeDepartamento', 
+
         ]
     ],
 

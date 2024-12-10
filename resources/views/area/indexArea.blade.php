@@ -2,11 +2,31 @@
 
 @section('title', 'Dashboard')
 
+@section('plugins.Sweetalert2', true)
+
 @section('content_header')
     <h1><strong>Areas</strong><small> Dashboard</small></h1>
 @stop
 
 @section('content')
+
+<!-- ---------------------------------------------------------------- -->
+
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: '¡Registro completado! ',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        });
+    });
+</script>
+@endif
+
+<!-- ---------------------------------------------------------------- -->
+
     <div class="card card-primary card-outline">
         <div class="card-header">
             <a href="{{ route('createArea') }}" class="btn btn-info float-right"><i class="fa-solid fa-plus" aria-hidden="true"></i> NUEVO REGISTRO</a>     
@@ -51,7 +71,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('showUsuario', $area->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
+                        <a href="{{ route('showArea', $area->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
                     </td>
                 </tr>
                 @endforeach

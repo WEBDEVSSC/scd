@@ -14,13 +14,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-/**
+/*******************************************************************************************
  * 
  * 
  * MODULO DE AREA
  * 
  * 
- */
+ ******************************************************************************************/
 
 // Ruta para mostrar el Dashboard
 Route::get('admin/indexArea', [AreaController::class, 'index'])->name('indexArea');
@@ -31,13 +31,25 @@ Route::get('admin/createArea', [AreaController::class, 'create'])->name('createA
 // Ruta para guardar la informacion en la DB
 Route::post('admin/storeArea',[AreaController::class,'store'])->name('storeArea');
 
-/**
+// Ruta para mostrar los datos del registro
+Route::get('admin/showArea/{id}',[AreaController::class,'show'])->name('showArea');
+
+// Ruta para editar los datos 
+Route::get('admin/editArea',[AreaController::class,'edit'])->name('editArea');
+
+// Ruta para actualizar los datos
+Route::put('admin/updateArea',[AreaController::class,'update'])->name('updateArea');
+
+// Ruta para eliminar los datos
+Route::get('admin/deleteArea',[AreaController::class,'delete'])->name('deleteArea');
+
+/*******************************************************************************************
  * 
  * 
  * MODULO DE USUARIOS
  * 
  * 
- */
+ ******************************************************************************************/
 
 // Ruta para mostrar el Dashboard
 Route::get('admin/indexUsuario',[UsuarioController::class, 'index'])->name('indexUsuario');
@@ -61,13 +73,13 @@ Route::put('admin/updateUsuario/{id}',[UsuarioController::class,'update'])->name
 Route::get('admin/deteleUser/{id}',[UsuarioController::class,'delete'])->name('deleteUsuario');
 
 
-/**
+/*******************************************************************************************
  * 
  * 
  * MODULO DE CREACION DE DOCUMENTOS
  * 
  * 
- */
+  ******************************************************************************************/
 
  // Ruta para mostrar el dashboard
 Route::get('admin/indexDocumento',[DocumentoController::class,'index'])->name('indexDocumento');
@@ -85,7 +97,10 @@ Route::get('admin/showDocumento/{id}',[DocumentoController::class,'show'])->name
 Route::get('admin/pdfDocumento/{id}', [DocumentoController::class, 'pdf'])->name('pdfDocumento');
 
 // Ruta para foirmar el documento
-Route::post('admin/firmarDocumento', [DocumentoController::class, 'firmar'])->name('firmarDocumento');
+Route::put('admin/firmarDocumento/{id}', [DocumentoController::class, 'firmar'])->name('firmarDocumento');
 
 // Ruta para mostrar los documentos pendientes de firma
 Route::get('admin/pendientesFirmarDocumento',[DocumentoController::class, 'pendientesFirmar'])->name('pendientesFirmarDocumento');
+
+// Ruta para mostrar los documentos que el usuario que inicio sesion redacto
+Route::get('admin/misDocumentos',[DocumentoController::class,'misDocumentos'])->name('misDocumentos');

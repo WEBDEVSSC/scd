@@ -83,7 +83,7 @@ class UsuarioController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             // Almacenar la imagen en la carpeta 'public/images' (esto la mueve a storage/app/public/images)
-            $imagePath = $image->storeAs('images', $imageName, 'public');
+            $imagePath = $image->storeAs('images/usuarios', $imageName, 'public');
         }
 
         $usuario = new User();
@@ -113,9 +113,9 @@ class UsuarioController extends Controller
     public function show($id)
     {
         // Consultamoe los datos del usuario 
-
         $usuario = User::find($id);
 
+        // Retornamos la vista con el objeto
         return view('usuario.showUsuario',['usuario'=>$usuario]);
 
     }

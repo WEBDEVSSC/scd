@@ -42,6 +42,7 @@ class AreaController extends Controller
             'correo' => 'required|email|unique:areas,correo', // Validación del correo
             'extension' => 'required|string',
             'tipo' => 'required|integer',
+            'firma' => 'required|image|mimes:jpeg,png,jpg|max:2048', 
         ], [
             'nombre.required' => 'El campo nombre es obligatorio',
             'responsable.required' => 'El campo responsable es obligatorio',
@@ -51,7 +52,22 @@ class AreaController extends Controller
             'correo.unique' => 'El correo electrónico ya está registrado en otra área', // Mensaje adicional
             'extension.required' => 'El campo extensión es obligatorio',
             'tipo.required' => 'El campo tipo es obligatorio',
+            'firma.required'=>'El campo es requerido',
+            'firma.mimes'=>'El formato soportado es JPG, PG ,JPEG',
+            'firma.max'=>'El tamaño maximo es de 2 MB',
         ]);
+
+        // Verificar si el campo firma tiene un archivo
+        if ($request->hasFile('firma')) {
+            // Obtener el archivo de la firma
+            $image = $request->file('firma');
+
+            // Generar un nombre único para la imagen (basado en el tiempo actual)
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            // Almacenar la imagen en la carpeta 'public/images' (esto la mueve a storage/app/public/images)
+            $imagePath = $image->storeAs('images/areas', $imageName, 'public');
+        }
 
         // Crear una nueva instancia del modelo Area
         $area = new Area();
@@ -63,21 +79,30 @@ class AreaController extends Controller
         $area->correo = $request->correo; // Cambiado a $request->correo
         $area->extension = $request->extension;
         $area->tipo = $request->tipo;
+        $area->firma = 'storage/' . $imagePath;
 
         // Guardar el modelo en la base de datos
         $area->save();
 
         // Redirigir con un mensaje de éxito
-        return redirect()->route('indexArea')->with('success', 'La unidad se registró correctamente');
+        return redirect()->route('indexArea')->with('success', 'Los datos se registrarón correctamente');
     }
 
 
     /**
-     * Display the specified resource.
+     * 
+     * 
+     * METODO PARA MOSTRAR LOS DATOS DEL AREA
+     * 
+     * 
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        // Buscamos el registro en la Base de Datos
+        $area = Area::findOrFail($id);
+
+        // Retornamos la vista con el objeto
+        return view('area.showArea',['area'=>$area]);
     }
 
     /**

@@ -6,7 +6,7 @@
     <title>Documento</title>
     <style>
         @page {
-            margin: 0.5cm 0.5cm 0.5cm 0.5cm;
+            margin: 1cm 1cm 1cm 1cm;
         }
         /* Estilo para tabla */
         table {
@@ -75,9 +75,9 @@
         {
             position: fixed;
             top: 2.5cm;
-            /*bottom: 0cm;
+            bottom: 0cm;
             left: 0cm;
-            width: 100%;*/
+            width: 100%;
         }
 
     </style>
@@ -117,7 +117,7 @@
 
                     @if ($documento->status_firma == 1)
 
-                        <p><img src="{{ public_path($usuario->firma) }}" alt="Firma" style="max-width: 300px; height: auto;"></p>
+                        <p><img src="{{ public_path($documento->firma_ruta) }}" alt="Firma" style="max-width: 300px; height: auto;"></p>
 
                     @else
 

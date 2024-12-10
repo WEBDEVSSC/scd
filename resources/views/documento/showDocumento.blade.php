@@ -141,7 +141,7 @@
 
                     @csrf
 
-                    <input type="hidden" name="id" value="{{$documento->id}}">
+                    @method('PUT')
 
                     <button type="submit" class="btn btn-info float-right"><i class="fa-solid fa-file-pen" aria-hidden="true"></i> FIRMAR DOCUMENTO</button>            
 

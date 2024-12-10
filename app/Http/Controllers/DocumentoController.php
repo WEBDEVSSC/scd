@@ -233,6 +233,7 @@ class DocumentoController extends Controller
         $siglasFirma = $datosFirma->siglas;
         $areaFirma = $datosFirma->nombre;
         $correoFirma = $datosFirma->correo;
+        $firmaFirma = $datosFirma->firma;
 
         // Consultamos el para label
         $paraLabel = Area::where('id',$request->para)->first();
@@ -306,6 +307,7 @@ class DocumentoController extends Controller
         $documento->firma = $request->firma;
         $documento->firma_label = $nombreFirma;
         $documento->firma_area = $areaFirma;
+        $documento->firma_ruta = $firmaFirma;
         $documento->siglas = $siglasFirma;
         $documento->status = 1;
         $documento->status_label = "NUEVO";
@@ -353,7 +355,7 @@ class DocumentoController extends Controller
      * METODO PARA GENERAR EL PDF
      * 
      * 
-     */
+     *//*
     public function pdf($id)
     {
         // Realizamos la consulta a la tabla Documento
@@ -367,7 +369,38 @@ class DocumentoController extends Controller
 
         // Retornamos la vista con los elementos
         return $pdf->stream('documento_' . $documento->id . '.pdf');
+    }*/
+
+    public function pdf($id)
+{
+    // Realizamos la consulta a la tabla Documento
+    $documento = Documento::find($id);
+
+    // Verificamos si el documento existe
+    if (!$documento) {
+        return response()->json(['error' => 'Documento no encontrado'], 404);
     }
+
+    // Verificamos si el campo 'firma' tiene un valor válido
+    if (!$documento->firma_ruta) {
+        return response()->json(['error' => 'No se encuentra un usuario asignado para la firma'], 404);
+    }
+
+    // Consultamos la firma del usuario asignado
+    $usuario = Area::find($documento->firma);
+
+    // Verificamos si se encontró el usuario
+    if (!$usuario) {
+        return response()->json(['error' => 'Usuario de la firma no encontrado'], 404);
+    }
+
+    // Generamos el documento PDF
+    $pdf = PDF::loadView('documento.pdf', compact('documento', 'usuario'));
+
+    // Retornamos la vista con los elementos
+    return $pdf->stream('documento_' . $documento->id . '.pdf');
+}
+
     
     /**
      * 
@@ -378,11 +411,8 @@ class DocumentoController extends Controller
      */
     public function firmar(Request $request, $id)
     {
-        // Capturamos el id
-        $id = $request->input('id');
-
         // Buscamos en la tabla de documento con el id
-        $documento = Documento::where('id', $id)->first();
+        $documento = Documento::findOrFail($id);
 
         // Actualizamos el campo de status
         $documento->status = '2';
@@ -400,8 +430,7 @@ class DocumentoController extends Controller
 
         // Regresamos al panel
         return redirect()->route('indexDocumento', ['id' => $documento->id])
-            ->with('success', 'El documento ha sido firmado correctamente.');
-        
+            ->with('success', 'El documento ha sido firmado correctamente.');    
     }
 
     /**
@@ -425,5 +454,25 @@ class DocumentoController extends Controller
         // Retornamos la vista con todos los valores
         return view('documento.pendientesFirmarDocumento', compact('documentos'));
 
+    }
+ 
+    /**
+     * 
+     * 
+     * METODO PARA MOSTRAR LOS DOCUMENTOS QUE EL USUARIO LOGEADO REDACTO
+     * 
+     * 
+     */
+    public function misDocumentos()
+    {
+        // Capturamos los datos del usuario que inicio sesion
+        $user = Auth::user();
+
+        // Consultamos los documentos del usuario que conicidan el ID con el campo ORIGEN
+        $documentos = Documento::where('origen',$user->id)
+                    ->get();
+
+        // Retornamos la vista con el objeto documentos
+        return view('documento.misDocumentos', compact('documentos'));
     }
 }
