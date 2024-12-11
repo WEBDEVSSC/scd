@@ -5,7 +5,7 @@
 @section('plugins.Sweetalert2', true)
 
 @section('content_header')
-    <h1><strong>Areas</strong><small> Dashboard</small></h1>
+    <h1><strong>Mi Unidad</strong><small> Dashboard</small></h1>
 @stop
 
 @section('content')
@@ -27,9 +27,9 @@
 
 <!-- ---------------------------------------------------------------- -->
 
-    <div class="card card-primary card-outline">
+    <div class="card card-info card-outline">
         <div class="card-header">
-            <a href="{{ route('createArea') }}" class="btn btn-info float-right"><i class="fa-solid fa-plus" aria-hidden="true"></i> NUEVO REGISTRO</a>     
+                
         </div> 
         <div class="card-body">
 
@@ -46,38 +46,38 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($areas as $area)
+                @foreach ($jefaturas as $jefatura)
                 <tr>
-                    <td>{{ $area->id }}</td>
-                    <td>{{ $area->nombre }}</td>
-                    <td>{{ $area->correo }}</td>
-                    <td>{{ $area->responsable }}</td>
-                    <td>{{ $area->siglas }}</td>
+                    <td>{{ $jefatura->id }}</td>
+                    <td>{{ $jefatura->nombre }}</td>
+                    <td>{{ $jefatura->correo }}</td>
+                    <td>{{ $jefatura->responsable }}</td>
+                    <td>{{ $jefatura->siglas }}</td>
                     <td>
                         <!-- DESPACHO -->
-                        @if($area->tipo == 1)
+                        @if($jefatura->tipo == 1)
                             <button class="btn btn-sx btn-primary btn-block">SECRETARIO DE SALUD</button>
                         <!-- SUBSECRETARIA -->
-                        @elseif($area->tipo == 2)
+                        @elseif($jefatura->tipo == 2)
                             <button class="btn btn-sx btn-secondary btn-block">SUBSECRETARIA</button>
                         <!-- SUBDIRECCION -->
-                        @elseif($area->tipo == 3)
+                        @elseif($jefatura->tipo == 3)
                             <button class="btn btn-sx btn-success btn-block">SUBDIRECCIÓN</button>
                         <!-- JEFATURA -->
-                        @elseif($area->tipo == 4)
+                        @elseif($jefatura->tipo == 4)
                             <button class="btn btn-sx btn-info btn-block">JEFATURA</button>
                         <!-- AREA / PROGRAMA -->
-                        @elseif($area->tipo == 5)
+                        @elseif($jefatura->tipo == 5)
                             <button class="btn btn-sx btn-dark btn-block">PROGRAMA / AREA</button>
                         <!-- UNIDAD -->
-                        @elseif($area->tipo == 6)
+                        @elseif($jefatura->tipo == 6)
                             <button class="btn btn-sx btn-warning btn-block">UNIDAD</button>
                         @else
                             <button class="btn btn-sx btn-danger btn-block">ERROR : SIN TIPO </button>
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('showArea', $area->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
+                        <a href="{{ route('showArea', $jefatura->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
                     </td>
                 </tr>
                 @endforeach

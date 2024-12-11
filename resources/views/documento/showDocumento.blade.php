@@ -54,14 +54,17 @@
             <div class="col-md-3">
                 <p><strong>EMISOR</strong></p>
                 <p>{{ $documento->area_responsable }} <br> <small><strong>{{ $documento->area_label}}</strong></small></p>
+                <center><img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario"></center>
             </div>
             <div class="col-md-3">
                 <p><strong>RECEPTOR</strong></p>
                 <p>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area}}</strong></small></p>
+                <center><img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario"></center>
             </div>
             <div class="col-md-3">
                 <p><strong>FIRMA</strong></p>
                 <p>{{ $documento->firma_label }} <br> <small><strong>{{ $documento->firma_area }}</strong></small></p>
+                <center><img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario"></center>
             </div>
             
         </div>
@@ -114,14 +117,6 @@
             <div class="col-md-3">
                 <p><strong>Fecha de creación</strong></p>
                 <p>{{ $documento->created_at }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Registrado por</strong></p>
-                <p>{{ $capturo->name }}</p>
-                
-            </div>
-            <div class="col-md-3">
-                <img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario">
             </div>
         </div>
 

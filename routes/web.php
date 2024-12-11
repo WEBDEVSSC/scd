@@ -76,7 +76,7 @@ Route::get('admin/deteleUser/{id}',[UsuarioController::class,'delete'])->name('d
 /*******************************************************************************************
  * 
  * 
- * MODULO DE CREACION DE DOCUMENTOS
+ * MODULO DE DOCUMENTOS
  * 
  * 
   ******************************************************************************************/
@@ -103,4 +103,18 @@ Route::put('admin/firmarDocumento/{id}', [DocumentoController::class, 'firmar'])
 Route::get('admin/pendientesFirmarDocumento',[DocumentoController::class, 'pendientesFirmar'])->name('pendientesFirmarDocumento');
 
 // Ruta para mostrar los documentos que el usuario que inicio sesion redacto
-Route::get('admin/misDocumentos',[DocumentoController::class,'misDocumentos'])->name('misDocumentos');
+Route::get('admin/misDocumentos',[DocumentoController::class, 'misDocumentos'])->name('misDocumentos');
+
+// Ruta para mostrar los documentos recibidos (Ya firmados)
+Route::get('admin/documentosRecibidos',[DocumentoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
+
+/*******************************************************************************************
+ * 
+ * 
+ * CONFIGURACION PARA TITULAR DE UNIDAD
+ * 
+ * 
+  ******************************************************************************************/
+
+// Ruta para mostrar las jefaturas a su cargo
+Route::get('admin/miUnidad',[AreaController::class,'miUnidad'])->name('miUnidad');

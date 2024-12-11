@@ -294,25 +294,14 @@ return [
     */
 
     'menu' => [
-        // Menu para Administradores
-        ['header' => 'Configuración'],
-        [
-            'text' => 'Areas',
-            'url' => 'admin/indexArea',
-            'icon' => 'fa-solid fa-chalkboard-user',
-            'can' => 'isAdmin',
-            
-        ],
-        [
-            'text' => 'Usuarios',
-            'url' => 'admin/indexUsuario',
-            'icon' => 'fa fa-user',
-            'can' => 'isAdmin', 
-        ],
-        ['header' => 'Documentos'],
+        
+        ['header' => 'DOCUMENTOS'],
 
-        // Menu para OPERATIVO 
-
+        /*
+        |--------------------------------------------------------------------------
+        | Menu OPERATIVO
+        |--------------------------------------------------------------------------
+        */
         [
             'text' => 'Nuevo registro',
             'url' => 'admin/createDocumento',
@@ -327,7 +316,11 @@ return [
 
         ],
 
-        // Menu para Jefe de departamento
+        /*
+        |--------------------------------------------------------------------------
+        | Menu JEFE DE DEPARTAMENTO
+        |--------------------------------------------------------------------------
+        */
 
         [
             'text' => 'Nuevo registro',
@@ -348,7 +341,96 @@ return [
             'icon' => 'fa-solid fa-file-pen',
             'can' => 'isJefeDepartamento', 
 
-        ]
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Menu TITULAR DE UNIDAD
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'text' => 'Nuevo registro',
+            'url' => 'admin/createDocumento',
+            'icon' => 'fa fa-check-circle',
+            'can' => 'isTitularUnidad', 
+        ],
+        [
+            'text' => 'Panel de Control',
+            'url' => 'admin/indexDocumento',
+            'icon' => 'fa fa-list-ul',
+            'can' => 'isTitularUnidad',
+        ],
+        [
+            'text' => 'Esperando firma',
+            'url' => 'admin/pendientesFirmarDocumento',
+            'icon' => 'fa-solid fa-file-pen',
+            'can' => 'isTitularUnidad', 
+        ],
+        [
+            'text' => 'Recibidos',
+            'url' => 'admin/documentosRecibidos',
+            'icon' => 'fa-solid fa-pen-fancy',
+            'can' => 'isTitularUnidad', 
+        ],
+        /*
+        |--------------------------------------------------------------------------
+        | Menu ADMINISTRADORES
+        |--------------------------------------------------------------------------
+        */
+        ['header' => 'CONFIGURACION'],
+        [
+            'text' => 'Areas',
+            'url' => 'admin/indexArea',
+            'icon' => 'fa-solid fa-chalkboard-user',
+            'can' => 'isAdmin',
+            
+        ],
+        [
+            'text' => 'Usuarios',
+            'url' => 'admin/indexUsuario',
+            'icon' => 'fa fa-user',
+            'can' => 'isAdmin', 
+        ],
+
+        // Configuracion para TITULAR DE UNIDAD
+        [
+            'text' => 'Mi Unidad',
+            'url' => 'admin/miUnidad',
+            'icon' => 'fa fa-user',
+            'can' => 'isTitularUnidad', 
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Menu SUBDIRECTORES
+        |--------------------------------------------------------------------------
+        */
+        [
+            'text' => 'Nuevo registro',
+            'url' => 'admin/createDocumento',
+            'icon' => 'fa fa-check-circle',
+            'can' => 'isSubdirector', 
+        ],
+        [
+            'text' => 'Panel de Control',
+            'url' => 'admin/indexDocumento',
+            'icon' => 'fa fa-list-ul',
+            'can' => 'isSubdirector',
+        ],
+        [
+            'text' => 'Esperando firma',
+            'url' => 'admin/pendientesFirmarDocumento',
+            'icon' => 'fa-solid fa-file-pen',
+            'can' => 'isSubdirector', 
+        ],
+        [
+            'text' => 'Recibidos',
+            'url' => 'admin/documentosRecibidos',
+            'icon' => 'fa-solid fa-pen-fancy',
+            'can' => 'isSubdirector', 
+        ],
+
     ],
 
     /*

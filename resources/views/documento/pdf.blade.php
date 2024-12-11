@@ -107,8 +107,10 @@
                 <p>{{ $documento->para_label }}<br><small><strong>{{ $documento->para_area }}</strong></small></p>
             </div>
         </div>
-    
-        <p>{!! $documento->contenido !!}</p>
+
+        <p>PRESENTE .
+        <br>    
+        {!! $documento->contenido !!}</p>
     
         <div class="row">
             <div class="col-md-12">

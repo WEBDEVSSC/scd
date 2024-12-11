@@ -30,10 +30,10 @@
     <div class="card card-primary card-outline">
 
         <div class="card-header d-flex justify-content-end">
-            <a href="{{ route('indexUsuario') }}" class="btn btn-info ml-2">
+            <a href="{{ route('indexArea') }}" class="btn btn-info ml-2">
                 <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
             </a>
-            <a href="{{ route('editUsuario',$area->id) }}" class="btn btn-info ml-2">
+            <a href="{{ route('editArea',$area->id) }}" class="btn btn-info ml-2">
                 <i class="fa-solid fa-pen" aria-hidden="true"></i> EDITAR
             </a>
             <button class="btn btn-info ml-2" id="deleteButton" data-id="{{ $area->id }}">

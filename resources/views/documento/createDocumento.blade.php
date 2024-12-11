@@ -107,7 +107,7 @@
                             <option value="">-- Selecciona una opción --</option>
                             @foreach($listaFirmas as $firma)
                                 <option value="{{ $firma->id }}" {{ old('firma') == $firma->id ? 'selected' : '' }}>
-                                    {{ $firma->responsable }} - {{ $firma->nombre }}
+                                    {{ $firma->responsable }} - {{ $firma->nombre }} - {{ $firma->id }}
                                 </option>
                             @endforeach
                         </select>

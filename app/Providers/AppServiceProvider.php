@@ -30,9 +30,19 @@ class AppServiceProvider extends ServiceProvider
             return $user->role === 'operativo';
         });
 
+        // Menu de SUBDIRECTOR
+        Gate::define('isSubdirector', function ($user) {
+            return $user->role === 'subdirector';
+        });
+
         // Menu para JEFE DE DEPARTAMENTO
         Gate::define('isJefeDepartamento', function ($user) {
             return $user->role === 'jefeDepartamento';
+        });
+
+        // Menu para TITULAR DE UNIDAD
+        Gate::define('isTitularUnidad', function ($user) {
+            return $user->role === 'titularUnidad';
         });
     }
 }

@@ -53,7 +53,7 @@ class DocumentoController extends Controller
             $documentos = Documento::all();
         }
 
-        // Nivel 2 - SUBSECRETARIA / UNIDAD
+        // Nivel 2 - SUBSECRETARIA
         elseif($userNivel == 2)
         {
             $documentos = Documento::where('origen_subsecretaria',$userIdArea)
@@ -82,6 +82,14 @@ class DocumentoController extends Controller
         elseif($userNivel == 5)
         {
             $documentos = Documento::where('origen',$userOrigen)
+                ->orderBy('created_at','desc')
+                ->get();
+        }
+
+        // Nivel 6 - Titular de Unidad
+        elseif($userNivel == 6)
+        {   
+            $documentos = Documento::where('para',$userOrigen)
                 ->orderBy('created_at','desc')
                 ->get();
         }
@@ -123,7 +131,7 @@ class DocumentoController extends Controller
         // Sacamos el tipo de area
         $areaTipo = $areaCampos->tipo;
 
-        // Consulta para Subsecretarias / Unidades
+        // Consulta para Subsecretarias
 
         if($areaTipo == 1)
         {
@@ -175,6 +183,17 @@ class DocumentoController extends Controller
             $listaFirmas = Area::where('id', $idJefatura)
                                ->orWhere('id',$idUnidad)
                                ->get();   
+        }
+        
+        // LISTA DE FIRMAS PARA UNIDAD
+        elseif($areaTipo == 6)
+        {
+            $idDespacho = $areaCampos->despacho;
+            $idUnidad = $areaCampos->id;
+
+            $listaFirmas = Area::where('id',$idDespacho)
+                                ->orWhere('id',$idUnidad)
+                                ->get();
         }
 
         //Seleccionamos las firmas
@@ -470,9 +489,32 @@ class DocumentoController extends Controller
 
         // Consultamos los documentos del usuario que conicidan el ID con el campo ORIGEN
         $documentos = Documento::where('origen',$user->id)
+                    ->orderBy('created_at', 'desc')     
                     ->get();
 
         // Retornamos la vista con el objeto documentos
         return view('documento.misDocumentos', compact('documentos'));
+    }
+
+    /**
+     * 
+     * 
+     * METODO PARA MOSTRAR LOS DOCUMENTOS TURNADOS (YA FIRMADOS)
+     * 
+     * 
+     */
+    public function documentosRecibidos()
+    {
+        // Capturamos los datos del usuario que inicio sesion
+        $user = Auth::user();
+
+        // Consultamos los documentos asignados para el usuario ya firmados
+        $documentos = Documento::where('para',$user->id)
+                    ->where('status',2)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        // Retornamos la vista con el objeto documentos
+        return view('documento.documentosRecibidos', compact('documentos'));
     }
 }

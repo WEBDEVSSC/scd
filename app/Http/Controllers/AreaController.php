@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\AreasNivel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AreaController extends Controller
 {
@@ -106,26 +107,22 @@ class AreaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 
+     * 
+     * METODO PARA MOSTRAR LAS JEFATURAS A CARGO DE LA UNIDAD
+     * 
+     * 
      */
-    public function edit(string $id)
+    public function miUnidad()
     {
-        //
-    }
+        // Consultamos el usuario que esta logeado
+        $user = Auth::user();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $jefaturas = Area::where('unidad',$user->id_area)
+                        ->where('tipo',4)
+                        ->get();
+        
+        // Retornamos la vista con el objeto
+        return view('area.miUnidad',['jefaturas'=>$jefaturas]);
     }
 }
