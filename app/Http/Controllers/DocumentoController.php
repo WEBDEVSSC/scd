@@ -116,7 +116,7 @@ class DocumentoController extends Controller
      */
     public function create()
     {
-        // Seleccionamos las areas para mostrar
+        // Seleccionamos las areas para mostrar EN EL SELECT
         $areas = Area::all();    
 
         // Consultamos el usuario que esta logeado
@@ -131,7 +131,39 @@ class DocumentoController extends Controller
         // Sacamos el tipo de area
         $areaTipo = $areaCampos->tipo;
 
+        // Connsultamos la lista de firmas segun el nivel del usuario
+
+        // Operativo == Solo le firma su jefe directo
+        if($user->nivel == 5)
+        {
+            // Consultamos jefatura
+            $jefatura = Area::where('id',$userIdArea)->first();
+            
+            $listaFirmas = Area::where('id',$jefatura->jefatura)->get();
+        }
+
+        // Jefe de Departamento == Solo le firma su Subdirector o Jefaturas hermanas
+        elseif($user->nivel == 4)
+        {
+            $subdireccion = Area::where('id',$userIdArea)->first();
+
+            $listaFirmas = Area::where('subdireccion',$subdireccion->subdireccion)->get();
+
+        }
+
+        // Titular de Unidad
+        elseif($user->nivel == 6)
+        {
+            $titular = Area::where('id',$userIdArea)->first(); 
+
+            $listaFirmas = Area::where('despacho',$titular->despacho)->get();
+        }
+
+        //
+
         // Consulta para Subsecretarias
+
+        /*
 
         if($areaTipo == 1)
         {
@@ -194,7 +226,7 @@ class DocumentoController extends Controller
             $listaFirmas = Area::where('id',$idDespacho)
                                 ->orWhere('id',$idUnidad)
                                 ->get();
-        }
+        }*/
 
         //Seleccionamos las firmas
         return view('documento.createDocumento',[

@@ -69,6 +69,7 @@
                 <div class="col-md-3">
                     <p><strong>Tipo</strong></p>
                     <select name="tipo" id="tipo" class="form-control">
+                        <option value="">-- SELECCIONE UNA OPCION --</option>
                         @foreach($niveles as $nivel)
                             <option value="{{ $nivel->id }}">{{ $nivel->nivel }}</option>
                         @endforeach
