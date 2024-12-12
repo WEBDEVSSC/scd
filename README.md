@@ -1,66 +1,23 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+El Sistema de Control de Documentos es una plataforma digital diseñada para mejorar la gestión, seguimiento y firma de documentos dentro de una organización. Este sistema permite la creación, asignación y firma de documentos de manera eficiente y segura, optimizando los procesos administrativos y reduciendo el uso de papel.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Características clave del sistema:
 
-## About Laravel
+Creación de Documentos: Los usuarios pueden crear documentos de forma rápida y sencilla dentro del sistema, sin necesidad de imprimir ni utilizar herramientas externas. La interfaz intuitiva permite generar documentos con plantillas personalizables, lo que facilita la estandarización y el control.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Firma Electrónica: El sistema incluye una funcionalidad de firma electrónica que permite a los usuarios firmar documentos digitalmente, garantizando la validez legal de las firmas y reduciendo los tiempos de espera asociados con las firmas físicas.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Asignación y Seguimiento de Documentos: Los documentos pueden ser asignados a diferentes usuarios o departamentos para su revisión, aprobación o acción. Los responsables de cada documento reciben notificaciones automáticas para mantener el flujo de trabajo ordenado y ágil.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Notificaciones por Correo Electrónico: El sistema mantiene a los usuarios informados sobre el estado de sus documentos mediante notificaciones automáticas por correo electrónico. Estas notificaciones alertan sobre eventos importantes, como cambios de estado, firmas pendientes o finalización de procesos, mejorando la comunicación y la transparencia.
 
-## Learning Laravel
+Reducción del Uso de Papel: Al digitalizar completamente el proceso de gestión de documentos, el sistema elimina la necesidad de impresiones físicas y el almacenamiento de documentos en papel. Esto contribuye a la sostenibilidad ambiental de la organización, reduciendo el consumo de recursos y el espacio necesario para almacenar documentos físicos.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Seguridad y Acceso Controlado: El sistema garantiza la seguridad de los documentos mediante controles de acceso, encriptación de datos y auditoría de acciones. Los usuarios solo tienen acceso a los documentos relevantes según sus roles y permisos dentro de la organización.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Beneficios para el usuario:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Mejora en la eficiencia y productividad: Los usuarios pueden gestionar y firmar documentos de forma ágil, sin las demoras del proceso tradicional de impresión y firma manual.
+Mayor visibilidad y control: Las notificaciones en tiempo real permiten a los usuarios estar al tanto del estado de sus documentos en todo momento, lo que facilita la toma de decisiones.
+Ahorro de recursos: Al eliminar el uso de papel y reducir las impresiones, el sistema contribuye al ahorro de recursos y la sostenibilidad.
+Acceso remoto y sin barreras: Los usuarios pueden acceder a sus documentos desde cualquier lugar y dispositivo con acceso a internet, lo que facilita la colaboración y la gestión de documentos en entornos de trabajo remotos.
+El Sistema de Control de Documentos optimiza los procesos internos, mejora la experiencia del usuario y contribuye al respeto por el medio ambiente al reducir significativamente el uso de papel e impresiones.
