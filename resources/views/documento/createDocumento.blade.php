@@ -14,7 +14,7 @@
     <div class="card card-info card-outline">
         <div class="card-body">
 
-            
+            {{ $user->nivel }}
 
                 <div class="row">
 

@@ -37,6 +37,9 @@
             <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
                 <i class="fa fa-file" aria-hidden="true"></i> PDF
             </a>
+            <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
+                <i class="fa fa-file" aria-hidden="true"></i> TURNAR
+            </a>
         </div>
 
     </div>
@@ -52,44 +55,16 @@
                 <p>{{ $documento->siglas }}/{{ $documento->tipo }}/{{ $documento->consecutivo }}/{{ $documento->created_at->format('Y') }}</p>
             </div>
             <div class="col-md-3">
-                <p><strong>EMISOR</strong></p>
-                <p>{{ $documento->area_responsable }} <br> <small><strong>{{ $documento->area_label}}</strong></small></p>
-                <center><img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario"></center>
-            </div>
-            <div class="col-md-3">
-                <p><strong>RECEPTOR</strong></p>
-                <p>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area}}</strong></small></p>
-                <center><img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario"></center>
-            </div>
-            <div class="col-md-3">
-                <p><strong>FIRMA</strong></p>
-                <p>{{ $documento->firma_label }} <br> <small><strong>{{ $documento->firma_area }}</strong></small></p>
-                <center><img src="{{ asset($capturo->firma) }}" width="100px" height="100px" alt="Firma del usuario"></center>
-            </div>
-            
-        </div>
-
-        <!-- ------------------------------------------------- -->
-
-        <hr>
-
-        <!-- ------------------------------------------------- -->
-
-        <div class="row mt-3">
-
-            <div class="col-md-3">
-                <p><strong>Asunto</strong></p>
+                <p><strong>ASUNTO</strong></p>
                 <p>{{ $documento->asunto }}</p>
             </div>
-
             <div class="col-md-3">
-                <p><strong>Anexos</strong></p>
-                <p>{{ $documento->anexo }}</p>
+                <p><strong>FECHA DE CREACIÓN</strong></p>
+                <p>{{ $documento->created_at }}</p>
             </div>
-
-            <div class="col-md-6">
-                <p><strong>Descripción</strong></p>
-                <p>{{ $documento->anexo_descripcion }}</p>
+            <div class="col-md-3">
+                <p><strong>ANEXOS</strong></p>
+                <p>{{ $documento->anexo }} - {{ $documento->anexo_descripcion }}</p>
             </div>
             
         </div>
@@ -102,7 +77,7 @@
 
         <div class="row mt-3">
             <div class="col-md-12">
-                <p><strong>Contenido</strong></p>
+                <p><strong>CONTENIDO</strong></p>
                 <p>{!! $documento->contenido !!}</p>
             </div>
         </div>
@@ -114,10 +89,48 @@
         <!-- ------------------------------------------------- -->
 
         <div class="row mt-3">
-            <div class="col-md-3">
-                <p><strong>Fecha de creación</strong></p>
-                <p>{{ $documento->created_at }}</p>
+
+            <div class="col-md-4">
+                <center>
+                    <p><strong>EMISOR</strong></p>
+                    <p>{{ $documento->area_responsable }} <br> <small><strong>{{ $documento->area_label}}</strong></small></p>
+                    <img src="{{ asset($capturo->firma) }}" width="80%" alt="Firma Emisor">
+                </center>
             </div>
+            <div class="col-md-4">
+                <center>
+                    <p><strong>AUTORIZO</strong></p>
+                    <p>{{ $documento->firma_label }} <br> <small><strong>{{ $documento->firma_area }}</strong></small></p>
+                
+                    @if ($documento->status_firma == 0)
+
+                    <p class="text-danger">EN ESPERA DE FIRMA</p>
+
+                    @elseif($documento->status_firma == 1)
+
+                    <img src="{{ asset($capturo->firma) }}" width="80%" alt="Firmo Autorizo">
+        
+                    @endif
+                </center>                
+            </div>
+            <div class="col-md-4">
+                <center>
+                    <p><strong>RECEPTOR</strong></p>
+                    <p>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area}}</strong></small></p>
+
+                    @if ($documento->status_firma == 0)
+
+                    <p class="text-danger">EN ESPERA DE FIRMA</p>
+
+                    @elseif($documento->status_firma == 1)
+
+                    <img src="{{ asset($capturo->firma) }}" width="80%" alt="Firma Receptor">
+        
+                    @endif
+                    
+                </center>
+            </div>
+            
         </div>
 
         <!-- ------------------------------------------------- -->
@@ -126,25 +139,32 @@
     </div>
     <div class="card-footer">
 
-        <!-- VALIDAMOS EL STATUS DEL DOCUMENTO  -->
-        @if ($documento->status_firma == 0)
-
-            <!-- VALIDAMOS QUE EL USUARIO TENGA QUE FIRMAR -->
-            @if ($documento->firma==$user->id_area)
-
-                <form action="{{ route('firmarDocumento', $documento->id) }}" method="POST">
-
-                    @csrf
-
-                    @method('PUT')
-
-                    <button type="submit" class="btn btn-info float-right"><i class="fa-solid fa-file-pen" aria-hidden="true"></i> FIRMAR DOCUMENTO</button>            
-
-                </form>
-
-            @endif
+        <!-- VALIDAMOS LOS PERMISOS DEL USUARIO -->
+        @if ($user->nivel != 5)
             
+            <!-- VALIDAMOS EL STATUS DEL DOCUMENTO  -->
+            @if ($documento->status_firma == 0)
+
+                <!-- VALIDAMOS QUE EL USUARIO TENGA QUE FIRMAR -->
+                @if ($documento->firma==$user->id_area)
+
+                    <form action="{{ route('firmarDocumento', $documento->id) }}" method="POST">
+
+                        @csrf
+
+                        @method('PUT')
+
+                        <button type="submit" class="btn btn-info float-right"><i class="fa-solid fa-file-pen" aria-hidden="true"></i> FIRMAR DOCUMENTO</button>            
+
+                    </form>
+
+                @endif
+                
+            @endif
+
         @endif
+
+       
         
     </div>
 </div>

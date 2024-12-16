@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Storage;
 class DocumentoController extends Controller
 {
     
-    public function generarQr()
-    {
-        
-    }
     
     /**
      * 
@@ -228,7 +224,8 @@ class DocumentoController extends Controller
         //Seleccionamos las firmas
         return view('documento.createDocumento',[
             'areas'=>$areas,
-            'listaFirmas'=>$listaFirmas
+            'listaFirmas'=>$listaFirmas,
+            'user'=>$user,
         ]);
     }
 
@@ -538,12 +535,12 @@ class DocumentoController extends Controller
         $user = Auth::user();
 
         // Consultamos los documentos asignados para el usuario ya firmados
-        $documentos = Documento::where('para',$user->id)
+        $documentos = Documento::where('para',$user->id_area)
                     ->where('status',2)
                     ->orderBy('created_at', 'desc')
                     ->get();
 
         // Retornamos la vista con el objeto documentos
-        return view('documento.documentosRecibidos', compact('documentos'));
+        return view('documento.documentosRecibidos', compact('documentos','user'));
     }
 }

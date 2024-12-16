@@ -392,7 +392,6 @@ return [
             'icon' => 'fa fa-user',
             'can' => 'isAdmin', 
         ],
-
         // Configuracion para TITULAR DE UNIDAD
         [
             'text' => 'Mi Unidad',
