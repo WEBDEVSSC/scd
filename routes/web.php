@@ -7,12 +7,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+  // Si el usuario no está autenticado, redirige al login
+  if (Auth::check()) {
+      return redirect('/home'); // Si el usuario ya está logueado, redirige a /home
+  }
+
+  return redirect('/login'); // Si no está logueado, redirige al login
 });
+
+/*Route::get('/', function () {
+    return view('welcome');
+});*/
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
 
 /*******************************************************************************************
  * 
