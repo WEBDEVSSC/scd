@@ -12,109 +12,123 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 /*******************************************************************************************
  * 
  * 
- * MODULO DE AREA
+ * PROTEGEMOS TODAS LAS RUTAS
  * 
  * 
  ******************************************************************************************/
 
-// Ruta para mostrar el Dashboard
-Route::get('admin/indexArea', [AreaController::class, 'index'])->name('indexArea');
+Route::middleware(['auth'])->group(function () 
+{
 
-// Ruta para mostrar el formulario de crear un nuevo registro
-Route::get('admin/createArea', [AreaController::class, 'create'])->name('createArea');
+  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Ruta para guardar la informacion en la DB
-Route::post('admin/storeArea',[AreaController::class,'store'])->name('storeArea');
+  /*******************************************************************************************
+   * 
+   * 
+   * MODULO DE AREA
+   * 
+   * 
+   ******************************************************************************************/
 
-// Ruta para mostrar los datos del registro
-Route::get('admin/showArea/{id}',[AreaController::class,'show'])->name('showArea');
+  // Ruta para mostrar el Dashboard
+  Route::get('admin/indexArea', [AreaController::class, 'index'])->name('indexArea');
 
-// Ruta para editar los datos 
-Route::get('admin/editArea',[AreaController::class,'edit'])->name('editArea');
+  // Ruta para mostrar el formulario de crear un nuevo registro
+  Route::get('admin/createArea', [AreaController::class, 'create'])->name('createArea');
 
-// Ruta para actualizar los datos
-Route::put('admin/updateArea',[AreaController::class,'update'])->name('updateArea');
+  // Ruta para guardar la informacion en la DB
+  Route::post('admin/storeArea',[AreaController::class,'store'])->name('storeArea');
 
-// Ruta para eliminar los datos
-Route::get('admin/deleteArea',[AreaController::class,'delete'])->name('deleteArea');
+  // Ruta para mostrar los datos del registro
+  Route::get('admin/showArea/{id}',[AreaController::class,'show'])->name('showArea');
 
-/*******************************************************************************************
- * 
- * 
- * MODULO DE USUARIOS
- * 
- * 
- ******************************************************************************************/
+  // Ruta para editar los datos 
+  Route::get('admin/editArea',[AreaController::class,'edit'])->name('editArea');
 
-// Ruta para mostrar el Dashboard
-Route::get('admin/indexUsuario',[UsuarioController::class, 'index'])->name('indexUsuario');
+  // Ruta para actualizar los datos
+  Route::put('admin/updateArea',[AreaController::class,'update'])->name('updateArea');
 
-// Ruta para crear usuarios
-Route::get('admin/createUsuario',[UsuarioController::class, 'create'])->name('createUsuario');
+  // Ruta para eliminar los datos
+  Route::get('admin/deleteArea',[AreaController::class,'delete'])->name('deleteArea');
 
-// Ruta para guardar la informacion en la DB
-Route::post('admin/storeUsuario',[UsuarioController::class, 'store'])->name('storeUsuario');
+  /*******************************************************************************************
+   * 
+   * 
+   * MODULO DE USUARIOS
+   * 
+   * 
+   ******************************************************************************************/
 
-// Ruta para mostrar los detalles del usuario
-Route::get('admin/showUsuario/{id}',[UsuarioController::class, 'show'])->name('showUsuario');
+  // Ruta para mostrar el Dashboard
+  Route::get('admin/indexUsuario',[UsuarioController::class, 'index'])->name('indexUsuario');
 
-// Ruta para editar los datos del usuario
-Route::get('admin/editUsuario/{id}',[UsuarioController::class, 'edit'])->name('editUsuario');
+  // Ruta para crear usuarios
+  Route::get('admin/createUsuario',[UsuarioController::class, 'create'])->name('createUsuario');
 
-// Ruta para actualizar los datos del usuario
-Route::put('admin/updateUsuario/{id}',[UsuarioController::class,'update'])->name('updateUsuario');
+  // Ruta para guardar la informacion en la DB
+  Route::post('admin/storeUsuario',[UsuarioController::class, 'store'])->name('storeUsuario');
 
-// Ruta para eliminar un usuario
-Route::get('admin/deteleUser/{id}',[UsuarioController::class,'delete'])->name('deleteUsuario');
+  // Ruta para mostrar los detalles del usuario
+  Route::get('admin/showUsuario/{id}',[UsuarioController::class, 'show'])->name('showUsuario');
+
+  // Ruta para editar los datos del usuario
+  Route::get('admin/editUsuario/{id}',[UsuarioController::class, 'edit'])->name('editUsuario');
+
+  // Ruta para actualizar los datos del usuario
+  Route::put('admin/updateUsuario/{id}',[UsuarioController::class,'update'])->name('updateUsuario');
+
+  // Ruta para eliminar un usuario
+  Route::get('admin/deteleUser/{id}',[UsuarioController::class,'delete'])->name('deleteUsuario');
 
 
-/*******************************************************************************************
- * 
- * 
- * MODULO DE DOCUMENTOS
- * 
- * 
-  ******************************************************************************************/
+  /*******************************************************************************************
+   * 
+   * 
+   * MODULO DE DOCUMENTOS
+   * 
+   * 
+    ******************************************************************************************/
 
- // Ruta para mostrar el dashboard
-Route::get('admin/indexDocumento',[DocumentoController::class,'index'])->name('indexDocumento');
+  // Ruta para mostrar el dashboard
+  Route::get('admin/indexDocumento',[DocumentoController::class,'index'])->name('indexDocumento');
 
-// Ruta para crear un nuevo documento
-Route::get('admin/createDocumento',[DocumentoController::class,'create'])->name('createDocumento');
+  // Ruta para crear un nuevo documento
+  Route::get('admin/createDocumento',[DocumentoController::class,'create'])->name('createDocumento');
 
-// Ruta para guardar la informacion en la DB
-Route::post('admin/storeDocumento',[DocumentoController::class,'store'])->name('storeDocumento');
+  // Ruta para guardar la informacion en la DB
+  Route::post('admin/storeDocumento',[DocumentoController::class,'store'])->name('storeDocumento');
 
-// Ruta para mostrrar los detalles del documento
-Route::get('admin/showDocumento/{id}',[DocumentoController::class,'show'])->name('showDocumento');
+  // Ruta para mostrrar los detalles del documento
+  Route::get('admin/showDocumento/{id}',[DocumentoController::class,'show'])->name('showDocumento');
 
-// Ruta para generar el PDF
-Route::get('admin/pdfDocumento/{id}', [DocumentoController::class, 'pdf'])->name('pdfDocumento');
+  // Ruta para generar el PDF
+  Route::get('admin/pdfDocumento/{id}', [DocumentoController::class, 'pdf'])->name('pdfDocumento');
 
-// Ruta para foirmar el documento
-Route::put('admin/firmarDocumento/{id}', [DocumentoController::class, 'firmar'])->name('firmarDocumento');
+  // Ruta para foirmar el documento
+  Route::put('admin/firmarDocumento/{id}', [DocumentoController::class, 'firmar'])->name('firmarDocumento');
 
-// Ruta para mostrar los documentos pendientes de firma
-Route::get('admin/pendientesFirmarDocumento',[DocumentoController::class, 'pendientesFirmar'])->name('pendientesFirmarDocumento');
+  // Ruta para mostrar los documentos pendientes de firma
+  Route::get('admin/pendientesFirmarDocumento',[DocumentoController::class, 'pendientesFirmar'])->name('pendientesFirmarDocumento');
 
-// Ruta para mostrar los documentos que el usuario que inicio sesion redacto
-Route::get('admin/misDocumentos',[DocumentoController::class, 'misDocumentos'])->name('misDocumentos');
+  // Ruta para mostrar los documentos que el usuario que inicio sesion redacto
+  Route::get('admin/misDocumentos',[DocumentoController::class, 'misDocumentos'])->name('misDocumentos');
 
-// Ruta para mostrar los documentos recibidos (Ya firmados)
-Route::get('admin/documentosRecibidos',[DocumentoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
+  // Ruta para mostrar los documentos recibidos (Ya firmados)
+  Route::get('admin/documentosRecibidos',[DocumentoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
 
-/*******************************************************************************************
- * 
- * 
- * CONFIGURACION PARA TITULAR DE UNIDAD
- * 
- * 
-  ******************************************************************************************/
+  /*******************************************************************************************
+   * 
+   * 
+   * CONFIGURACION PARA TITULAR DE UNIDAD
+   * 
+   * 
+    ******************************************************************************************/
 
-// Ruta para mostrar las jefaturas a su cargo
-Route::get('admin/miUnidad',[AreaController::class,'miUnidad'])->name('miUnidad');
+  // Ruta para mostrar las jefaturas a su cargo
+  Route::get('admin/miUnidad',[AreaController::class,'miUnidad'])->name('miUnidad');
+
+});
+
