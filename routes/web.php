@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
   // Si el usuario no está autenticado, redirige al login
-  if (Auth::check()) 
-  {
+  if (Auth::check()) {
       return redirect('/home'); // Si el usuario ya está logueado, redirige a /home
   }
 
@@ -25,6 +24,8 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register' => false]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /*******************************************************************************************
  * 
