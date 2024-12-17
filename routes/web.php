@@ -7,17 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  // Si el usuario no está autenticado, redirige al login
-  if (Auth::check()) {
-      return redirect('/home'); // Si el usuario ya está logueado, redirige a /home
-  }
-
-  return redirect('/login'); // Si no está logueado, redirige al login
-});
-/*
-Route::get('/', function () {
     return view('welcome');
-});*/
+});
 
 Auth::routes();
 
