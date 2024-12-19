@@ -87,4 +87,30 @@
 
 @section('js')
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+
+    <script>
+        // Escuchar el click del botón de eliminar
+        document.getElementById('deleteButton').addEventListener('click', function (e) {
+            // Obtener el ID del usuario
+            var areaId = this.getAttribute('data-id');
+            
+            // Mostrar la alerta de confirmación con SweetAlert2
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '<i class="fa fa-check" aria-hidden="true"></i> ELIMINAR',
+                cancelButtonText: '<i class="fa fa-ban" aria-hidden="true"></i> CANCELAR'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si se confirma, se hace la solicitud de eliminación
+                    // Redirigimos a la ruta de eliminación con el ID del usuario
+                    window.location.href = '/admin/deleteArea/' + areaId; // Ajuste según tu ruta
+                }
+            });
+        });
+    </script>
 @stop

@@ -238,7 +238,7 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validamos los datos
         $validateData = $request->validate([
             'para' => 'required', 
             'tipo' => 'required', 

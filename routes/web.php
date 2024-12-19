@@ -62,13 +62,13 @@ Route::middleware(['auth'])->group(function ()
   Route::get('admin/showArea/{id}',[AreaController::class,'show'])->name('showArea');
 
   // Ruta para editar los datos 
-  Route::get('admin/editArea',[AreaController::class,'edit'])->name('editArea');
+  Route::get('admin/editArea/{id}',[AreaController::class,'edit'])->name('editArea');
 
   // Ruta para actualizar los datos
-  Route::put('admin/updateArea',[AreaController::class,'update'])->name('updateArea');
+  Route::put('admin/updateArea/{id}',[AreaController::class,'update'])->name('updateArea');
 
   // Ruta para eliminar los datos
-  Route::get('admin/deleteArea',[AreaController::class,'delete'])->name('deleteArea');
+  Route::get('admin/deleteArea/{id}',[AreaController::class,'delete'])->name('deleteArea');
 
   /*******************************************************************************************
    * 

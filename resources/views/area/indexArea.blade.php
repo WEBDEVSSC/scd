@@ -25,9 +25,21 @@
 </script>
 @endif
 
+@if(session('delete'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            title: '¡Datos eliminados exitosamente!', 
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        });
+    });
+</script>
+@endif
+
 <!-- ---------------------------------------------------------------- -->
 
-    <div class="card card-primary card-outline">
+    <div class="card card-info card-outline">
         <div class="card-header">
             <a href="{{ route('createArea') }}" class="btn btn-info float-right"><i class="fa-solid fa-plus" aria-hidden="true"></i> NUEVO REGISTRO</a>     
         </div> 

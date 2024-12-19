@@ -14,8 +14,6 @@
     <div class="card card-info card-outline">
         <div class="card-body">
 
-            {{ $user->nivel }}
-
                 <div class="row">
 
                     <div class="col-md-3">
