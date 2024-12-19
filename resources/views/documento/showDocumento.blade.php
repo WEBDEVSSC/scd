@@ -27,7 +27,7 @@
 
 <!-- ---------------------------------------------------------------- -->
 
-<div class="card card-primary card-outline">
+<div class="card card-info card-outline">
     <div class="card-title">
 
         <div class="card-header d-flex justify-content-end">
@@ -93,8 +93,8 @@
             <div class="col-md-4">
                 <center>
                     <p><strong>EMISOR</strong></p>
-                    <p>{{ $documento->area_responsable }} <br> <small><strong>{{ $documento->area_label}}</strong></small></p>
-                    <img src="{{ asset($capturo->firma) }}" width="80%" alt="Firma Emisor">
+                    <p>{{ $documento->origen_nombre }} <br> <small><strong>{{ $documento->origen_label}}</strong></small></p>
+                    <img src="{{ asset($documento->origen_firma) }}" width="80%" alt="Firma Emisor">
                 </center>
             </div>
             <div class="col-md-4">

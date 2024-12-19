@@ -79,19 +79,13 @@ class DocumentoController extends Controller
                 ->get();
         }
 
-        // Nivel 6 - Titular de Unidad
+        // Nivel 6 - TITULAR DE UNIDAD
         elseif($userNivel == 6)
         {   
             $documentos = Documento::where('para',$userOrigen)
                 ->orderBy('created_at','desc')
                 ->get();
         }
-
-
-        /*$documentos = Documento::where('area',$userIdArea)
-                ->orderBy('created_at','desc')
-                ->get();*/
-        
 
         // Redireccionamos con el array de documentos
 
@@ -262,6 +256,9 @@ class DocumentoController extends Controller
 
         // Campo origen de quien capturo
         $origen = $user->id;
+        $origenNombre = $user->name;
+        $origenLabel = $user->id_area_label;
+        $origenFirma = $user->firma;
 
         // Campo para el id del area
         $idArea = $user->id_area;
@@ -344,6 +341,9 @@ class DocumentoController extends Controller
         $documento->anexo_descripcion = $request->anexo_descripcion;
         $documento->contenido = $request->contenido;
         $documento->origen = $origen;
+        $documento->origen_nombre = $origenNombre;
+        $documento->origen_label = $origenLabel;
+        $documento->origen_firma = $origenFirma;
         $documento->origen_subsecretaria = $subsecretariaOrigen;
         $documento->origen_subsecretaria_label = $subSecretariaLabelFinal;
         $documento->area = $idArea;
@@ -380,17 +380,13 @@ class DocumentoController extends Controller
         // Buscamos el registro con el ID
         $documento = Documento::find($id);
 
-        // Cargamos los datos del usuario que esta en sesion
+        // Validamos los datos del usuario autenticado
         $user = Auth::user();
-
-        // Cargamos los datos del usuario que capturo
-        $capturo = User::where('id', $documento->origen)->first();
 
         // Mandamos los datos a la vista
         return view('documento.showDocumento',[
             'documento'=>$documento,
-            'user'=>$user,
-            'capturo'=>$capturo
+            'user'=>$user
         ]);
     }
 

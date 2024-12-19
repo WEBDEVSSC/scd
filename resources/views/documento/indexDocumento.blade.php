@@ -37,8 +37,8 @@
                     <th>STATUS</th>
                     <th>FOLIO</th>
                     <th>EMISOR</th>
-                    <th>RECEPTOR</th>
                     <th>FIRMA</th>
+                    <th>RECEPTOR</th>                    
                     <th>ASUNTO</th>
                     <th></th>
                 </tr>
@@ -49,9 +49,9 @@
                         <td>{{ $documento->id }}</td>
                         <td>{{ $documento->status_label }}</td>
                         <td>{{ $documento->siglas }}/{{ $documento->tipo }}/{{ $documento->consecutivo }}/{{ $documento->created_at->format('Y') }}</td>
-                        <td>{{ $documento->area_responsable }} <br> <small><strong>{{ $documento->area_label }}</strong></small></td>
-                        <td>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area }}</strong></small></strong></td>
+                        <td>{{ $documento->origen_nombre }} <br> <small><strong>{{ $documento->origen_label }}</strong></small></td>
                         <td>{{ $documento->firma_label }} <br> <small><strong>{{ $documento->firma_area }}</strong></small></strong></td>
+                        <td>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area }}</strong></small></strong></td>                        
                         <td>{{ $documento->asunto }}</td>
                         <td>
                             <a href="{{ route('showDocumento', $documento->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>

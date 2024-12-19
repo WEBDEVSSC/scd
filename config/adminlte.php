@@ -309,9 +309,9 @@ return [
             'can' => 'isOperativo', 
         ],
         [
-            'text' => 'Mis documentos',
-            'url' => 'admin/misDocumentos',
-            'icon' => 'fa-solid fa-folder-open',
+            'text' => 'Panel de Control',
+            'url' => 'admin/indexDocumento',
+            'icon' => 'fa fa-list-ul',
             'can' => 'isOperativo', 
 
         ],
