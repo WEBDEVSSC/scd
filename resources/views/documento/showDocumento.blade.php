@@ -34,12 +34,12 @@
             <a href="{{ route('indexDocumento') }}" class="btn btn-info ml-2">
                 <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
             </a>
-            <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
+            {{-- <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
                 <i class="fa fa-file" aria-hidden="true"></i> PDF
-            </a>
+            </a> 
             <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
                 <i class="fa fa-file" aria-hidden="true"></i> TURNAR
-            </a>
+            </a>--}}
         </div>
 
     </div>

@@ -13,6 +13,14 @@ use Illuminate\Support\Str;
 class DocumentoRecibidoController extends Controller
 {
     //
+    public function documentosRecibidosShow($id)
+    {
+        // Cargamos el documento
+        $documento = DocumentoRecibido::findOrFail($id);
+
+        // Regresamos la vista con el arreglo
+        return view('documento-recibido.documentosRecibidosShow', compact('documento'));
+    }
 
     public function documentosRecibidos()
     {

@@ -1,11 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Documentos Recibidos')
 
 @section('plugins.Sweetalert2', true)
 
 @section('content_header')
-<h1><i class="fa-solid fa-file-circle-check"></i><strong>Documentos recibidos</strong></h1>
+<h1>
+    <strong>Documentos recibidos</strong>
+    <small class="text-muted">Panel de Control</small>
+</h1>
 @stop
 
 @section('content')
@@ -55,7 +58,7 @@
                         <td>{{ $documento->asunto }}</td>                        
                         <td>{{ $documento->turnado_area_label }}</td>                        
                         <td>
-                            <a href="{{ route('showDocumento', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
+                            <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
                             
                             @if($documento->documento)
                                 {{-- sí hay documento --}}

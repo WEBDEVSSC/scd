@@ -1,9 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Número de Folio')
+@section('title', 'Documentos Recibidos')
 
 @section('content_header')
-<h1><strong>Número de Folio</strong><small> Nuevo registro</small></h1>
+<h1>
+    <strong>Documentos Recibidos</strong>
+    <small class="text-muted">Nuevo registro</small>
+</h1>
 @stop
 
 @section('content')
@@ -190,31 +193,26 @@
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#contenido').summernote();
-    });
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
 
-<script>
-$(document).ready(function() {
-    // Inicialización básica de Summernote para los campos
-    $('#descripcion').summernote({
-        height: 200, // Altura del editor
-        lang: 'es-ES', // Idioma español
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ]
+
+    <script>
+    $(document).ready(function() {
+
+        $('#contenido').summernote({
+            height: 200,
+            lang: 'es-ES',
+            toolbar: [
+                ['font', ['bold', 'italic', 'underline']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+
     });
-});
-</script>
+    </script>
 
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
 @stop

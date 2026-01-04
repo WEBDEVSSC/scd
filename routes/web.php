@@ -167,6 +167,8 @@ Route::middleware(['auth'])->group(function ()
 
   Route::put('admin/documentosRecibidosCargarStore/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosCargarStore'])->name('documentosRecibidosCargarStore');
 
+  Route::get('admin/documentosRecibidosShow/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosShow'])->name('documentosRecibidosShow');
+
   Route::get('documentos-recibidos/{id}/ver',[DocumentoRecibidoController::class, 'verDocumento'])->name('verDocumento');
 
 
