@@ -86,7 +86,7 @@
     <!-- ------------------------------------------------------ -->
     <div id="header">
         <!-- <img src="{{ public_path('img/CABECERA.jpg') }}" alt="Encabezado" width="80%"> -->
-        <center><img class="imgHeader" src="{{ public_path('img/CABECERA.jpg') }}"></center>
+        <center><img  src="{{ public_path('img/CABECERA.jpg') }}" width="80%"></center>
     </div>
     <!-- ------------------------------------------------------ -->
 

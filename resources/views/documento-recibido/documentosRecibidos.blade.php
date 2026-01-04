@@ -5,7 +5,7 @@
 @section('plugins.Sweetalert2', true)
 
 @section('content_header')
-<h1><strong>Documentos</strong><small> Documentos recibidos</small></h1>
+<h1><i class="fa-solid fa-file-circle-check"></i><strong>Documentos recibidos</strong></h1>
 @stop
 
 @section('content')
@@ -28,6 +28,9 @@
 <!-- ---------------------------------------------------------------- -->
 
 <div class="card card-info card-outline">
+    <div class="card-header">
+        <a href="{{ route("documentosRecibidosCreate") }}" class="btn btn-info btn-sm">NUEVO REGISTRO</a>
+    </div>
     <div class="card-body">
 
         <table class="table table-striped">
@@ -37,9 +40,8 @@
                     <th>STATUS</th>
                     <th>FOLIO</th>
                     <th>EMISOR</th>
-                    <th>RECEPTOR</th>
-                    <th>FIRMA</th>
                     <th>ASUNTO</th>
+                    <th>TURNADO</th>
                     <th></th>
                 </tr>
             </thead>
@@ -47,14 +49,25 @@
                 @foreach($documentos as $documento)
                     <tr>
                         <td>{{ $documento->id }}</td>
-                        <td>{{ $documento->status_label }}</td>
-                        <td>{{ $documento->siglas }}/{{ $documento->tipo }}/{{ $documento->consecutivo }}/{{ $documento->created_at->format('Y') }}</td>
-                        <td>{{ $documento->area_responsable }} <br> <small><strong>{{ $documento->area_label }}</strong></small></td>
-                        <td>{{ $documento->para_label }} <br> <small><strong>{{ $documento->para_area }}</strong></small></strong></td>
-                        <td>{{ $documento->firma_label }} <br> <small><strong>{{ $documento->firma_area }}</strong></small></strong></td>
-                        <td>{{ $documento->asunto }}</td>
+                        <td>{{ $documento->status }}</td>
+                        <td>{{ $documento->folio}}</td>
+                        <td>{{ $documento->emisor }}</td>
+                        <td>{{ $documento->asunto }}</td>                        
+                        <td>{{ $documento->turnado_area_label }}</td>                        
                         <td>
-                            <a href="{{ route('showDocumento', $documento->id) }}" class="btn btn-info"><i class="fa-solid fa-gear"></i></a>
+                            <a href="{{ route('showDocumento', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
+                            
+                            @if($documento->documento)
+                                {{-- sí hay documento --}}
+                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                            @else
+                                {{-- no hay documento --}}
+                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                            @endif
+
+                            
+
+                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file-export"></i></a>
                         </td> 
                     </tr>
                 @endforeach

@@ -71,8 +71,7 @@ class UsuarioController extends Controller
         $labelArea = Area::where('id',$request->id_area)->first();
         $nombreArea = $labelArea -> nombre;
 
-        $labelNivel = UsersNivel::where('id',$request->nivel)->first();
-        $nombreNivel = $labelNivel->nivel;
+        $nivel = UsersNivel::where('id',$request->nivel)->first();
 
         // Verificar si el campo firma tiene un archivo
         if ($request->hasFile('firma')) {
@@ -94,8 +93,11 @@ class UsuarioController extends Controller
         $usuario->cargo = $request->cargo;
         $usuario->id_area = $request->id_area;
         $usuario->id_area_label = $nombreArea;
+
         $usuario->nivel = $request->nivel;
-        $usuario->nivel_label = $nombreNivel;
+        $usuario->nivel_label = $nivel->nivel;
+        $usuario->role = $nivel->role;
+
         $usuario->firma = 'storage/' . $imagePath;
 
         $usuario->save();
@@ -205,7 +207,7 @@ class UsuarioController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
         
             // Almacenar la imagen en la carpeta 'public/images' (esto la mueve a storage/app/public/images)
-            $imagePath = $image->storeAs('images', $imageName, 'public');
+            $imagePath = $image->storeAs('images/usuarios', $imageName, 'public');
         
             // Actualizamos el campo 'firma' del usuario con la nueva ruta de la imagen
             $usuario->firma = 'storage/' . $imagePath;
@@ -235,5 +237,10 @@ class UsuarioController extends Controller
 
         // Redirigir con mensaje de éxito
         return redirect()->route('indexUsuario')->with('delete', 'Datos eliminados exitosamente.');
+    }
+
+    public function miPerfil($id)
+    {
+        dd("MENSAJE PERSONALIZADO");
     }
 }

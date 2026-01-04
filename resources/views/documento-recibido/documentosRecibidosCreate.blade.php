@@ -8,7 +8,7 @@
 
 @section('content')
 
-<form action="{{ route('storeDocumento') }}" method="POST">
+<form action="{{ route('documentosRecibidosStore') }}" method="POST">
     @csrf
 
     <div class="card card-info card-outline">
@@ -17,8 +17,8 @@
                 <div class="row">
 
                     <div class="col-md-3">
-                        <p><strong>Para</strong></p>
-                        <select name="para" class="form-control">
+                        <p><strong>Emisor</strong></p>
+                        <select name="emisor" class="form-control">
                             <option value="">-- Selecciona una opción --</option>
                             @foreach($areas as $area)
                                 <option value="{{ $area->id }}" {{ old('para') == $area->id ? 'selected' : '' }}>
@@ -39,9 +39,53 @@
                             <option value="OF" {{ old('tipo') == 'OF' ? 'selected' : '' }}>OFICIO</option>
                             <option value="MEM" {{ old('tipo') == 'MEM' ? 'selected' : '' }}>MEMORANDUM</option>
                             <option value="TI" {{ old('tipo') == 'TI' ? 'selected' : '' }}>TARJETA INFORMATIVA</option>
+                            <option value="CIR" {{ old('tipo') == 'CIR' ? 'selected' : '' }}>CIRCULAR</option>
+                            <option value="EM" {{ old('tipo') == 'EM' ? 'selected' : '' }}>E-MAIL</option>
                         </select>
 
                         @error('tipo')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-3">
+                        <p><strong>Folio</strong></p>
+                        <input type="text" name="folio" class="form-control" value="{{ old('folio') }}">
+                    
+                        @error('folio')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-3">
+                        <p><strong>Fecha del documento</strong></p>
+                        <input type="date" name="fecha_documento" class="form-control" value="{{ old('fecha_documento') }}">
+                    
+                        @error('fecha_documento')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                </div>
+
+                <!-- ------------------------------------------------------------------------------------- -->
+
+                <div class="row mt-3">
+
+                    <div class="col-md-3">
+                        <p><strong>Fecha y hora de recepción</strong></p>
+                        <input type="datetime-local" name="fecha_recepcion" class="form-control" value="{{ old('fecha_recepcion') }}">
+                    
+                        @error('fecha_recepcion')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-3">
+                        <p><strong>Fecha límite de respuesta</strong></p>
+                        <input type="date" name="fecha_limite" class="form-control" value="{{ old('fecha_limite') }}">
+                    
+                        @error('fecha_limite')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -54,6 +98,7 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+
                 </div>
 
                 <!-- ------------------------------------------------------------------------------------- -->
@@ -84,8 +129,19 @@
                 <!-- ------------------------------------------------------------------------------------- -->
 
                 <div class="row mt-3">
+
+                    
+
+                    
+
+                    
+                </div>
+
+                <!-- ------------------------------------------------------------------------------------- -->
+
+                <div class="row mt-3">
                     <div class="col-md-12">
-                        <p><strong>Contenido</strong></p>
+                        <p><strong>Observaciones</strong></p>
 
                         <textarea name="contenido" id="contenido" class="form-control" rows="10">{{ old('contenido') }}</textarea>
                         
@@ -98,29 +154,23 @@
 
                 <!-- ------------------------------------------------------------------------------------- -->
 
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <p><strong>Firma</strong></p>
-                        <select name="firma" id="firma" class="form-control">
-                            <option value="">-- Selecciona una opción --</option>
-                            @foreach($listaFirmas as $firma)
-                                <option value="{{ $firma->id }}" {{ old('firma') == $firma->id ? 'selected' : '' }}>
-                                    {{ $firma->responsable }} - {{ $firma->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-
-                        @error('firma')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
+                
 
         </div>
 
             <div class="card-footer">
 
-                <button type="submit" class="btn btn-info float-right"><i class="fa fa-check-circle" aria-hidden="true"></i> REGISTRAR DOCUMENTO</button>            
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-check-circle" aria-hidden="true"></i> REGISTRAR DOCUMENTO</button>   
+                
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
             </div>
 

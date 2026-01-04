@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\DocumentoRecibidoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -14,8 +15,12 @@ use Illuminate\Support\Facades\Route;
  * 
  ******************************************************************************************/
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
+});*/
+
+Route::get('/', function () {
+    return redirect()->route('login');
 });
 
 /*******************************************************************************************
@@ -26,7 +31,11 @@ Route::get('/', function () {
  * 
  ******************************************************************************************/
 
- Auth::routes(['register' => false]);
+ Auth::routes([
+    'register' => false, // Desactiva el registro de nuevos usuarios
+    'reset' => false, // Desactiva la recuperación de contraseña
+    'verify' => false,   // Desactiva la verificación de email
+]);
 
 /*******************************************************************************************
  * 
@@ -99,6 +108,9 @@ Route::middleware(['auth'])->group(function ()
   // Ruta para eliminar un usuario
   Route::get('admin/deteleUser/{id}',[UsuarioController::class,'delete'])->name('deleteUsuario');
 
+  // Ruta para mostrar el perfil del Usuario
+  Route::get('admin/usuarios/miPerfil/{id}',[UsuarioController::class,'miPerfil'])->name('miPerfil');
+
 
   /*******************************************************************************************
    * 
@@ -132,8 +144,31 @@ Route::middleware(['auth'])->group(function ()
   // Ruta para mostrar los documentos que el usuario que inicio sesion redacto
   Route::get('admin/misDocumentos',[DocumentoController::class, 'misDocumentos'])->name('misDocumentos');
 
-  // Ruta para mostrar los documentos recibidos (Ya firmados)
-  Route::get('admin/documentosRecibidos',[DocumentoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
+  
+  /*******************************************************************************************
+   * 
+   * 
+   * DOCUMENTOS RECIBIDOS
+   * 
+   * 
+    ******************************************************************************************/
+
+  Route::get('admin/documentosRecibidos',[DocumentoRecibidoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
+
+  Route::get('admin/documentosRecibidosCreate',[DocumentoRecibidoController::class, 'documentosRecibidosCreate'])->name('documentosRecibidosCreate');
+
+  Route::post('admin/documentosRecibidosStore',[DocumentoRecibidoController::class, 'documentosRecibidosStore'])->name('documentosRecibidosStore');
+
+  Route::get('admin/documentosRecibidosTurnar/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosTurnar'])->name('documentosRecibidosTurnar');
+
+  Route::post('admin/documentosRecibidosTurnarStore/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosTurnarStore'])->name('documentosRecibidosTurnarStore');
+
+  Route::get('admin/documentosRecibidosCargar/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosCargar'])->name('documentosRecibidosCargar');
+
+  Route::put('admin/documentosRecibidosCargarStore/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosCargarStore'])->name('documentosRecibidosCargarStore');
+
+  Route::get('documentos-recibidos/{id}/ver',[DocumentoRecibidoController::class, 'verDocumento'])->name('verDocumento');
+
 
   /*******************************************************************************************
    * 

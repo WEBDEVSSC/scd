@@ -294,8 +294,13 @@ return [
     */
 
     'menu' => [
-        
-        ['header' => 'DOCUMENTOS'],
+
+        [
+            'text' => 'Dashboard',
+            'url' => '/home',
+            'icon' => 'fa fa-area-chart',
+            'label_color' => 'success',
+        ],
 
         /*
         |--------------------------------------------------------------------------
@@ -303,18 +308,19 @@ return [
         |--------------------------------------------------------------------------
         */
         [
-            'text' => 'Nuevo registro',
+            'text' => 'Número de Fólio',
             'url' => 'admin/createDocumento',
             'icon' => 'fa fa-check-circle',
-            'can' => 'isOperativo', 
+            'can' => 'operativo', 
         ],
         [
             'text' => 'Panel de Control',
             'url' => 'admin/indexDocumento',
             'icon' => 'fa fa-list-ul',
-            'can' => 'isOperativo', 
+            'can' => 'operativo', 
 
         ],
+
 
         /*
         |--------------------------------------------------------------------------
@@ -323,24 +329,28 @@ return [
         */
 
         [
-            'text' => 'Nuevo registro',
+            'text' => 'Número de Folio',
             'url' => 'admin/createDocumento',
             'icon' => 'fa fa-check-circle',
-            'can' => 'isJefeDepartamento', 
+            'can' => 'jefeDepartamento', 
         ],
         [
             'text' => 'Panel de Control',
             'url' => 'admin/indexDocumento',
             'icon' => 'fa fa-list-ul',
-            'can' => 'isJefeDepartamento', 
-
+            'can' => 'jefeDepartamento', 
+        ],
+        [
+            'text' => 'Mis Documentos',
+            'url' => 'admin/misDocumentos',
+            'icon' => 'fa fa-list-ul',
+            'can' => 'jefeDepartamento',
         ],
         [
             'text' => 'Esperando firma',
             'url' => 'admin/pendientesFirmarDocumento',
             'icon' => 'fa-solid fa-file-pen',
-            'can' => 'isJefeDepartamento', 
-
+            'can' => 'jefeDepartamento', 
         ],
 
         /*
@@ -353,24 +363,36 @@ return [
             'text' => 'Nuevo registro',
             'url' => 'admin/createDocumento',
             'icon' => 'fa fa-check-circle',
-            'can' => 'isTitularUnidad', 
+            'can' => 'titularUnidad', 
         ],
         [
             'text' => 'Panel de Control',
             'url' => 'admin/indexDocumento',
             'icon' => 'fa fa-list-ul',
-            'can' => 'isTitularUnidad',
+            'can' => 'titularUnidad',
+        ],
+        [
+            'text' => 'Mis Documentos',
+            'url' => 'admin/misDocumentos',
+            'icon' => 'fa fa-list-ul',
+            'can' => 'titularUnidad',
         ],
         [
             'text' => 'Esperando firma',
             'url' => 'admin/pendientesFirmarDocumento',
             'icon' => 'fa-solid fa-file-pen',
-            'can' => 'isTitularUnidad', 
+            'can' => 'titularUnidad', 
         ],
         [
             'text' => 'Recibidos',
             'url' => 'admin/documentosRecibidos',
             'icon' => 'fa-solid fa-pen-fancy',
+            'can' => 'titularUnidad', 
+        ],
+        [
+            'text' => 'Mi Unidad',
+            'url' => 'admin/miUnidad',
+            'icon' => 'fa fa-user',
             'can' => 'isTitularUnidad', 
         ],
         /*
@@ -378,58 +400,52 @@ return [
         | Menu ADMINISTRADORES
         |--------------------------------------------------------------------------
         */
-        ['header' => 'CONFIGURACION'],
+        
+        
         [
             'text' => 'Areas',
             'url' => 'admin/indexArea',
             'icon' => 'fa-solid fa-chalkboard-user',
-            'can' => 'isAdmin',
+            'can' => 'admin',
             
         ],
         [
             'text' => 'Usuarios',
             'url' => 'admin/indexUsuario',
             'icon' => 'fa fa-user',
-            'can' => 'isAdmin', 
+            'can' => 'admin', 
         ],
-        // Configuracion para TITULAR DE UNIDAD
-        [
-            'text' => 'Mi Unidad',
-            'url' => 'admin/miUnidad',
-            'icon' => 'fa fa-user',
-            'can' => 'isTitularUnidad', 
-        ],
+        
 
         /*
         |--------------------------------------------------------------------------
         | Menu SUBDIRECTORES
         |--------------------------------------------------------------------------
         */
-        [
+        /*[
             'text' => 'Nuevo registro',
             'url' => 'admin/createDocumento',
             'icon' => 'fa fa-check-circle',
-            'can' => 'isSubdirector', 
+            'can' => 'subdirector', 
         ],
         [
             'text' => 'Panel de Control',
             'url' => 'admin/indexDocumento',
             'icon' => 'fa fa-list-ul',
-            'can' => 'isSubdirector',
+            'can' => 'subdirector',
         ],
         [
             'text' => 'Esperando firma',
             'url' => 'admin/pendientesFirmarDocumento',
             'icon' => 'fa-solid fa-file-pen',
-            'can' => 'isSubdirector', 
-        ],
+            'can' => 'subdirector', 
+        ],*/
         [
-            'text' => 'Recibidos',
+            'text' => 'Documentos Recibidos',
             'url' => 'admin/documentosRecibidos',
-            'icon' => 'fa-solid fa-pen-fancy',
-            'can' => 'isSubdirector', 
+            'icon' => 'fa-solid fa-file-circle-check',
+            'can' => 'subdirector', 
         ],
-
     ],
 
     /*

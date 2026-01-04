@@ -69,6 +69,8 @@ class AreaController extends Controller
 
             // Almacenar la imagen en la carpeta 'public/images' (esto la mueve a storage/app/public/images)
             $imagePath = $image->storeAs('images/areas', $imageName, 'public');
+
+            $imagePath = $image->storeAs('images/usuarios', $imageName, 'public');
         }
 
         // Crear una nueva instancia del modelo Area

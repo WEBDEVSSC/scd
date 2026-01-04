@@ -6,17 +6,17 @@ use App\Mail\DocumentoFirmado;
 use App\Mail\DocumentoParaFirma;
 use App\Models\Area;
 use App\Models\Documento;
+use App\Models\DocumentoRecibido;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class DocumentoController extends Controller
-{
-    
-    
+{    
     /**
      * 
      * 
@@ -62,7 +62,7 @@ class DocumentoController extends Controller
                 ->get();
         }
 
-        // Nivel 4 - Jefatura de departamento
+        // Nivel 4 - JEFATURA DE DEPARTAMENTO
         elseif($userNivel == 4)
         {
             $documentos = Documento::where('firma',$userIdArea)
@@ -112,17 +112,16 @@ class DocumentoController extends Controller
         // Consultamos el ID al area que pertenece el usuario
         $userIdArea = $user->id_area;
 
-        // Con el ID del area consultamos los campos del Area en la tabla Areas
-        $areaCampos = Area::where('id', $userIdArea)->first();
-
-        // Sacamos el tipo de area
-        $areaTipo = $areaCampos->tipo;
-
-        // Connsultamos la lista de firmas segun el nivel del usuario
+        /*************************************************************************************************************************************** */
+        /*************************************************************************************************************************************** */
+        /*                                                   CONSULTA DE LISTAS DE AREAS                                                         */
+        /*************************************************************************************************************************************** */
+        /*************************************************************************************************************************************** */
 
         // Operativo == Solo le firma su jefe directo
         if($user->nivel == 5)
         {
+            
             // Consultamos jefatura
             $jefatura = Area::where('id',$userIdArea)->first();
             
@@ -132,9 +131,14 @@ class DocumentoController extends Controller
         // Jefe de Departamento == Solo le firma su Subdirector o Jefaturas hermanas
         elseif($user->nivel == 4)
         {
-            $subdireccion = Area::where('id',$userIdArea)->first();
+            // Consultamos el area
+            $area = Area::where('id', $user->id_area)->first();
 
-            $listaFirmas = Area::where('subdireccion',$subdireccion->subdireccion)->get();
+            // Consultamos la subdireccion
+            $subdireccion = Area::where('id',$area->subdireccion)->first();
+
+            // Consultamos la lista de firmas
+            $listaFirmas = Area::where('subdireccion',$subdireccion->id)->get();
 
         }
 
@@ -145,76 +149,7 @@ class DocumentoController extends Controller
 
             $listaFirmas = Area::where('despacho',$titular->despacho)->get();
         }
-
-        //
-
-        // Consulta para Subsecretarias
-
-        /*
-
-        if($areaTipo == 1)
-        {
-            $idUnidad = $areaCampos ->subsecretaria;
-
-            $listaFirmas = Area::where('id', $userIdArea)
-                               ->orWhere('id',$idUnidad)
-                               ->get();  
-        }
         
-
-        // Consulta para Subdirecciones
-        elseif($areaTipo == 2)
-        {
-            $idDespacho = $areaCampos->despacho;
-
-            $listaFirmas = Area::where('id', $userIdArea)
-                               ->orWhere('id',$idDespacho)
-                               ->get();    
-        }
-
-        // Consulta para Subdirecciones
-        elseif($areaTipo == 3)
-        {
-            $idUnidad = $areaCampos ->subsecretaria;
-
-            $listaFirmas = Area::where('id', $userIdArea)
-                               ->orWhere('id',$idUnidad)
-                               ->get();    
-        }
-
-        // Jefafura de Departamento (Firma el mismo y el subdirector)
-        elseif($areaTipo == 4)
-        {
-            $idUnidad = $areaCampos ->unidad;
-            $idSubsecretaria = $areaCampos ->subsecretaria;
-
-            $listaFirmas = Area::where('id', $userIdArea)
-                               ->orWhere('id',$idSubsecretaria)
-                               ->get();   
-        }
-
-        // Area o Programa (Firma jefe inmediato o Subdirector)
-        elseif($areaTipo == 5)
-        {
-            $idUnidad = $areaCampos ->unidad;
-            $idJefatura = $areaCampos ->jefatura;
-
-            $listaFirmas = Area::where('id', $idJefatura)
-                               ->orWhere('id',$idUnidad)
-                               ->get();   
-        }
-        
-        // LISTA DE FIRMAS PARA UNIDAD
-        elseif($areaTipo == 6)
-        {
-            $idDespacho = $areaCampos->despacho;
-            $idUnidad = $areaCampos->id;
-
-            $listaFirmas = Area::where('id',$idDespacho)
-                                ->orWhere('id',$idUnidad)
-                                ->get();
-        }*/
-
         //Seleccionamos las firmas
         return view('documento.createDocumento',[
             'areas'=>$areas,
@@ -285,12 +220,12 @@ class DocumentoController extends Controller
         $subsecretariaOrigen = $subsecretaria->subsecretaria;
         
         // Consultamos los datos de la subsecretaria
-        $subsecretariaLabel = Area::where('id',$subsecretariaOrigen)->first();  
-        $subSecretariaLabelFinal = $subsecretariaLabel->nombre;
+        $subSecretariaLabelFinal = Area::find($subsecretariaOrigen)?->nombre;
+        //$subSecretariaLabelFinal = Area::find($subsecretariaOrigen)?->nombre;
 
         // Filtramos por el tipo de documento
 
-        if ($request->tipo == "MEM") 
+        /*if ($request->tipo == "MEM") 
         {
             $ultimoArea = Documento::where('siglas',$siglasFirma)
                                    ->where('tipo','MEM')
@@ -326,6 +261,22 @@ class DocumentoController extends Controller
         else 
         {
             $ultimo = 1; // Valor por defecto si no coincide con ningún tipo
+        }*/
+
+        // Consultamos el año actual
+        $anioActual = Carbon::now()->year;
+
+        if (in_array($request->tipo, ['MEM', 'OF', 'TI'])) {
+
+            $ultimoDocumento = Documento::where('siglas', $siglasFirma)
+                ->where('tipo', $request->tipo)
+                ->whereYear('created_at', $anioActual)
+                ->orderByDesc('consecutivo')
+                ->first();
+
+            $consecutivo = $ultimoDocumento
+                ? $ultimoDocumento->consecutivo + 1
+                : 1;
         }
 
         // Generamos el nuevo objeto para guardar los datos
@@ -525,18 +476,7 @@ class DocumentoController extends Controller
      * 
      * 
      */
-    public function documentosRecibidos()
-    {
-        // Capturamos los datos del usuario que inicio sesion
-        $user = Auth::user();
+    
 
-        // Consultamos los documentos asignados para el usuario ya firmados
-        $documentos = Documento::where('para',$user->id_area)
-                    ->where('status',2)
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-
-        // Retornamos la vista con el objeto documentos
-        return view('documento.documentosRecibidos', compact('documentos','user'));
-    }
+    
 }

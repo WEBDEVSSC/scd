@@ -93,8 +93,11 @@
             <div class="col-md-4">
                 <center>
                     <p><strong>EMISOR</strong></p>
+                    <img src="{{ asset('storage/usuarios/1748204855.png') }}">
+                    {{ asset($documento->origen_firma) }}
                     <p>{{ $documento->origen_nombre }} <br> <small><strong>{{ $documento->origen_label}}</strong></small></p>
                     <img src="{{ asset($documento->origen_firma) }}" width="80%" alt="Firma Emisor">
+
                 </center>
             </div>
             <div class="col-md-4">

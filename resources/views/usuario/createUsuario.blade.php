@@ -63,9 +63,13 @@
                     <select name="id_area" id="id_area" class="form-control">
                         <option value="">-- SELECCIONE UNA OPCIÓN --</option>
                         @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->nombre }}</option>
+                            <option value="{{ $area->id }}"
+                                {{ old('id_area') == $area->id ? 'selected' : '' }}>
+                                {{ $area->nombre }}
+                            </option>
                         @endforeach
                     </select>
+
                     @error('id_area')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -75,9 +79,13 @@
                     <select name="nivel" id="nivel" class="form-control">
                         <option value="">-- SELECCIONE UNA OPCIÓN --</option>
                         @foreach($niveles as $nivel)
-                            <option value="{{ $nivel->id }}">{{ $nivel->nivel }}</option>
+                            <option value="{{ $nivel->id }}"
+                                {{ old('nivel') == $nivel->id ? 'selected' : '' }}>
+                                {{ $nivel->nivel }}
+                            </option>
                         @endforeach
                     </select>
+
                     @error('nivel')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

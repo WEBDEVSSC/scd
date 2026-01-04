@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,28 +21,33 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        // Ajuste para el campo de correo en la tabla users
+        Schema::defaultStringLength(191);
+
+
         // Menu para Administradores
-        Gate::define('isAdmin', function ($user) {
+        Gate::define('admin', function ($user) {
             return $user->role === 'admin';
         });
 
         // Menu para OPERARATIVO
-        Gate::define('isOperativo', function ($user) {
+        Gate::define('operativo', function ($user) {
             return $user->role === 'operativo';
         });
 
         // Menu de SUBDIRECTOR
-        Gate::define('isSubdirector', function ($user) {
+        Gate::define('subdirector', function ($user) {
             return $user->role === 'subdirector';
         });
 
         // Menu para JEFE DE DEPARTAMENTO
-        Gate::define('isJefeDepartamento', function ($user) {
+        Gate::define('jefeDepartamento', function ($user) {
             return $user->role === 'jefeDepartamento';
         });
 
         // Menu para TITULAR DE UNIDAD
-        Gate::define('isTitularUnidad', function ($user) {
+        Gate::define('titularUnidad', function ($user) {
             return $user->role === 'titularUnidad';
         });
     }
