@@ -1,0 +1,160 @@
+@extends('adminlte::page')
+
+@section('title', 'Cargar Documento')
+
+@section('content_header')
+    <h1>
+        <strong>Documentos Recibidos</strong>
+        <small class="text-muted">Respuesta</small>
+    </h1>
+@stop
+
+@section('content')
+
+<div class="row">
+
+    {{-- ======================= CARGA DE DOCUMENTO ======================= --}}
+    <div class="col-md-6">
+
+        <form action="{{ route('documentosRecibidosTurnadosRespuestaStore', $documento->id) }}" method="POST" enctype="multipart/form-data">
+
+            @csrf
+            @method('PUT')
+
+            <div class="card card-info card-outline">
+
+                <div class="card-header">
+                    <p class="mb-1"><strong>Folio:</strong> {{ $documento->folio }}</p>
+                    <p class="mb-1"><strong>Emisor:</strong> {{ $documento->emisor }}</p>
+                    <p class="mb-0"><strong>Asunto:</strong> {{ $documento->asunto }}</p>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <p><strong>Respuesta</strong></p>
+
+                            <textarea name="contenido" id="contenido" class="form-control" rows="10">{{ old('contenido') }}</textarea>
+                            
+                            @error('contenido')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="documento">Selecciona documento en PDF</label>
+                                <input type="file"
+                                    name="documento"
+                                    id="documento"
+                                    class="form-control-file"
+                                    accept="application/pdf"
+                                    required>
+
+                                @error('documento')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    
+
+                    
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger mt-2">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                </div>
+
+                <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-info">
+                        <i class="fa fa-check-circle"></i> Registrar respuesta
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    {{-- ======================= VISTA PREVIA ======================= --}}
+    <div class="col-md-6">
+
+        <div class="card card-secondary card-outline">
+
+            <div class="card-header">
+                <strong>Vista previa del documento</strong>
+            </div>
+
+            <div class="card-body p-0">
+
+                @if ($documento->documento)
+                    <iframe
+                        src="{{ route('verDocumento', $documento->id) }}"
+                        width="100%"
+                        height="600"
+                        style="border: none;">
+                    </iframe>
+                @else
+                    <div class="p-4 text-center text-muted">
+                        <i class="fa fa-file-pdf fa-3x mb-2"></i>
+                        <p>No hay documento cargado.</p>
+                    </div>
+                @endif
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@stop
+
+@section('footer')
+    @include('partials.footer')
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+@stop
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
+
+
+    <script>
+    $(document).ready(function() {
+
+        $('#contenido').summernote({
+            height: 200,
+            lang: 'es-ES',
+            toolbar: [
+                ['font', ['bold', 'italic', 'underline']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+
+    });
+    </script>
+
+    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+@stop
+

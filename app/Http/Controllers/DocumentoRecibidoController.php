@@ -31,12 +31,63 @@ class DocumentoRecibidoController extends Controller
        if($user->nivel == 3)
        {
             $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
+                ->where('status', 'NUEVO')    
                 ->orderBy('id','DESC')
                 ->get();
        }
 
         // Retornamos la vista con el objeto documentos
         return view('documento-recibido.documentosRecibidos', compact('documentos','user'));
+    }
+
+    public function documentosRecibidosTurnados()
+    {
+        // Capturamos los datos del usuario que inicio sesion
+        $user = Auth::user();
+
+       // Filtramos el index por nivel
+       if($user->nivel == 3)
+       {
+            $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
+                ->where('status', 'TURNADO A AREA')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+       elseif($user->nivel==4)
+       {
+            $documentos = DocumentoRecibido::where('turnado_area_id', $user->id_area)
+                ->where('status', 'TURNADO A AREA')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+
+        // Retornamos la vista con el objeto documentos
+        return view('documento-recibido.documentosTurnados', compact('documentos','user'));
+    }
+
+    public function documentosRecibidosAtendidos()
+    {
+        // Capturamos los datos del usuario que inicio sesion
+        $user = Auth::user();
+
+       // Filtramos el index por nivel
+       if($user->nivel == 3)
+       {
+            $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
+                ->where('status', 'ATENDIDO')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+       elseif($user->nivel==4)
+       {
+            $documentos = DocumentoRecibido::where('turnado_area_id', $user->id_area)
+                ->where('status', 'ATENDIDO')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+
+        // Retornamos la vista con el objeto documentos
+        return view('documento-recibido.documentosAtendidos', compact('documentos','user'));
     }
 
     public function documentosRecibidosCreate()
@@ -246,12 +297,6 @@ class DocumentoRecibidoController extends Controller
 
         $ruta = 'documentos/' . $documento->documento;
 
-        /*dd([
-            'ruta' => $ruta,
-            'existe' => Storage::disk('private')->exists($ruta),
-            'ruta_fisica' => storage_path('app/private/' . $ruta),
-        ]);*/
-
         // Verifica que exista
         if (!Storage::disk('private')->exists($ruta)) {
             abort(404, 'Documento no encontrado');
@@ -265,5 +310,76 @@ class DocumentoRecibidoController extends Controller
                 'Content-Disposition' => 'inline; filename="' . $documento->documento . '"'
             ]
         );
+    }
+
+    public function verDocumentoRespuesta($id)
+    {        
+        $documento = DocumentoRecibido::findOrFail($id);
+
+        $ruta = 'documentos-respuesta/' . $documento->turnado_area_respuesta_documento;
+
+        // Verifica que exista
+        if (!Storage::disk('private')->exists($ruta)) {
+            abort(404, 'Documento no encontrado');
+        }
+
+        // Mostrar PDF en el navegador
+        return response()->file(
+            storage_path('app/private/documentos-respuesta/' . $documento->turnado_area_respuesta_documento),
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $documento->turnado_area_respuesta_documento . '"'
+            ]
+        );
+    }
+
+    public function documentosRecibidosTurnadosRespuestaCreate($id)
+    {
+        // Consultamos el documento
+        $documento = DocumentoRecibido::findOrFail($id);
+        
+        // Regresamos la vista con el objeto
+        return view('documento-recibido.documentosRecibidosTurnadosRespuesta', compact('documento'));
+    }
+
+    public function documentosRecibidosTurnadosRespuestaStore(Request $request, $id)
+    {
+        // Validamos los datos
+        $request->validate([
+            'contenido' => 'required',
+            'documento' => 'required|file|mimes:pdf|max:10240'
+        ],[
+
+        ]);
+
+        // Buscamos el registro
+        $documento = DocumentoRecibido::findOrFail($id);
+
+        $documento->turnado_area_respuesta = $request->contenido;
+        $documento->turnado_area_respuesta_fecha = now();
+        $documento->status = "ATENDIDO";
+
+        // 📤 Guardar archivo en PRIVATE
+        if ($request->hasFile('documento')) {
+
+            $archivo = $request->file('documento');
+
+            // Fecha y hora actual
+            $fechaHora = Carbon::now()->format('Y-m-d_H-i-s');
+            
+            // Nombre seguro
+            $nombreArchivo = $fechaHora . '.' . $archivo->getClientOriginalExtension();
+
+            // Ruta privada
+            $ruta = $archivo->storeAs('documentos-respuesta',$nombreArchivo);
+
+            // Guardar ruta en BD
+            $documento->turnado_area_respuesta_documento = $nombreArchivo;
+
+        }
+
+        $documento->save();
+
+        return redirect()->route('documentosRecibidosShow',$id)->with('success', 'La respuesta se registro correctamente.');    
     }
 }

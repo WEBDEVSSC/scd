@@ -155,6 +155,14 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('admin/documentosRecibidos',[DocumentoRecibidoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
 
+  Route::get('admin/documentosRecibidosTurnados',[DocumentoRecibidoController::class, 'documentosRecibidosTurnados'])->name('documentosRecibidosTurnados');
+
+  Route::get('admin/documentosRecibidosTurnadosRespuestaCreate/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosTurnadosRespuestaCreate'])->name('documentosRecibidosTurnadosRespuestaCreate');
+
+  Route::put('admin/documentosRecibidosTurnadosRespuestaStore/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosTurnadosRespuestaStore'])->name('documentosRecibidosTurnadosRespuestaStore');
+
+  Route::get('admin/documentosRecibidosAtendidos',[DocumentoRecibidoController::class, 'documentosRecibidosAtendidos'])->name('documentosRecibidosAtendidos');
+
   Route::get('admin/documentosRecibidosCreate',[DocumentoRecibidoController::class, 'documentosRecibidosCreate'])->name('documentosRecibidosCreate');
 
   Route::post('admin/documentosRecibidosStore',[DocumentoRecibidoController::class, 'documentosRecibidosStore'])->name('documentosRecibidosStore');
@@ -170,6 +178,8 @@ Route::middleware(['auth'])->group(function ()
   Route::get('admin/documentosRecibidosShow/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosShow'])->name('documentosRecibidosShow');
 
   Route::get('documentos-recibidos/{id}/ver',[DocumentoRecibidoController::class, 'verDocumento'])->name('verDocumento');
+
+  Route::get('documentos-recibidos-respuesta/{id}/ver',[DocumentoRecibidoController::class, 'verDocumentoRespuesta'])->name('verDocumentoRespuesta');
 
 
   /*******************************************************************************************

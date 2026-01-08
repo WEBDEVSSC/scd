@@ -5,7 +5,7 @@
 @section('plugins.Sweetalert2', true)
 
 @section('content_header')
-<h1><strong>Documento</strong><small> Detalles</small></h1>
+<h1><strong>Documentos Recibidos</strong><small> Detalles</small></h1>
 @stop
 
 @section('content')
@@ -27,25 +27,16 @@
 
 <!-- ---------------------------------------------------------------- -->
 
-<div class="card card-info card-outline">
-    <div class="card-title">
+<div class="row">
+    <div class="col-md-6">
 
-        <div class="card-header d-flex justify-content-end">
-            <a href="{{ route('indexDocumento') }}" class="btn btn-info ml-2">
-                <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
-            </a>
-            {{-- <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
-                <i class="fa fa-file" aria-hidden="true"></i> PDF
-            </a> 
-            <a href="{{ route('pdfDocumento',$documento->id) }}" class="btn btn-info ml-2" target="_blank">
-                <i class="fa fa-file" aria-hidden="true"></i> TURNAR
-            </a>--}}
-        </div>
+        <div class="card card-info card-outline">
+            <div class="card-header">
+                <strong>DATOS GENERALES</strong>
+            </div>
 
-    </div>
-    <div class="card-body">
-
-        <div class="row">
+            <div class="card-body">
+                <div class="row">
             <div class="col-md-2">
                 <p><strong>STATUS</strong></p>
                 <p>{{ $documento->status }}</p>
@@ -60,15 +51,15 @@
             </div>
             <div class="col-md-2">
                 <p><strong>FECHA DEL DOCUMENTO</strong></p>
-                <p>{{ $documento->fecha_documento }}</p>
+                <p>{{ \Carbon\Carbon::parse($documento->fecha_documento)->format('d-m-Y') }}</p>
             </div>
             <div class="col-md-2">
                 <p><strong>FECHA DEL RECEPCIÓN</strong></p>
-                <p>{{ $documento->fecha_recepcion }}</p>
+                <p>{{ \Carbon\Carbon::parse($documento->fecha_recepcion)->format('d-m-Y') }}</p>
             </div>
             <div class="col-md-2">
                 <p><strong>FECHA LÍMITE</strong></p>
-                <p>{{ $documento->fecha_limite }}</p>
+                <p>{{ \Carbon\Carbon::parse($documento->fecha_limite)->format('d-m-Y') }}</p>
             </div>
             
             
@@ -77,44 +68,20 @@
         <!-- ------------------------------------------------- -->
 
         <div class="row mt-3">
-            <div class="col-md-4">
-                <p><strong>TURNADO A</strong></p>
-                <p>{{ $documento->turnado_area_label }} - {{ $documento->turnado_area_encargado }}</p>
-            </div>
-            <div class="col-md-2">
-                <p><strong>FECHA</strong></p>
-                <p>{{ $documento->turnado_area_fecha }}</p>
-            </div>
-        </div>
-
-        <!-- ------------------------------------------------- -->
-
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <p><strong>OBSERVACIONES</strong></p>
-                <p>{!! $documento->turnado_area_observaciones !!}</p>
-            </div>
-        </div>
-
-        <!-- ------------------------------------------------- -->
-
-        
-        
-        <!-- ------------------------------------------------- -->
-
-        <div class="row mt-3">
-            <div class="col-md-3">
+            <div class="col-md-12">
                 <p><strong>ASUNTO</strong></p>
                 <p>{{ $documento->asunto }}</p>
             </div>
-            <div class="col-md-3">
+        </div>
+
+        <!-- ------------------------------------------------- -->
+
+        <div class="row mt-3">
+            <div class="col-md-12">
                 <p><strong>ANEXOS</strong></p>
                 <p>{{ $documento->anexo }} - {{ $documento->anexo_descripcion }}</p>
             </div>
         </div>
-
-
-        <!-- ------------------------------------------------- -->
 
         <div class="row mt-3">
             <div class="col-md-12">
@@ -123,37 +90,136 @@
             </div>
         </div>
 
-        <!-- ------------------------------------------------- -->
-
         <div class="row mt-3">
-            <div class="col-md-12">
-                @if ($documento->documento)
-                    <iframe
-                        src="{{ route('verDocumento', $documento->id) }}"
-                        width="100%"
-                        height="600"
-                        style="border: none;">
-                    </iframe>
-                @else
-                    <div class="p-4 text-center text-muted">
-                        <i class="fa fa-file-pdf fa-3x mb-2"></i>
-                        <p>No hay documento cargado.</p>
+                        <div class="col-md-12">
+                            <p><strong>DOCUMENTO ESCANEADO</strong></p>
+
+                                <a href="#"
+                                    class="btn btn-info btn-sm"
+                                    data-toggle="modal"
+                                    data-target="#modalDocumento">
+                                    VER DOCUMENTO
+                                </a>
+                        </div>
                     </div>
-                @endif
+
+            </div>
+
+            <div class="card-footer">
+
+            </div>
+        </div>        
+
+    </div>
+
+    <div class="col-md-6">
+        <div class="card-md-6">
+            <div class="card card-secondary card-outline">
+            
+                <div class="card-header"><strong>ÁREA TURNADA</strong></div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>TURNADO A</strong></p>
+                            <p>{{ $documento->turnado_area_label }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>FECHA</strong></p>
+                            <p>{{ \Carbon\Carbon::parse($documento->turnado_area_fecha)->format('d-m-Y') }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>RESPUESTA</strong></p> 
+                            <p>{{ \Carbon\Carbon::parse($documento->turnado_area_respuesta_fecha)->format('d-m-Y') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <p><strong>OBSERVACIONES</strong></p>
+                            <p>{!! $documento->turnado_area_observaciones !!}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <p><strong>RESPUESTA</strong></p>
+                            <p>{!! $documento->turnado_area_respuesta !!}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <p><strong>DOCUMENTO DE RESPALDO</strong></p>
+
+                                <a href="#"
+                                    class="btn btn-info btn-sm"
+                                    data-toggle="modal"
+                                    data-target="#modalDocumentoRespuesta">
+                                    VER DOCUMENTO
+                                </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer"></div>
+                
             </div>
         </div>
-
-        <!-- ------------------------------------------------- -->
-        
     </div>
-    <div class="card-footer">
 
+</div>
 
+<!-- ---------------------------------------------------------------- -->
 
-       
-        
+<div class="modal fade" id="modalDocumento" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Documento PDF</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-0">
+                <iframe
+                    src="{{ route('verDocumento', $documento->id) }}"
+                    width="100%"
+                    height="800px"
+                    style="border:none;">
+                </iframe>
+            </div>
+
+        </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalDocumentoRespuesta" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Documento PDF</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-0">
+                <iframe
+                    src="{{ route('verDocumentoRespuesta', $documento->id) }}"
+                    width="100%"
+                    height="800px"
+                    style="border:none;">
+                </iframe>
+            </div>
+
+        </div>
+    </div>
+</div>
+
     
 @stop
 

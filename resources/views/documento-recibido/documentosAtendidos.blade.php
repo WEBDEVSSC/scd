@@ -7,7 +7,7 @@
 @section('content_header')
 <h1>
     <strong>Documentos Recibidos</strong>
-    <small class="text-muted">Nuevos</small>
+    <small class="text-muted">Atendidos</small>
 </h1>
 @stop
 
@@ -57,18 +57,6 @@
                         <td>{{ $documento->turnado_area_label }}</td>                        
                         <td>
                             <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
-                            
-                            @if($documento->documento)
-                                {{-- sí hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
-                            @else
-                                {{-- no hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
-                            @endif
-
-                            
-
-                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file-export"></i></a>
                         </td> 
                     </tr>
                 @endforeach

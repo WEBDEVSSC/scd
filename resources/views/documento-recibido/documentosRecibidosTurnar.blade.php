@@ -14,7 +14,18 @@
     <div class="card card-info card-outline">
 
         <div class="card-header">
-            {{$documento->folio}}
+            <p><strong>Folio :</strong>{{$documento->folio}}</p>
+            <p><strong>Fecha :</strong>{{$documento->fecha_documento}}</p>
+            <p><strong>Emisor :</strong>{{$documento->emisor}}</p>
+            <p><strong>Asunto :</strong>{{$documento->asunto}}</p>
+
+            @if (is_null($documento->documento))
+                <p class="text-white bg-danger p-2">
+    <strong><u>El registro no tiene el documento escaneado en formato PDF</u></strong>
+</p>
+            @else
+
+            @endif
         </div>
 
         <div class="card-body">
@@ -98,31 +109,26 @@
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#contenido').summernote();
-    });
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
 
-<script>
-$(document).ready(function() {
-    // Inicialización básica de Summernote para los campos
-    $('#descripcion').summernote({
-        height: 200, // Altura del editor
-        lang: 'es-ES', // Idioma español
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture']],
-            ['view', ['fullscreen', 'codeview', 'help']]
-        ]
+
+    <script>
+    $(document).ready(function() {
+
+        $('#contenido').summernote({
+            height: 200,
+            lang: 'es-ES',
+            toolbar: [
+                ['font', ['bold', 'italic', 'underline']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']]
+            ]
+        });
+
     });
-});
-</script>
+    </script>
 
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
 @stop

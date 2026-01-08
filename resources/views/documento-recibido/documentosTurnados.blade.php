@@ -7,7 +7,7 @@
 @section('content_header')
 <h1>
     <strong>Documentos Recibidos</strong>
-    <small class="text-muted">Nuevos</small>
+    <small class="text-muted">Turnados a Área</small>
 </h1>
 @stop
 
@@ -58,17 +58,23 @@
                         <td>
                             <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
                             
-                            @if($documento->documento)
-                                {{-- sí hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
-                            @else
-                                {{-- no hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                            {{-- Mostramos este boton solo si tiene el nivel de subdireccion --}}
+                            @if (auth()->user()->nivel == 3)
+
+                                @if($documento->documento)
+                                    {{-- sí hay documento --}}
+                                    <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                                @else
+                                    {{-- no hay documento --}}
+                                    <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                                @endif
+
                             @endif
 
-                            
+                            {{-- Si es nivel Jefe de Departamento le mostramos el boton de respuesta --}}
 
-                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file-export"></i></a>
+                            <a href="{{ route('documentosRecibidosTurnadosRespuestaCreate', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file-circle-plus"></i></a>
+                            
                         </td> 
                     </tr>
                 @endforeach

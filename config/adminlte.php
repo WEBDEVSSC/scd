@@ -327,7 +327,7 @@ return [
         | Menu JEFE DE DEPARTAMENTO
         |--------------------------------------------------------------------------
         */
-
+        /*
         [
             'text' => 'Número de Folio',
             'url' => 'admin/createDocumento',
@@ -351,6 +351,24 @@ return [
             'url' => 'admin/pendientesFirmarDocumento',
             'icon' => 'fa-solid fa-file-pen',
             'can' => 'jefeDepartamento', 
+        ],*/
+
+        [
+            'text' => 'Documentos Recibidos',
+            'icon' => 'fa-solid fa-file-circle-check',
+            'can'  => 'jefeDepartamento',
+            'submenu' => [
+                [
+                    'text' => 'Documentos Turnados',
+                    'url'  => 'admin/documentosRecibidosTurnados',
+                    'icon' => 'fa-solid fa-box-archive',
+                ],
+                [
+                    'text' => 'Documentos Atendidos',
+                    'url'  => 'admin/documentosRecibidosAtendidos',
+                    'icon' => 'fa-solid fa-box-archive',
+                ],
+            ],
         ],
 
         /*
@@ -422,29 +440,33 @@ return [
         | Menu SUBDIRECTORES
         |--------------------------------------------------------------------------
         */
-        /*[
-            'text' => 'Nuevo registro',
-            'url' => 'admin/createDocumento',
-            'icon' => 'fa fa-check-circle',
-            'can' => 'subdirector', 
-        ],
-        [
-            'text' => 'Panel de Control',
-            'url' => 'admin/indexDocumento',
-            'icon' => 'fa fa-list-ul',
-            'can' => 'subdirector',
-        ],
-        [
-            'text' => 'Esperando firma',
-            'url' => 'admin/pendientesFirmarDocumento',
-            'icon' => 'fa-solid fa-file-pen',
-            'can' => 'subdirector', 
-        ],*/
+
         [
             'text' => 'Documentos Recibidos',
-            'url' => 'admin/documentosRecibidos',
             'icon' => 'fa-solid fa-file-circle-check',
-            'can' => 'subdirector', 
+            'can'  => 'subdirector',
+            'submenu' => [
+                [
+                    'text' => 'Nuevo registro',
+                    'url'  => 'admin/documentosRecibidosCreate',
+                    'icon' => 'fa-solid fa-list',
+                ],
+                [
+                    'text' => 'Documentos Nuevos',
+                    'url'  => 'admin/documentosRecibidos',
+                    'icon' => 'fa-solid fa-file-circle-plus',
+                ],
+                [
+                    'text' => 'Documentos Turnados',
+                    'url'  => 'admin/documentosRecibidosTurnados',
+                    'icon' => 'fa-solid fa-box-archive',
+                ],
+                [
+                    'text' => 'Documentos Atendidos',
+                    'url'  => 'admin/documentosRecibidosAtendidos',
+                    'icon' => 'fa-solid fa-box-archive',
+                ],
+            ],
         ],
     ],
 
