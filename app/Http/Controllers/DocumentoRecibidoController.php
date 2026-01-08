@@ -100,7 +100,6 @@ class DocumentoRecibidoController extends Controller
 
     public function documentosRecibidosStore(Request $request)
     {        
-
         $request->validate([
             'emisor' => 'required',
             'tipo' => 'required',
@@ -117,23 +116,42 @@ class DocumentoRecibidoController extends Controller
             
             
         ],[
+            // Emisor
             'emisor.required' => 'El campo emisor es obligatorio.',
 
+            // Tipo
             'tipo.required' => 'Debe seleccionar un tipo de documento.',
 
+            // Folio
+            'folio.required' => 'El folio del documento es obligatorio.',
+
+            // Fecha del documento
+            'fecha_documento.required' => 'La fecha del documento es obligatoria.',
+            'fecha_documento.date'     => 'La fecha del documento no tiene un formato válido.',
+
+            // Fecha de recepción
+            'fecha_recepcion.required'       => 'La fecha de recepción es obligatoria.',
+            'fecha_recepcion.date'           => 'La fecha de recepción no tiene un formato válido.',
+            'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser menor a la fecha del documento.',
+
+            // Fecha límite
+            'fecha_limite.required'       => 'La fecha límite es obligatoria.',
+            'fecha_limite.date'           => 'La fecha límite no tiene un formato válido.',
+            'fecha_limite.after_or_equal' => 'La fecha límite no puede ser menor a la fecha del documento.',
+
+            // Asunto
             'asunto.required' => 'El asunto del documento es obligatorio.',
 
+            // Anexo
             'anexo.required' => 'Debe indicar si el documento contiene anexo.',
-            'anexo.in'       => 'El valor del campo anexo no es válido.',
+            'anexo.in'       => 'El valor seleccionado para el campo anexo no es válido.',
 
-            'anexo_descripcion.required_if' => 'Debe especificar la descripción del anexo cuando selecciona que el documento contiene anexo.',
+            // Descripción del anexo
+            'anexo_descripcion.required_if' =>
+                'Debe especificar la descripción del anexo cuando indica que el documento contiene anexo.',
 
-            'fecha_documento.required' => 'La fecha del documento es obligatoria',
-            'fecha_documento.date' => 'La fecha del documento no es válida',
-
-            'fecha_recepcion.required' => 'La fecha y hora de recepción es obligatoria',
-            'fecha_recepcion.date' => 'La fecha y hora de recepción no es válida',
-            'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser menor a la fecha del documento',
+            // Contenido
+            'contenido.required' => 'El contenido u observaciones del documento es obligatorio.',
         ]);
 
         // Consultamos los valores con sus id
@@ -381,5 +399,101 @@ class DocumentoRecibidoController extends Controller
         $documento->save();
 
         return redirect()->route('documentosRecibidosShow',$id)->with('success', 'La respuesta se registro correctamente.');    
+    }
+
+    public function documentosRecibidosEdit($id)
+    {   
+        // Cargamos el documento
+        $documento = DocumentoRecibido::findOrFail($id);
+
+        // Cargamos todas las Areas
+        $areas = Area::all();
+
+        // Regresamos la vista con el objeto
+        return view('documento-recibido.documentosRecibidosEdit', compact('documento','areas'));
+    }
+
+    public function documentosRecibidosUpdate(Request $request, $id)
+    {
+        // Vlaidamos los datos
+        $request->validate([
+            'emisor' => 'required',
+            'tipo' => 'required',
+            'folio' => 'required',
+            'fecha_documento' => 'required|date',
+
+            'fecha_recepcion' => 'required|date|after_or_equal:fecha_documento',
+            'fecha_limite' => 'required|date|after_or_equal:fecha_documento',
+            'asunto' => 'required',
+            
+            'anexo' => 'required|in:SI,NO',
+            'anexo_descripcion' => 'required_if:anexo,SI',
+            'contenido' => 'required',
+            
+            
+        ],[
+            // Emisor
+            'emisor.required' => 'El campo emisor es obligatorio.',
+
+            // Tipo
+            'tipo.required' => 'Debe seleccionar un tipo de documento.',
+
+            // Folio
+            'folio.required' => 'El folio del documento es obligatorio.',
+
+            // Fecha del documento
+            'fecha_documento.required' => 'La fecha del documento es obligatoria.',
+            'fecha_documento.date'     => 'La fecha del documento no tiene un formato válido.',
+
+            // Fecha de recepción
+            'fecha_recepcion.required'       => 'La fecha de recepción es obligatoria.',
+            'fecha_recepcion.date'           => 'La fecha de recepción no tiene un formato válido.',
+            'fecha_recepcion.after_or_equal' => 'La fecha de recepción no puede ser menor a la fecha del documento.',
+
+            // Fecha límite
+            'fecha_limite.required'       => 'La fecha límite es obligatoria.',
+            'fecha_limite.date'           => 'La fecha límite no tiene un formato válido.',
+            'fecha_limite.after_or_equal' => 'La fecha límite no puede ser menor a la fecha del documento.',
+
+            // Asunto
+            'asunto.required' => 'El asunto del documento es obligatorio.',
+
+            // Anexo
+            'anexo.required' => 'Debe indicar si el documento contiene anexo.',
+            'anexo.in'       => 'El valor seleccionado para el campo anexo no es válido.',
+
+            // Descripción del anexo
+            'anexo_descripcion.required_if' =>
+                'Debe especificar la descripción del anexo cuando indica que el documento contiene anexo.',
+
+            // Contenido
+            'contenido.required' => 'El contenido u observaciones del documento es obligatorio.',
+        ]);
+
+        // Buscamos el emisor
+        $emisor = Area::findOrFail($request->emisor);
+
+        // Buscamos el documento
+        $documento = DocumentoRecibido::findOrFail($id);
+
+        // Asignamos los valores
+        $documento->emisor_id = $request->emisor;
+        $documento->emisor = $emisor->nombre;
+        $documento->tipo = $request->tipo;
+        $documento->folio = $request->folio;
+        $documento->fecha_documento = $request->fecha_documento;
+        $documento->fecha_recepcion = $request->fecha_recepcion;
+        $documento->fecha_limite = $request->fecha_limite;
+        $documento->asunto = $request->asunto;
+        $documento->anexo = $request->anexo;
+        $documento->anexo_descripcion = $request->anexo_descripcion;
+        $documento->contenido = $request->contenido;
+
+        // Guardamos el registro
+        $documento->save();
+
+        // Redireccionamos a la vista de show del documento
+        return redirect()->route('documentosRecibidosShow',$id)->with('success', 'El documento se edito correctamente.');  
+
     }
 }

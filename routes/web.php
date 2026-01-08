@@ -177,6 +177,10 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('admin/documentosRecibidosShow/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosShow'])->name('documentosRecibidosShow');
 
+  Route::get('admin/documentosRecibidosEdit/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosEdit'])->name('documentosRecibidosEdit');
+
+  Route::put('admin/documentosRecibidosUpdate/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosUpdate'])->name('documentosRecibidosUpdate');
+
   Route::get('documentos-recibidos/{id}/ver',[DocumentoRecibidoController::class, 'verDocumento'])->name('verDocumento');
 
   Route::get('documentos-recibidos-respuesta/{id}/ver',[DocumentoRecibidoController::class, 'verDocumentoRespuesta'])->name('verDocumentoRespuesta');

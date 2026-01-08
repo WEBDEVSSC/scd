@@ -94,12 +94,20 @@
                         <div class="col-md-12">
                             <p><strong>DOCUMENTO ESCANEADO</strong></p>
 
+                            @if (is_null($documento->documento))
+                                <p class="text-white bg-danger p-2">
+                                    <strong><u>El registro no tiene el documento escaneado en formato PDF</u></strong>
+                                </p>
+                            @else
                                 <a href="#"
                                     class="btn btn-info btn-sm"
                                     data-toggle="modal"
                                     data-target="#modalDocumento">
                                     VER DOCUMENTO
                                 </a>
+                            @endif   
+                            
+                            
                         </div>
                     </div>
 
@@ -152,12 +160,20 @@
                         <div class="col-md-12">
                             <p><strong>DOCUMENTO DE RESPALDO</strong></p>
 
+                            @if (is_null($documento->turnado_area_respuesta_documento))
+                                <p class="text-white bg-danger p-2">
+                                    <strong><u>El registro no tiene el documento escaneado en formato PDF</u></strong>
+                                </p>
+                            @else
+
                                 <a href="#"
                                     class="btn btn-info btn-sm"
                                     data-toggle="modal"
                                     data-target="#modalDocumentoRespuesta">
                                     VER DOCUMENTO
                                 </a>
+                            
+                            @endif
                         </div>
                     </div>
 

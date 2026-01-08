@@ -21,8 +21,8 @@
 
             @if (is_null($documento->documento))
                 <p class="text-white bg-danger p-2">
-    <strong><u>El registro no tiene el documento escaneado en formato PDF</u></strong>
-</p>
+                    <strong><u>El registro no tiene el documento escaneado en formato PDF</u></strong>
+                </p>
             @else
 
             @endif

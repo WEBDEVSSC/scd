@@ -56,7 +56,12 @@
                         <td>{{ $documento->asunto }}</td>                        
                         <td>{{ $documento->turnado_area_label }}</td>                        
                         <td>
+                            
+                            {{-- VER DETALLES--}}
                             <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
+
+                            {{-- EDITAR REGISTRO--}}
+                            <a href="{{ route('documentosRecibidosEdit', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                             
                             @if($documento->documento)
                                 {{-- sí hay documento --}}

@@ -11,8 +11,10 @@
 
 @section('content')
 
-<form action="{{ route('documentosRecibidosStore') }}" method="POST">
+<form action="{{ route('documentosRecibidosUpdate', $documento->id) }}" method="POST">
     @csrf
+
+    @method('PUT')
 
     <div class="card card-info card-outline">
         <div class="card-body">
@@ -24,7 +26,7 @@
                         <select name="emisor" class="form-control">
                             <option value="">-- Selecciona una opción --</option>
                             @foreach($areas as $area)
-                                <option value="{{ $area->id }}" {{ old('para') == $area->id ? 'selected' : '' }}>
+                                <option value="{{ $area->id }}" {{ old('para',$documento->emisor_id) == $area->id ? 'selected' : '' }}>
                                     {{ $area->nombre }}
                                 </option>
                             @endforeach
@@ -39,11 +41,11 @@
                         <p><strong>Tipo</strong></p>
                         <select name="tipo" id="tipo" class="form-control">
                             <option value="">-- Selecciona una opción --</option>
-                            <option value="OF" {{ old('tipo') == 'OF' ? 'selected' : '' }}>OFICIO</option>
-                            <option value="MEM" {{ old('tipo') == 'MEM' ? 'selected' : '' }}>MEMORANDUM</option>
-                            <option value="TI" {{ old('tipo') == 'TI' ? 'selected' : '' }}>TARJETA INFORMATIVA</option>
-                            <option value="CIR" {{ old('tipo') == 'CIR' ? 'selected' : '' }}>CIRCULAR</option>
-                            <option value="EM" {{ old('tipo') == 'EM' ? 'selected' : '' }}>E-MAIL</option>
+                            <option value="OF" {{ old('tipo',$documento->tipo) == 'OF' ? 'selected' : '' }}>OFICIO</option>
+                            <option value="MEM" {{ old('tipo',$documento->tipo) == 'MEM' ? 'selected' : '' }}>MEMORANDUM</option>
+                            <option value="TI" {{ old('tipo',$documento->tipo) == 'TI' ? 'selected' : '' }}>TARJETA INFORMATIVA</option>
+                            <option value="CIR" {{ old('tipo',$documento->tipo) == 'CIR' ? 'selected' : '' }}>CIRCULAR</option>
+                            <option value="EM" {{ old('tipo',$documento->tipo) == 'EM' ? 'selected' : '' }}>E-MAIL</option>
                         </select>
 
                         @error('tipo')
@@ -53,7 +55,7 @@
 
                     <div class="col-md-3">
                         <p><strong>Folio</strong></p>
-                        <input type="text" name="folio" class="form-control" value="{{ old('folio') }}">
+                        <input type="text" name="folio" class="form-control" value="{{ old('folio',$documento->folio) }}">
                     
                         @error('folio')
                             <small class="text-danger">{{ $message }}</small>
@@ -62,7 +64,7 @@
 
                     <div class="col-md-3">
                         <p><strong>Fecha del documento</strong></p>
-                        <input type="date" name="fecha_documento" class="form-control" value="{{ old('fecha_documento') }}">
+                        <input type="date" name="fecha_documento" class="form-control" value="{{ old('fecha_documento',$documento->fecha_documento) }}">
                     
                         @error('fecha_documento')
                             <small class="text-danger">{{ $message }}</small>
@@ -77,7 +79,7 @@
 
                     <div class="col-md-3">
                         <p><strong>Fecha y hora de recepción</strong></p>
-                        <input type="datetime-local" name="fecha_recepcion" class="form-control" value="{{ old('fecha_recepcion') }}">
+                        <input type="datetime-local" name="fecha_recepcion" class="form-control" value="{{ old('fecha_recepcion',$documento->fecha_recepcion) }}">
                     
                         @error('fecha_recepcion')
                             <small class="text-danger">{{ $message }}</small>
@@ -86,7 +88,7 @@
 
                     <div class="col-md-3">
                         <p><strong>Fecha límite de respuesta</strong></p>
-                        <input type="date" name="fecha_limite" class="form-control" value="{{ old('fecha_limite') }}">
+                        <input type="date" name="fecha_limite" class="form-control" value="{{ old('fecha_limite',$documento->fecha_limite) }}">
                     
                         @error('fecha_limite')
                             <small class="text-danger">{{ $message }}</small>
@@ -95,7 +97,7 @@
 
                     <div class="col-md-6">
                         <p><strong>Asunto</strong></p>
-                        <input type="text" name="asunto" class="form-control" value="{{ old('asunto') }}">
+                        <input type="text" name="asunto" class="form-control" value="{{ old('asunto',$documento->asunto) }}">
 
                         @error('asunto')
                             <small class="text-danger">{{ $message }}</small>
@@ -111,8 +113,8 @@
                         <p><strong>Incluye anexo</strong></p>
                         <select name="anexo" id="anexo" class="form-control">
                             <option value="">-- Seleccione una opción --</option>
-                            <option value="SI" {{ old('anexo') == 'SI' ? 'selected' : '' }}>SI</option>
-                            <option value="NO" {{ old('anexo') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('anexo',$documento->anexo) == 'SI' ? 'selected' : '' }}>SI</option>
+                            <option value="NO" {{ old('anexo',$documento->anexo) == 'NO' ? 'selected' : '' }}>NO</option>
                         </select>
 
                         @error('anexo')
@@ -121,7 +123,7 @@
                     </div>
                     <div class="col-md-9">
                         <p><strong>Descripción del anexo</strong></p>
-                        <input type="text" name="anexo_descripcion" class="form-control" value="{{ old('anexo_descripcion') }}">
+                        <input type="text" name="anexo_descripcion" class="form-control" value="{{ old('anexo_descripcion',$documento->anexo_descripcion) }}">
                     
                         @error('anexo_descripcion')
                             <small class="text-danger">{{ $message }}</small>
@@ -146,7 +148,7 @@
                     <div class="col-md-12">
                         <p><strong>Observaciones</strong></p>
 
-                        <textarea name="contenido" id="contenido" class="form-control" rows="10">{{ old('contenido') }}</textarea>
+                        <textarea name="contenido" id="contenido" class="form-control" rows="10">{{ old('contenido',$documento->contenido) }}</textarea>
                         
                         @error('contenido')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -163,7 +165,7 @@
 
             <div class="card-footer">
 
-                <button type="submit" class="btn btn-info float-right"><i class="fa fa-check-circle" aria-hidden="true"></i> REGISTRAR DOCUMENTO</button>   
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-check-circle" aria-hidden="true"></i> ACTUALIZAR DOCUMENTO</button>   
 
             </div>
 

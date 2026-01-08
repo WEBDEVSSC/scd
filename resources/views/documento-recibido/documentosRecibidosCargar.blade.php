@@ -61,7 +61,7 @@
 
                 <div class="card-footer text-right">
                     <button type="submit" class="btn btn-info">
-                        <i class="fa fa-check-circle"></i> Registrar documento
+                        <i class="fa fa-check-circle"></i> REGISTRAR DOCUMENTO
                     </button>
                 </div>
 
