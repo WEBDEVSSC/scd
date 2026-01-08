@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DocumentoRecibidoTurnado;
 
 class DocumentoRecibidoController extends Controller
 {
@@ -220,7 +222,9 @@ class DocumentoRecibidoController extends Controller
             'departamento_id' => 'required',
             'contenido' => 'required',
         ],[
+            'departamento_id.required' => 'Debe seleccionar un departamento al cual turnar el documento.',
 
+            'contenido.required' => 'El campo observaciones es obligatorio.',
         ]);
 
         // Consultamos el departamento
@@ -244,6 +248,13 @@ class DocumentoRecibidoController extends Controller
             $documento->turnado_area_observaciones = $request->contenido;
 
             $documento->save();
+
+            // Avisar por correo electronico la notificacion
+            /* 📧 ENVÍO DE CORREO */
+            if ($departamento->correo) 
+                {
+                Mail::to($departamento->correo)->send(new DocumentoRecibidoTurnado($documento));
+            }
                 
         }
         else
