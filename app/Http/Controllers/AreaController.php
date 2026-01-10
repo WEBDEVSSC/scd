@@ -44,7 +44,7 @@ class AreaController extends Controller
             'correo' => 'required|email|unique:areas,correo', // Validación del correo
             'extension' => 'required|string',
             'tipo' => 'required|integer',
-            'firma' => 'required|image|mimes:jpeg,png,jpg|max:2048', 
+            'firma' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ], [
             'nombre.required' => 'El campo nombre es obligatorio',
             'responsable.required' => 'El campo responsable es obligatorio',
