@@ -6,6 +6,7 @@ use App\Http\Controllers\DocumentoRecibidoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*******************************************************************************************
  * 
@@ -14,10 +15,6 @@ use Illuminate\Support\Facades\Route;
  * 
  * 
  ******************************************************************************************/
-
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -36,6 +33,15 @@ Route::get('/', function () {
     'reset' => false, // Desactiva la recuperación de contraseña
     'verify' => false,   // Desactiva la verificación de email
 ]);
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/login');
+})->name('logout');
 
 /*******************************************************************************************
  * 
