@@ -44,7 +44,6 @@ class AreaController extends Controller
             'correo' => 'required|email|unique:areas,correo', // Validación del correo
             'extension' => 'required|string',
             'tipo' => 'required|integer',
-            'firma' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ], [
             'nombre.required' => 'El campo nombre es obligatorio',
             'responsable.required' => 'El campo responsable es obligatorio',
@@ -54,24 +53,7 @@ class AreaController extends Controller
             'correo.unique' => 'El correo electrónico ya está registrado en otra área', // Mensaje adicional
             'extension.required' => 'El campo extensión es obligatorio',
             'tipo.required' => 'El campo tipo es obligatorio',
-            'firma.required'=>'El campo es requerido',
-            'firma.mimes'=>'El formato soportado es JPG, PG ,JPEG',
-            'firma.max'=>'El tamaño maximo es de 2 MB',
         ]);
-
-        // Verificar si el campo firma tiene un archivo
-        if ($request->hasFile('firma')) {
-            // Obtener el archivo de la firma
-            $image = $request->file('firma');
-
-            // Generar un nombre único para la imagen (basado en el tiempo actual)
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-
-            // Almacenar la imagen en la carpeta 'public/images' (esto la mueve a storage/app/public/images)
-            $imagePath = $image->storeAs('images/areas', $imageName, 'public');
-
-            $imagePath = $image->storeAs('images/usuarios', $imageName, 'public');
-        }
 
         // Crear una nueva instancia del modelo Area
         $area = new Area();
@@ -83,7 +65,6 @@ class AreaController extends Controller
         $area->correo = $request->correo; // Cambiado a $request->correo
         $area->extension = $request->extension;
         $area->tipo = $request->tipo;
-        $area->firma = 'storage/' . $imagePath;
 
         // Guardar el modelo en la base de datos
         $area->save();
@@ -147,7 +128,6 @@ class AreaController extends Controller
             'correo' => ['required','email',Rule::unique('areas', 'correo')->ignore($id),],
             'extension' => 'required|string',
             'tipo' => 'required|integer',
-            'firma' => 'image|mimes:jpeg,png,jpg|max:2048', 
         ], [
             'nombre.required' => 'El campo nombre es obligatorio',
             'responsable.required' => 'El campo responsable es obligatorio',
@@ -155,9 +135,7 @@ class AreaController extends Controller
             'correo.required' => 'El campo correo es obligatorio',
             'correo.email' => 'El formato del correo electrónico es inválido', 
             'correo.unique' => 'El correo electrónico ya está registrado en otra área', 
-            'tipo.required' => 'El campo tipo es obligatorio',
-            'firma.mimes'=>'El formato soportado es JPG, PG ,JPEG',
-            'firma.max'=>'El tamaño maximo es de 2 MB',
+            'tipo.required' => 'El campo tipo es obligatorio',            
         ]);
 
         
@@ -171,13 +149,6 @@ class AreaController extends Controller
         $area->correo = $validatedData['correo'];
         $area->extension = $validatedData['extension'];
         $area->tipo = $validatedData['tipo'];
-
-        // Verificar si se cargó una nueva firma
-        if ($request->hasFile('firma')) {
-            // Guardar el archivo y obtener la ruta
-            $firmaPath = $request->file('firma')->store('firmas', 'public');
-            $area->firma = $firmaPath;
-        }
 
         // Guardar los cambios en la base de datos
         $area->save();

@@ -33,18 +33,6 @@
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-md-6">
-                    <p><strong>Firma</strong></p>
-                    <input type="file" name="firma" id="firma" class="form-control-file">
-                    @error('firma')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-            </div>
-    
-            <!-- ---------------------------------------------------------------------- -->
-    
-            <div class="row mt-3">
                 <div class="col-md-3">
                     <p><strong>Siglas</strong></p>
                     <input type="text" name="siglas" class="form-control" value="{{ old('siglas') }}">
@@ -52,6 +40,12 @@
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
                 </div>
+            </div>
+    
+            <!-- ---------------------------------------------------------------------- -->
+    
+            <div class="row mt-3">
+                
                 <div class="col-md-3">
                     <p><strong>E-mail</strong></p>
                     <input type="email" name="correo" class="form-control" value="{{ old('correo') }}">
