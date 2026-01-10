@@ -15,9 +15,6 @@
             <a href="{{ route('indexArea') }}" class="btn btn-info ml-2">
                 <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
             </a>
-            <a href="{{ route('showArea',$area->id) }}" class="btn btn-info ml-2">
-                <i class="fa-solid fa-sliders" aria-hidden="true"></i> DETALLES
-            </a>
         </div>
 
     </div>
@@ -95,15 +92,7 @@
 
             </div>
     
-            <!-- ---------------------------------------------------------------------- -->   
-
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <p><strong>Firma actual</strong></p>
-                    <td><img src="{{ asset($area->firma) }}" width="300px"></td>
-                    {{$area->firma}}
-                </div>
-            </div>
+            <!-- ---------------------------------------------------------------------- -->  
       
 
         <!-- ----------------------------------------------------------------- -->

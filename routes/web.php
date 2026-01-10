@@ -79,6 +79,9 @@ Route::middleware(['auth'])->group(function ()
   // Ruta para eliminar los datos
   Route::get('admin/deleteArea/{id}',[AreaController::class,'delete'])->name('deleteArea');
 
+  // Ruta para mostrar mis Areas
+  Route::get('admin/configuracion/misAreas',[AreaController::class,'misAreas'])->name('misAreas');
+
   /*******************************************************************************************
    * 
    * 

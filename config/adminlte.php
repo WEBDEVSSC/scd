@@ -468,6 +468,20 @@ return [
                 ],
             ],
         ],
+
+        [
+            'text' => 'Configuración',
+            'icon' => 'fa-solid fa-gears',
+            'can'  => 'subdirector',
+            'submenu' => [
+                [
+                    'text' => 'Mis Áreas',
+                    'url'  => 'admin/configuracion/misAreas',
+                    'icon' => 'fa-solid fa-check-to-slot',
+                ],
+                
+            ],
+        ],
     ],
 
     /*

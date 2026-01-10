@@ -196,4 +196,30 @@ class AreaController extends Controller
         // Retornamos la vista con el objeto
         return view('area.miUnidad',['jefaturas'=>$jefaturas]);
     }
+
+    /***************************************************************************************************************************************************
+     * 
+     * 
+     * METODO PARA MOSTRAR MIS AREAS RESPONSABLES CON SUS DATOS
+     * 
+     * 
+     **************************************************************************************************************************************************/
+
+    public function misAreas()
+    {
+        // Consultamos el usuario logeado
+        $user = Auth::user();
+
+        // Hacemos el filtro por nivel de usuario
+
+        // Subdirecciones
+        if($user->nivel == 3)
+        {
+            $areas = Area::where('subdireccion',$user->id_area)
+                ->get();
+        }
+
+        // Regresamos la vista con el arreglo
+        return view('configuracion.misAreas', compact('areas'));
+    }
 }
