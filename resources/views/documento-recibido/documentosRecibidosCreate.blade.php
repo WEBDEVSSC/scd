@@ -2,6 +2,8 @@
 
 @section('title', 'Documentos Recibidos')
 
+@section('plugins.Select2', true)
+
 @section('content_header')
 <h1>
     <strong>Documentos Recibidos</strong>
@@ -21,7 +23,7 @@
 
                     <div class="col-md-3">
                         <p><strong>Emisor</strong></p>
-                        <select name="emisor" class="form-control">
+                        <select name="emisor" id="emisor" class="form-control select2" >
                             <option value="">-- Selecciona una opción --</option>
                             @foreach($areas as $area)
                                 <option value="{{ $area->id }}" {{ old('para') == $area->id ? 'selected' : '' }}>
@@ -180,11 +182,41 @@
 @section('css')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
+    <style>
+        /* Asegura que Select2 tenga el mismo alto y bordes redondeados */
+        .select2-container--default .select2-selection--single {
+            height: calc(2.25rem + 2px) !important; /* Ajuste de altura */
+            border-radius: 0.25rem !important; /* Bordes redondeados */
+            border: 1px solid #ced4da !important; /* Color del borde */
+        }
+        
+        /* Alineación del texto */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: calc(2.25rem - 2px) !important;
+            padding-left: 0.75rem !important;
+        }
+        
+        /* Ajuste del ícono desplegable */
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: calc(2.25rem + 2px) !important;
+        }
+    </style>
+    
 @stop
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#emisor').select2({
+                placeholder: "-- Seleccione una opcion --",
+                allowClear: true
+            });
+        });
+    </script> 
 
 
     <script>
