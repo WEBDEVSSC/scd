@@ -1,12 +1,31 @@
 @extends('adminlte::page')
 
-@section('title', 'Número de Folio')
+@section('title', 'Turnar documento')
+
+@section('plugins.Sweetalert2', true)
 
 @section('content_header')
 <h1><strong>Documentos Recibidos</strong><small> Turnar</small></h1>
 @stop
 
 @section('content')
+
+<!-- ---------------------------------------------------------------- -->
+
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: '¡Registro completado! ',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
+            });
+        </script>
+    @endif
+
+<!-- ---------------------------------------------------------------- -->
 
 <form action="{{ route('documentosRecibidosTurnarStore', $documento->id) }}" method="POST">
     @csrf
@@ -111,7 +130,6 @@
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
-
 
     <script>
     $(document).ready(function() {

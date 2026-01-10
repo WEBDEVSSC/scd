@@ -42,7 +42,6 @@
                     <th>FOLIO</th>
                     <th>EMISOR</th>
                     <th>ASUNTO</th>
-                    <th>TURNADO</th>
                     <th></th>
                 </tr>
             </thead>
@@ -53,27 +52,26 @@
                         <td>{{ $documento->status }}</td>
                         <td>{{ $documento->folio}}</td>
                         <td>{{ $documento->emisor }}</td>
-                        <td>{{ $documento->asunto }}</td>                        
-                        <td>{{ $documento->turnado_area_label }}</td>                        
+                        <td>{{ $documento->asunto }}</td>                                  
                         <td>
                             
                             {{-- VER DETALLES--}}
-                            <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
+                            <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Ver Detalles"><i class="fa-solid fa-file"></i></a>
 
                             {{-- EDITAR REGISTRO--}}
-                            <a href="{{ route('documentosRecibidosEdit', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="{{ route('documentosRecibidosEdit', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Actualizar Registro"><i class="fa-solid fa-pen-to-square"></i></a>
                             
                             @if($documento->documento)
                                 {{-- sí hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Actualizar PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
                             @else
                                 {{-- no hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Subir PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
                             @endif
 
                             
 
-                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file-export"></i></a>
+                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Turnar a Área"><i class="fa-solid fa-file-export"></i></a>
                         </td> 
                     </tr>
                 @endforeach
@@ -96,4 +94,10 @@
 
 @section('js')
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+    
+    <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 @stop

@@ -273,7 +273,7 @@ class DocumentoRecibidoController extends Controller
         }
 
         
-        return redirect()->route('documentosRecibidos')->with('success', 'El documento se turno correctamente al area');    
+        return redirect()->route('documentosRecibidosTurnar',$id)->with('success', 'El documento se turno correctamente al area');    
     }
 
     public function documentosRecibidosCargar($id)

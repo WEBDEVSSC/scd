@@ -56,24 +56,28 @@
                         <td>{{ $documento->asunto }}</td>                        
                         <td>{{ $documento->turnado_area_label }}</td>                        
                         <td>
-                            <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file"></i></a>
+                            <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Ver documento"><i class="fa-solid fa-file"></i></a>
                             
                             {{-- Mostramos este boton solo si tiene el nivel de subdireccion --}}
                             @if (auth()->user()->nivel == 3)
 
                                 @if($documento->documento)
                                     {{-- sí hay documento --}}
-                                    <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                                    <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Actualizar PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
                                 @else
                                     {{-- no hay documento --}}
-                                    <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-file-arrow-up"></i></a>
+                                    <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Subir PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
                                 @endif
 
                             @endif
 
-                            {{-- Si es nivel Jefe de Departamento le mostramos el boton de respuesta --}}
+                            @if (auth()->user()->nivel == 4)
 
-                            <a href="{{ route('documentosRecibidosTurnadosRespuestaCreate', $documento->id) }}" class="btn btn-info btn-sm"><i class="fa-solid fa-file-circle-plus"></i></a>
+                                {{-- Si es nivel Jefe de Departamento le mostramos el boton de respuesta --}}
+
+                                <a href="{{ route('documentosRecibidosTurnadosRespuestaCreate', $documento->id) }}" class="btn btn-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Dar respuesta"><i class="fa-solid fa-file-circle-plus"></i></a>
+
+                            @endif
                             
                         </td> 
                     </tr>
@@ -97,4 +101,10 @@
 
 @section('js')
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+
+    <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 @stop
