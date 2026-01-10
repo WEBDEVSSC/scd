@@ -183,6 +183,7 @@ class DocumentoRecibidoController extends Controller
         $documentoRecibido->fecha_limite = $request->fecha_limite;
         $documentoRecibido->emisor_id = $request->emisor;
         $documentoRecibido->emisor = $emisor->nombre;
+        $documentoRecibido->emisor_encargado = $emisor->responsable;
         $documentoRecibido->tipo = $request->tipo;
         $documentoRecibido->asunto = $request->asunto;
         $documentoRecibido->anexo = $request->anexo;
