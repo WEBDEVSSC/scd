@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::table('documentos_recibidos', function (Blueprint $table) {
             //
-             $table->dropColumn('turnado_area_respuesta');
+            if (Schema::hasColumn('documentos_recibidos', 'turnado_area_respuesta')) {
+                $table->dropColumn('turnado_area_respuesta');
+            }
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('documentos_recibidos', function (Blueprint $table) {
-            //
-            $table->text('turnado_area_respuesta')
-                  ->nullable()
-                  ->after('turnado_area_observaciones');
+            if (!Schema::hasColumn('documentos_recibidos', 'turnado_area_respuesta')) {
+                $table->text('turnado_area_respuesta')->nullable();
+            }
         });
     }
 };
