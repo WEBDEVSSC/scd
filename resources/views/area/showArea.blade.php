@@ -29,17 +29,29 @@
 
     <div class="card card-primary card-outline">
 
+        @if(auth()->check() && auth()->user()->role === 'admin')
+        
         <div class="card-header d-flex justify-content-end">
-            <a href="{{ route('indexArea') }}" class="btn btn-info ml-2">
+            <a href="{{ route('indexArea') }}" class="btn btn-info ml-2 btn-sm">
                 <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
             </a>
-            <a href="{{ route('editArea',$area->id) }}" class="btn btn-info ml-2">
+            <a href="{{ route('editArea',$area->id) }}" class="btn btn-info ml-2 btn-sm">
                 <i class="fa-solid fa-pen" aria-hidden="true"></i> EDITAR
             </a>
-            <button class="btn btn-info ml-2" id="deleteButton" data-id="{{ $area->id }}">
+            <button class="btn btn-info ml-2 btn-sm" id="deleteButton" data-id="{{ $area->id }}">
                 <i class="fa-solid fa-trash" aria-hidden="true"></i> ELIMINAR
             </button>
         </div>
+
+        @else
+
+        <div class="card-header d-flex justify-content-end">
+            <a href="{{ route('misAreas') }}" class="btn btn-info ml-2 btn-sm">
+                <i class="fa-solid fa-sliders" aria-hidden="true"></i> MIS ÁREAS
+            </a>
+        </div>
+
+        @endif
 
         
         <div class="card-body">
@@ -64,10 +76,6 @@
                 <tr>
                     <td><strong>Extesión : </strong></td>
                     <td>{{ $area->extension }}</td>
-                </tr>
-                <tr>
-                    <td><strong>Firma : </strong></td>
-                    <td><img src="{{ asset($area->firma) }}" width="300px"></td>
                 </tr>
 
             </table>

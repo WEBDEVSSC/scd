@@ -11,11 +11,23 @@
 <div class="card card-info card-outline">
     <div class="card-title">
 
+        @if(auth()->check() && auth()->user()->role === 'admin')
+
         <div class="card-header d-flex justify-content-end">
-            <a href="{{ route('indexArea') }}" class="btn btn-info ml-2">
+            <a href="{{ route('indexArea') }}" class="btn btn-info ml-2 btn-sm">
                 <i class="fa-solid fa-sliders" aria-hidden="true"></i> DASHBOARD
             </a>
         </div>
+
+        @else
+
+        <div class="card-header d-flex justify-content-end">
+            <a href="{{ route('misAreas') }}" class="btn btn-info ml-2 btn-sm">
+                <i class="fa-solid fa-sliders" aria-hidden="true"></i> MIS ÁREAS
+            </a>
+        </div>
+
+        @endif
 
     </div>
     <div class="card-body">
@@ -29,10 +41,16 @@
     
             <!-- ---------------------------------------------------------------------- -->
     
-            <div class="row">
+            <div class="row">                
                 <div class="col-md-3">
                     <p><strong>Nombre</strong></p>
-                    <input type="text" name="nombre" class="form-control" value="{{ old('nombre',$area->nombre) }}">
+
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                        <input type="text" name="nombre" class="form-control" value="{{ old('nombre',$area->nombre) }}">
+                    @else
+                        <input type="text" name="nombre" class="form-control" value="{{ old('nombre',$area->nombre) }}" readonly>
+                    @endif
+                    
                     @error('nombre')
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
@@ -46,7 +64,11 @@
                 </div>        
                 <div class="col-md-3">
                     <p><strong>Siglas</strong></p>
-                    <input type="text" name="siglas" class="form-control" value="{{ old('siglas',$area->siglas) }}">
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+                        <input type="text" name="siglas" class="form-control" value="{{ old('siglas',$area->siglas) }}">
+                    @else
+                        <input type="text" name="siglas" class="form-control" value="{{ old('siglas',$area->siglas) }}" readonly>
+                    @endif
                     @error('siglas')
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
@@ -76,15 +98,31 @@
 
                 <div class="col-md-3">
                     <p><strong>Tipo</strong></p>
-                    <select name="tipo" id="tipo" class="form-control">
-                        <option value="">-- SELECCIONE UNA OPCION --</option>
-                        @foreach($niveles as $nivel)
-                            <option value="{{ $nivel->id }}" 
-                                {{ old('tipo', $area->tipo) == $nivel->id ? 'selected' : '' }}>
-                                {{ $nivel->nivel }}
-                            </option>
-                        @endforeach
-                    </select>
+                    @if(auth()->check() && auth()->user()->role === 'admin')
+
+                        <select name="tipo" id="tipo" class="form-control">
+                            <option value="">-- SELECCIONE UNA OPCION --</option>
+                            @foreach($niveles as $nivel)
+                                <option value="{{ $nivel->id }}" 
+                                    {{ old('tipo', $area->tipo) == $nivel->id ? 'selected' : '' }}>
+                                    {{ $nivel->nivel }}
+                                </option>
+                            @endforeach
+                        </select>
+                    
+                    @else
+
+                        <select name="tipo" id="tipo" class="form-control" readonly>
+                            <option value="">-- SELECCIONE UNA OPCION --</option>
+                            @foreach($niveles as $nivel)
+                                <option value="{{ $nivel->id }}" 
+                                    {{ old('tipo', $area->tipo) == $nivel->id ? 'selected' : '' }}>
+                                    {{ $nivel->nivel }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                    @endif
                     @error('tipo')
                         <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                     @enderror
@@ -100,7 +138,7 @@
     </div>
     <div class="card-footer">
 
-        <button type="submit" class="btn btn-info float-right"><i class="fa fa-check-circle" aria-hidden="true"></i> ACTUALIZAR DATOS</button>  
+        <button type="submit" class="btn btn-info float-right btn-sm"><i class="fa fa-check-circle" aria-hidden="true"></i> ACTUALIZAR DATOS</button>  
         
     </div>
 </div>
