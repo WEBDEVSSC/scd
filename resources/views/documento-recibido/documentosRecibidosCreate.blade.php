@@ -32,7 +32,7 @@
                             @endforeach
                         </select>
 
-                        @error('para')
+                        @error('emisor')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -149,9 +149,9 @@
                         <p><strong>Observaciones</strong></p>
 
                         <textarea name="contenido" id="contenido" class="form-control" rows="10">{{ old('contenido') }}</textarea>
-                        
+
                         @error('contenido')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                            <small class="text-danger">{{ $message }}</small>
                         @enderror
 
                     </div>

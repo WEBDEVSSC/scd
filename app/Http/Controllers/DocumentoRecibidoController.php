@@ -109,7 +109,7 @@ class DocumentoRecibidoController extends Controller
             'fecha_documento' => 'required|date',
 
             'fecha_recepcion' => 'required|date|after_or_equal:fecha_documento',
-            'fecha_limite' => 'required|date|after_or_equal:fecha_documento',
+            'fecha_limite' => 'nullable|date|after_or_equal:fecha_documento',
             'asunto' => 'required',
             
             'anexo' => 'required|in:SI,NO',
