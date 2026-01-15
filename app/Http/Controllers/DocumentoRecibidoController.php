@@ -171,13 +171,20 @@ class DocumentoRecibidoController extends Controller
             $subdireccion = $user->id_area;
 
             $subdireccionLabel = Area::findOrFail($subdireccion);
+
+            $ultimoConsecutivo = DocumentoRecibido::where('subdireccion_id', $subdireccion)->max('consecutivo');
+
+            $consecutivo = $ultimoConsecutivo ? $ultimoConsecutivo + 1 : 1;
         }
+
+        // Consul
 
         $documentoRecibido = new DocumentoRecibido();
 
         $documentoRecibido->folio = $request->folio;
         $documentoRecibido->anio = $anio;
         $documentoRecibido->status = "NUEVO";
+        $documentoRecibido->consecutivo = $consecutivo;
         $documentoRecibido->fecha_documento = $request->fecha_documento;
         $documentoRecibido->fecha_recepcion = $request->fecha_recepcion;
         $documentoRecibido->fecha_limite = $request->fecha_limite;
@@ -196,8 +203,6 @@ class DocumentoRecibidoController extends Controller
 
         // Regresamos al panel
         return redirect()->route('documentosRecibidos')->with('success', 'El documento se registro correctamente.');    
-        
-
     }
 
     public function documentosRecibidosTurnar($id)
@@ -507,5 +512,20 @@ class DocumentoRecibidoController extends Controller
         // Redireccionamos a la vista de show del documento
         return redirect()->route('documentosRecibidosShow',$id)->with('success', 'El documento se edito correctamente.');  
 
+    }
+
+    public function documentosRecibidosPanelDeControl()
+    {
+        // Consultamos el id del usuario
+        $user = Auth::user();  
+        
+        if($user->nivel == 3)
+        {            
+            $documentos = documentoRecibido::where('subdireccion_id',$user->id_area)
+            ->orderBy('created_at','DESC')
+            ->get();
+        }
+
+        return view('documento-recibido.documentosRecibidosPanelDeControl', compact('documentos'));
     }
 }

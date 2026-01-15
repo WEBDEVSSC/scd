@@ -455,6 +455,11 @@ return [
                     'icon' => 'fa-solid fa-list',
                 ],
                 [
+                    'text' => 'Panel de Control',
+                    'url'  => 'admin/documentosRecibidos/documentosRecibidosPanelDeControl',
+                    'icon' => 'fa-solid fa-file-circle-plus',
+                ],
+                [
                     'text' => 'Documentos Nuevos',
                     'url'  => 'admin/documentosRecibidos',
                     'icon' => 'fa-solid fa-file-circle-plus',

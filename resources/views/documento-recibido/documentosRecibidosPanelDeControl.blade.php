@@ -7,7 +7,7 @@
 @section('content_header')
 <h1>
     <strong>Documentos Recibidos</strong>
-    <small class="text-muted">Nuevos</small>
+    <small class="text-muted">Panel de Control</small>
 </h1>
 @stop
 
