@@ -8,6 +8,7 @@
             <th>FECHA DEL DOCUMENTO</th>
             <th>FECHA DE RECEPCIÓN</th>
             <th>FECHA LÍMITE</th>
+            <th>ASUNTO</th>
             <th>TURNADO A</th>
             <th>RESPONSABLE</th>
             <th>FECHA DE TURNADO</th>
@@ -24,6 +25,7 @@
                 <td>{{ $doc->fecha_documento }}</td>
                 <td>{{ $doc->fecha_recepcion }}</td>
                 <td>{{ $doc->fecha_limite }}</td>
+                <td>{{ $doc->asunto }}</td>
                 <td>{{ $doc->turnado_area_label }}</td>
                 <td>{{ $doc->turnado_area_encargado }}</td>
                 <td>{{ $doc->turnado_area_fecha }}</td>
