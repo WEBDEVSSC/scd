@@ -32,6 +32,8 @@
 
 <!-- ---------------------------------------------------------------- -->
 
+<a href="{{route('documentosRecibidosExport')}}" class="btn btn-success">EXPORTAR EXCEL</a>
+
 <div class="card card-info card-outline">
     
     <div class="card-body">

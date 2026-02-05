@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DocumentosRecibidosExport;
 use App\Models\Area;
 use App\Models\DocumentoRecibido;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DocumentoRecibidoTurnado;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentoRecibidoController extends Controller
 {
@@ -527,5 +529,10 @@ class DocumentoRecibidoController extends Controller
         }
 
         return view('documento-recibido.documentosRecibidosPanelDeControl', compact('documentos'));
+    }
+
+    public function documentosRecibidosExport()
+    {
+        return Excel::download(new DocumentosRecibidosExport,'documentos_recibidos.xlsx');
     }
 }

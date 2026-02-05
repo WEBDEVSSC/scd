@@ -194,6 +194,8 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('documentos-recibidos-respuesta/{id}/ver',[DocumentoRecibidoController::class, 'verDocumentoRespuesta'])->name('verDocumentoRespuesta');
 
+  Route::get('admin/documentosRecibidosUpdate/documentosRecibidosExport', [DocumentoRecibidoController::class, 'documentosRecibidosExport'])->name('documentosRecibidosExport');
+
   // Panel de Control para mostrar todos los recibidos
   Route::get('admin/documentosRecibidos/documentosRecibidosPanelDeControl',[DocumentoRecibidoController::class, 'documentosRecibidosPanelDeControl'])->name('documentosRecibidosPanelDeControl');
 
