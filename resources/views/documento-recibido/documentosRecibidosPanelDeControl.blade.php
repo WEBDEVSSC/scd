@@ -32,9 +32,15 @@
 
 <!-- ---------------------------------------------------------------- -->
 
-<a href="{{route('documentosRecibidosExport')}}" class="btn btn-success">EXPORTAR EXCEL</a>
 
 <div class="card card-info card-outline">
+
+    <div class="card-header d-flex justify-content-end">
+        <a href="{{ route('documentosRecibidosExport') }}" 
+        class="btn btn-success">
+            <i class="fa-regular fa-file-excel"></i> EXPORTAR EXCEL
+        </a>
+    </div>
     
     <div class="card-body">
 
