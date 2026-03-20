@@ -490,6 +490,12 @@ return [
                 
             ],
         ],
+
+        [
+            'text' => 'Directorio',
+            'url' => 'admin/directorio/index',
+            'icon' => 'fa-solid fa-address-book',            
+        ],
     ],
 
     /*

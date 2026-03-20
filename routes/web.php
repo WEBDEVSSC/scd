@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\DirectorioController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoRecibidoController;
 use App\Http\Controllers\UsuarioController;
@@ -210,6 +211,20 @@ Route::middleware(['auth'])->group(function ()
 
   // Ruta para mostrar las jefaturas a su cargo
   Route::get('admin/miUnidad',[AreaController::class,'miUnidad'])->name('miUnidad');
+
+  /*******************************************************************************************
+   * 
+   * 
+   * CONFIGURACION PARA DIRECTORIO
+   * 
+   * 
+    ******************************************************************************************/
+
+  Route::get('admin/directorio/index',[DirectorioController::class,'directorioIndex'])->name('directorioIndex');
+
+  Route::get('admin/sirectorio/edit/{id}',[DirectorioController::class,'directorioEdit'])->name('directorioEdit');
+
+  Route::put('admin/sirectorio/update/{id}',[DirectorioController::class,'directorioUpdate'])->name('directorioUpdate');
 
 });
 
