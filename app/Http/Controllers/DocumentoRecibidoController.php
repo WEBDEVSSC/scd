@@ -535,4 +535,13 @@ class DocumentoRecibidoController extends Controller
     {
         return Excel::download(new DocumentosRecibidosExport,'documentos_recibidos.xlsx');
     }
+
+    public function documentosRecibidosDestroy($id)
+    {
+        $documentoRecibido = DocumentoRecibido::findOrFail($id);
+
+        $documentoRecibido->delete();
+
+        return redirect()->route('documentosRecibidosPanelDeControl')->with('delete', 'El documento se elimino correctamente.');  
+    }
 }

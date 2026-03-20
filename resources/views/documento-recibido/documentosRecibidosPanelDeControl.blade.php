@@ -30,6 +30,19 @@
         </script>
     @endif
 
+    @if (session('delete'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Eliminado',
+                text: "{{ session('delete') }}",
+                confirmButtonText: 'Ok'
+            });
+        });
+    </script>
+    @endif
+
 <!-- ---------------------------------------------------------------- -->
 
 
@@ -79,9 +92,18 @@
                                 <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Subir PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
                             @endif
 
-                            
-
+                            {{-- TURNAR DOCUMENTO --}}
                             <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Turnar a Área"><i class="fa-solid fa-file-export"></i></a>
+
+                            {{-- ELIMINAR REGISTRO--}}
+                            <form action="{{ route('documentosRecibidosDestroy', $documento->id) }}" method="POST" class="form-eliminar d-inline">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar Registro">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </form>
                         </td> 
                     </tr>
                 @endforeach
@@ -141,5 +163,32 @@
         });
     });
     } );
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = document.querySelectorAll('.form-eliminar');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "Este registro se eliminará permanentemente",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
     </script>
 @stop

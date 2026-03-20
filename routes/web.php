@@ -197,6 +197,8 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('admin/documentosRecibidosUpdate/documentosRecibidosExport', [DocumentoRecibidoController::class, 'documentosRecibidosExport'])->name('documentosRecibidosExport');
 
+  Route::delete('admin/documentos-recibidos/documentosRecibidosDestroy/{id}', [DocumentoRecibidoController::class, 'documentosRecibidosDestroy'])->name('documentosRecibidosDestroy');
+
   // Panel de Control para mostrar todos los recibidos
   Route::get('admin/documentosRecibidos/documentosRecibidosPanelDeControl',[DocumentoRecibidoController::class, 'documentosRecibidosPanelDeControl'])->name('documentosRecibidosPanelDeControl');
 
