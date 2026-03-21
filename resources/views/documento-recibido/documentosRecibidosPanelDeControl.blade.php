@@ -78,35 +78,76 @@
                         <td>{{ $documento->asunto }}</td>                                  
                         <td>
                             
-                            {{-- VER DETALLES--}}
-                            <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Ver Detalles"><i class="fa-solid fa-file"></i></a>
+                            <div style="display: flex; flex-direction: column; gap: 5px;">
 
-                            {{-- EDITAR REGISTRO--}}
-                            <a href="{{ route('documentosRecibidosEdit', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Actualizar Registro"><i class="fa-solid fa-pen-to-square"></i></a>
-                            
-                            @if($documento->documento)
-                                {{-- sí hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Actualizar PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
-                            @else
-                                {{-- no hay documento --}}
-                                <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Subir PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
-                            @endif
+    <!-- FILA 1 -->
+    <div style="display: flex; gap: 5px;">
+        
+        {{-- VER DETALLES--}}
+        <a href="{{ route('documentosRecibidosShow', $documento->id) }}" 
+           class="btn btn-info btn-sm flex-fill text-center"
+           data-toggle="tooltip" title="Ver Detalles">
+           <i class="fa-solid fa-file"></i>
+        </a>
 
-                            {{-- TURNAR DOCUMENTO --}}
-                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Turnar a Área"><i class="fa-solid fa-file-export"></i></a>
+        {{-- EDITAR --}}
+        <a href="{{ route('documentosRecibidosEdit', $documento->id) }}" 
+           class="btn btn-info btn-sm flex-fill text-center"
+           data-toggle="tooltip" title="Actualizar Registro">
+           <i class="fa-solid fa-pen-to-square"></i>
+        </a>
 
-                            {{-- FICHA TECNICA EN PDF --}}
-                            <a href="{{ route('fichaTecnicaPDF', $documento->id) }}" target="_blank" class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Ficha Técnica"><i class="fa-solid fa-file-pdf"></i></a>
+        {{-- SUBIR / ACTUALIZAR PDF --}}
+        @if($documento->documento)
+            <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" 
+               class="btn btn-success btn-sm flex-fill text-center"
+               data-toggle="tooltip" title="Actualizar PDF">
+               <i class="fa-solid fa-file-arrow-up"></i>
+            </a>
+        @else
+            <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" 
+               class="btn btn-danger btn-sm flex-fill text-center"
+               data-toggle="tooltip" title="Subir PDF">
+               <i class="fa-solid fa-file-arrow-up"></i>
+            </a>
+        @endif
 
-                            {{-- ELIMINAR REGISTRO--}}
-                            <form action="{{ route('documentosRecibidosDestroy', $documento->id) }}" method="POST" class="form-eliminar d-inline">
-                                @csrf
-                                @method('DELETE')
+    </div>
 
-                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar Registro">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </form>
+    <!-- FILA 2 -->
+    <div style="display: flex; gap: 5px;">
+
+        {{-- TURNAR --}}
+        <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" 
+           class="btn btn-info btn-sm flex-fill text-center"
+           data-toggle="tooltip" title="Turnar a Área">
+           <i class="fa-solid fa-file-export"></i>
+        </a>
+
+        {{-- PDF --}}
+        <a href="{{ route('fichaTecnicaPDF', $documento->id) }}" 
+           target="_blank"
+           class="btn btn-dark btn-sm flex-fill text-center"
+           data-toggle="tooltip" title="Ficha Técnica">
+           <i class="fa-solid fa-file-pdf"></i>
+        </a>
+
+        {{-- ELIMINAR --}}
+        <form action="{{ route('documentosRecibidosDestroy', $documento->id) }}" 
+              method="POST" class="form-eliminar flex-fill">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit" 
+                    class="btn btn-danger btn-sm w-100"
+                    data-toggle="tooltip" title="Eliminar Registro">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+        </form>
+
+    </div>
+
+</div>
                         </td> 
                     </tr>
                 @endforeach
