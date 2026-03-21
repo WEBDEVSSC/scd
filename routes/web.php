@@ -4,6 +4,7 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DirectorioController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DocumentoRecibidoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -203,6 +204,16 @@ Route::middleware(['auth'])->group(function ()
   Route::get('admin/documentosRecibidos/documentosRecibidosPanelDeControl',[DocumentoRecibidoController::class, 'documentosRecibidosPanelDeControl'])->name('documentosRecibidosPanelDeControl');
 
 
+  /*******************************************************************************************
+   * 
+   * 
+   * REPORTES
+   * 
+   * 
+    ******************************************************************************************/
+
+  Route::get('/admin/reportes/ficha-tecnica/{id}', [ReporteController::class, 'fichaTecnicaPDF'])->name('fichaTecnicaPDF');
+  
   /*******************************************************************************************
    * 
    * 

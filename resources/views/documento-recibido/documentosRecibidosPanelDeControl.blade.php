@@ -95,6 +95,9 @@
                             {{-- TURNAR DOCUMENTO --}}
                             <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Turnar a Área"><i class="fa-solid fa-file-export"></i></a>
 
+                            {{-- FICHA TECNICA EN PDF --}}
+                            <a href="{{ route('fichaTecnicaPDF', $documento->id) }}" target="_blank" class="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Ficha Técnica"><i class="fa-solid fa-file-pdf"></i></a>
+
                             {{-- ELIMINAR REGISTRO--}}
                             <form action="{{ route('documentosRecibidosDestroy', $documento->id) }}" method="POST" class="form-eliminar d-inline">
                                 @csrf

@@ -71,6 +71,9 @@
                                     <a href="{{ route('documentosRecibidosCargar', $documento->id) }}" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Subir PDF"><i class="fa-solid fa-file-arrow-up"></i></a>
                                 @endif
 
+                                {{-- TURNAR DOCUMENTO --}}
+                            <a href="{{ route('documentosRecibidosTurnar', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Turnar a Área"><i class="fa-solid fa-file-export"></i></a>
+
                             @endif
 
                             @if (auth()->user()->nivel == 4)

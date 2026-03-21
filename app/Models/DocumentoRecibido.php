@@ -26,4 +26,9 @@ class DocumentoRecibido extends Model
         'subdireccion_id',
         'subdireccion',
     ];
+
+    protected $casts = [
+        'fecha_documento' => 'date',
+        'fecha_recepcion' => 'datetime',
+    ];
 }
