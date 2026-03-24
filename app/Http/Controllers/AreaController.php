@@ -219,6 +219,19 @@ class AreaController extends Controller
                 ->get();
         }
 
+        // Titulares de Unidad
+        elseif($user->nivel == 6)
+        {
+            $areas = Area::where('unidad',$user->id_area)
+            ->get();
+        }
+
+        // Arreglo vacio
+        else
+        {
+            $areas = collect(); // colección vacía
+        }
+
         // Regresamos la vista con el arreglo
         return view('configuracion.misAreas', compact('areas'));
     }
