@@ -179,6 +179,18 @@ class DocumentoRecibidoController extends Controller
             $consecutivo = $ultimoConsecutivo ? $ultimoConsecutivo + 1 : 1;
         }
 
+        elseif($user->nivel == 6)
+        {
+            // Comsultamos la unidad
+            $unidad = $user->id_area;
+
+            $unidadLabel = Area::findOrFail($unidad);
+
+            $ultimoConsecutivo = DocumentoRecibido::where('subdireccion_id', $unidad)->max('consecutivo');
+
+            $consecutivo = $ultimoConsecutivo ? $ultimoConsecutivo + 1 : 1;
+        }
+
         // Consul
 
         $documentoRecibido = new DocumentoRecibido();

@@ -223,7 +223,7 @@ class AreaController extends Controller
         elseif($user->nivel == 6)
         {
             $areas = Area::where('unidad',$user->id_area)
-            ->get();
+                ->get();
         }
 
         // Arreglo vacio
