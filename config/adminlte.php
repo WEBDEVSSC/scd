@@ -374,48 +374,7 @@ return [
             ],
         ],
 
-        /*
-        |--------------------------------------------------------------------------
-        | Menu TITULAR DE UNIDAD
-        |--------------------------------------------------------------------------
-        */
-
-        [
-            'text' => 'Nuevo registro',
-            'url' => 'admin/createDocumento',
-            'icon' => 'fa fa-check-circle',
-            'can' => 'titularUnidad', 
-        ],
-        [
-            'text' => 'Panel de Control',
-            'url' => 'admin/indexDocumento',
-            'icon' => 'fa fa-list-ul',
-            'can' => 'titularUnidad',
-        ],
-        [
-            'text' => 'Mis Documentos',
-            'url' => 'admin/misDocumentos',
-            'icon' => 'fa fa-list-ul',
-            'can' => 'titularUnidad',
-        ],
-        [
-            'text' => 'Esperando firma',
-            'url' => 'admin/pendientesFirmarDocumento',
-            'icon' => 'fa-solid fa-file-pen',
-            'can' => 'titularUnidad', 
-        ],
-        [
-            'text' => 'Recibidos',
-            'url' => 'admin/documentosRecibidos',
-            'icon' => 'fa-solid fa-pen-fancy',
-            'can' => 'titularUnidad', 
-        ],
-        [
-            'text' => 'Mi Unidad',
-            'url' => 'admin/miUnidad',
-            'icon' => 'fa fa-user',
-            'can' => 'isTitularUnidad', 
-        ],
+        
         /*
         |--------------------------------------------------------------------------
         | Menu ADMINISTRADORES
@@ -477,10 +436,50 @@ return [
             ],
         ],
 
+        /*
+        |--------------------------------------------------------------------------
+        | Menu TITULARES DE UNIDAD
+        |--------------------------------------------------------------------------
+        */
+
+        [
+            'text' => 'Documentos Recibidos',
+            'icon' => 'fa-solid fa-file-circle-check',
+            'can'  => 'titularUnidad',
+            'submenu' => [
+                [
+                    'text' => 'Nuevo registro',
+                    'url'  => 'admin/documentosRecibidosCreate',
+                    'icon' => 'fa-solid fa-list',
+                ],
+                [
+                    'text' => 'Panel de Control',
+                    'url'  => 'admin/documentosRecibidos/documentosRecibidosPanelDeControl',
+                    'icon' => 'fa-solid fa-file-circle-plus',
+                ],
+                [
+                    'text' => 'Documentos Nuevos',
+                    'url'  => 'admin/documentosRecibidos',
+                    'icon' => 'fa-solid fa-file-circle-plus',
+                ],
+                [
+                    'text' => 'Documentos Turnados',
+                    'url'  => 'admin/documentosRecibidosTurnados',
+                    'icon' => 'fa-solid fa-box-archive',
+                ],
+                [
+                    'text' => 'Documentos Atendidos',
+                    'url'  => 'admin/documentosRecibidosAtendidos',
+                    'icon' => 'fa-solid fa-box-archive',
+                ],
+            ],
+        ],
+
+
         [
             'text' => 'Configuración',
             'icon' => 'fa-solid fa-gears',
-            'can'  => 'subdirector',
+            'can'  => 'titularUnidad',
             'submenu' => [
                 [
                     'text' => 'Mis Áreas',

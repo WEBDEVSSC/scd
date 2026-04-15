@@ -48,6 +48,11 @@ class DocumentoRecibidoController extends Controller
                 ->orderBy('id','DESC')
                 ->get();
        }
+       else
+       {
+            $documentos = collect();
+
+        }
 
         // Retornamos la vista con el objeto documentos
         return view('documento-recibido.documentosRecibidos', compact('documentos','user'));
@@ -191,11 +196,11 @@ class DocumentoRecibidoController extends Controller
         elseif($user->nivel == 6)
         {
             // Comsultamos la unidad
-            $unidad = $user->id_area;
+            $subdireccion = $user->id_area;
 
-            $unidadLabel = Area::findOrFail($unidad);
+            $subdireccionLabel = Area::findOrFail($subdireccion);
 
-            $ultimoConsecutivo = DocumentoRecibido::where('subdireccion_id', $unidad)->max('consecutivo');
+            $ultimoConsecutivo = DocumentoRecibido::where('subdireccion_id', $subdireccion)->max('consecutivo');
 
             $consecutivo = $ultimoConsecutivo ? $ultimoConsecutivo + 1 : 1;
         }
@@ -547,6 +552,16 @@ class DocumentoRecibidoController extends Controller
             $documentos = documentoRecibido::where('subdireccion_id',$user->id_area)
             ->orderBy('created_at','DESC')
             ->get();
+        }
+        elseif($user->nivel == 6)
+        {
+            $documentos = documentoRecibido::where('subdireccion_id',$user->id_area)
+            ->orderBy('created_at','DESC')
+            ->get();
+        }
+        else
+        {
+            $documentos = collect();
         }
 
         return view('documento-recibido.documentosRecibidosPanelDeControl', compact('documentos'));
