@@ -40,6 +40,15 @@ class DocumentoRecibidoController extends Controller
                 ->get();
        }
 
+       // TITULAR DE UNIDAD , DIRECCION ETC
+       elseif($user->nivel == 6)
+       {
+            $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
+                ->where('status', 'NUEVO')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+
         // Retornamos la vista con el objeto documentos
         return view('documento-recibido.documentosRecibidos', compact('documentos','user'));
     }
