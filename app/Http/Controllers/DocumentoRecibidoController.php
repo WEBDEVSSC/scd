@@ -78,6 +78,13 @@ class DocumentoRecibidoController extends Controller
                 ->orderBy('id','DESC')
                 ->get();
        }
+       elseif($user->nivel==6)
+       {
+            $documentos = DocumentoRecibido::where('turnado_area_id', $user->id_area)
+                ->where('status', 'TURNADO A AREA')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
 
         // Retornamos la vista con el objeto documentos
         return view('documento-recibido.documentosTurnados', compact('documentos','user'));
