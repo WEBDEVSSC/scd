@@ -43,7 +43,7 @@ class DocumentoRecibidoController extends Controller
        // TITULAR DE UNIDAD , DIRECCION ETC
        elseif($user->nivel == 6)
        {
-            $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
+            $documentos = DocumentoRecibido::where('titular_id', $user->id_area)
                 ->where('status', 'NUEVO')    
                 ->orderBy('id','DESC')
                 ->get();
@@ -166,7 +166,7 @@ class DocumentoRecibidoController extends Controller
 
             // Descripción del anexo
             'anexo_descripcion.required_if' =>
-                'Debe especificar la descripción del anexo cuando indica que el documento contiene anexo.',
+            'Debe especificar la descripción del anexo cuando indica que el documento contiene anexo.',
 
             // Contenido
             'contenido.required' => 'El contenido u observaciones del documento es obligatorio.',
@@ -181,6 +181,12 @@ class DocumentoRecibidoController extends Controller
         // Asignamos el anio
         $anio = Carbon::now()->year;
 
+        $titular = NULL;
+        $nombreTitular = NULL;
+        $subdireccion = NULL;
+        $nombreSubdireccion = NULL;
+
+        // SUBDIRECCION
         if($user->nivel == 3)
         {
             // Comsultamos la subdireccion
@@ -191,18 +197,23 @@ class DocumentoRecibidoController extends Controller
             $ultimoConsecutivo = DocumentoRecibido::where('subdireccion_id', $subdireccion)->max('consecutivo');
 
             $consecutivo = $ultimoConsecutivo ? $ultimoConsecutivo + 1 : 1;
+
+            $nombreSubdireccion = $subdireccionLabel->nombre;
         }
 
+        // TITULAR DE UNIDAD
         elseif($user->nivel == 6)
         {
             // Comsultamos la unidad
-            $subdireccion = $user->id_area;
+            $titular = $user->id_area;
 
-            $subdireccionLabel = Area::findOrFail($subdireccion);
+            $titularLabel = Area::findOrFail($titular);
 
-            $ultimoConsecutivo = DocumentoRecibido::where('subdireccion_id', $subdireccion)->max('consecutivo');
+            $ultimoConsecutivo = DocumentoRecibido::where('titular_id', $titular)->max('consecutivo');
 
             $consecutivo = $ultimoConsecutivo ? $ultimoConsecutivo + 1 : 1;
+
+            $nombreTitular = $titularLabel->nombre;
         }
 
         // Consul
@@ -224,8 +235,12 @@ class DocumentoRecibidoController extends Controller
         $documentoRecibido->anexo = $request->anexo;
         $documentoRecibido->anexo_descripcion = $request->anexo_descripcion;
         $documentoRecibido->contenido = $request->contenido;
+
         $documentoRecibido->subdireccion_id = $subdireccion;
-        $documentoRecibido->subdireccion = $subdireccionLabel->nombre;
+        $documentoRecibido->subdireccion = $nombreSubdireccion;
+
+        $documentoRecibido->titular_id = $titular;
+        $documentoRecibido->titular = $nombreTitular;
 
         $documentoRecibido->save();
 
