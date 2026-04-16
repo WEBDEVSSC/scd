@@ -263,7 +263,7 @@ class DocumentoRecibidoController extends Controller
 
         elseif($user->nivel == 6)
         {            
-            $listaDepartamentos = Area::where('titular',$user->id_area)->get();
+            $listaDepartamentos = Area::where('unidad',$user->id_area)->get();
         }
 
         return view('documento-recibido.documentosRecibidosTurnar', compact('listaDepartamentos','documento'));
