@@ -239,5 +239,8 @@ Route::middleware(['auth'])->group(function ()
 
   Route::put('admin/sirectorio/update/{id}',[DirectorioController::class,'directorioUpdate'])->name('directorioUpdate');
 
+  Route::get('admin/info',[DirectorioController::class,'phpInfo'])->name('phpInfo');
+
+
 });
 

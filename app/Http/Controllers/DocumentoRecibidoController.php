@@ -355,7 +355,7 @@ class DocumentoRecibidoController extends Controller
     public function documentosRecibidosCargarStore(Request $request, $id)
     {
         $request->validate([
-            'documento' => 'required|file|mimes:pdf|max:10240'
+            'documento' => 'required|file|mimes:pdf|max:102400'
         ], [
             'documento.required' => 'Debe adjuntar un documento.',
             'documento.mimes'    => 'El documento debe ser un archivo PDF.',

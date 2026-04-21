@@ -52,4 +52,9 @@ class DirectorioController extends Controller
 
         return redirect()->route('directorioIndex')->with('success', 'Datos actualizados correctamente.');    
     }
+
+    public function phpInfo()
+    {
+        phpinfo();
+    }
 }
