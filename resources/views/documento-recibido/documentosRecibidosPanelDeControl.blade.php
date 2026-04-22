@@ -75,7 +75,7 @@
                         <td>{{ $documento->status }}</td>
                         <td>{{ $documento->folio}}</td>
                         <td>{{ $documento->emisor }}</td>
-                        <td>{{ $documento->asunto }}</td>                                  
+                        <td>{{ Str::limit($documento->asunto, 150) }}</td>                                  
                         <td>
                             
                             <div style="display: flex; flex-direction: column; gap: 5px;">
