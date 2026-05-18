@@ -80,7 +80,7 @@ class DocumentoRecibidoController extends Controller
        }
        elseif($user->nivel==6)
        {
-            $documentos = DocumentoRecibido::where('turnado_area_id', $user->id_area)
+            $documentos = DocumentoRecibido::where('titular_id', $user->id_area)
                 ->where('status', 'TURNADO A AREA')    
                 ->orderBy('id','DESC')
                 ->get();
@@ -589,9 +589,10 @@ class DocumentoRecibidoController extends Controller
         }
         elseif($user->nivel == 6)
         {
-            $documentos = documentoRecibido::where('subdireccion_id',$user->id_area)
-            ->orderBy('created_at','DESC')
-            ->get();
+
+            $documentos = DocumentoRecibido::where('titular_id', $user->id_area)   
+                ->orderBy('id','DESC')
+                ->get();
         }
         else
         {

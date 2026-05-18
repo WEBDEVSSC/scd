@@ -39,8 +39,7 @@
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>STATUS</th>
+                    <th>CONS</th>
                     <th>FOLIO</th>
                     <th>EMISOR</th>
                     <th>ASUNTO</th>
@@ -51,12 +50,13 @@
             <tbody>
                 @foreach($documentos as $documento)
                     <tr>
-                        <td>{{ $documento->id }}</td>
-                        <td>{{ $documento->status }}</td>
+                        <td>{{ $documento->consecutivo }}</td>
                         <td>{{ $documento->folio}}</td>
                         <td>{{ $documento->emisor }}</td>
                         <td>{{ $documento->asunto }}</td>                        
-                        <td>{{ $documento->turnado_area_label }}</td>                        
+                        <td>{{ $documento->turnado_area_label }}</td> 
+                        
+                        
                         <td>
                             <a href="{{ route('documentosRecibidosShow', $documento->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Ver documento"><i class="fa-solid fa-file"></i></a>
                             
@@ -84,7 +84,7 @@
 
                             @endif
                             
-                        </td> 
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

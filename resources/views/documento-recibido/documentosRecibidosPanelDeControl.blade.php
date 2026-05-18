@@ -64,6 +64,7 @@
                     <th>STATUS</th>
                     <th>FOLIO</th>
                     <th>EMISOR</th>
+                    <th>TURNADO</th>
                     <th>ASUNTO</th>
                     <th></th>
                 </tr>
@@ -72,9 +73,22 @@
                 @foreach($documentos as $documento)
                     <tr>
                         <td>{{ $documento->consecutivo }}</td>
-                        <td>{{ $documento->status }}</td>
+                        <td>
+                            @if($documento->status == 'NUEVO')
+                                <span class="badge badge-primary">NUEVO</span>
+                            @elseif($documento->status == 'TURNADO A AREA')
+                                <span class="badge badge-warning">TURNADO A ÁREA</span>
+                            @elseif($documento->status == 'ATENDIDO')
+                                <span class="badge badge-success">ATENDIDO</span>
+                            @else
+                                <span class="badge badge-secondary">
+                                    {{ $documento->status }}
+                                </span>
+                            @endif
+                        </td>
                         <td>{{ $documento->folio}}</td>
                         <td>{{ $documento->emisor }}</td>
+                        <td>{{ $documento->turnado_area_label }}</td>
                         <td>{{ Str::limit($documento->asunto, 150) }}</td>                                  
                         <td>
                             
