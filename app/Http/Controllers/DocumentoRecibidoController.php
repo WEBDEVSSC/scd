@@ -444,9 +444,13 @@ class DocumentoRecibidoController extends Controller
         // Validamos los datos
         $request->validate([
             'contenido' => 'required',
-            'documento' => 'required|file|mimes:pdf|max:10240'
+            'documento' => 'nullable|file|mimes:pdf|max:10240'
         ],[
-
+            'contenido.required' => 'El campo contenido es obligatorio.',
+            
+            'documento.file' => 'El archivo seleccionado no es válido.',
+            'documento.mimes' => 'El documento debe estar en formato PDF.',
+            'documento.max' => 'El documento no debe superar los 10 MB.',
         ]);
 
         // Buscamos el registro
