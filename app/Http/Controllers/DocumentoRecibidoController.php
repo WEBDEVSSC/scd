@@ -58,6 +58,38 @@ class DocumentoRecibidoController extends Controller
         return view('documento-recibido.documentosRecibidos', compact('documentos','user'));
     }
 
+    public function documentosRecibidosIndex()
+    {
+         // Capturamos los datos del usuario que inicio sesion
+        $user = Auth::user();
+
+       // Filtramos el index por nivel
+       if($user->nivel == 3)
+       {
+            $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
+                ->where('status', 'NUEVO')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+
+       // TITULAR DE UNIDAD , DIRECCION ETC
+       elseif($user->nivel == 6)
+       {
+            $documentos = DocumentoRecibido::where('titular_id', $user->id_area)
+                ->where('status', 'NUEVO')    
+                ->orderBy('id','DESC')
+                ->get();
+       }
+       else
+       {
+            $documentos = collect();
+
+        }
+
+        // Retornamos la vista con el objeto documentos
+        return view('documento-recibido.documentosRecibidos', compact('documentos','user'));
+    }
+
     public function documentosRecibidosTurnados()
     {
         // Capturamos los datos del usuario que inicio sesion

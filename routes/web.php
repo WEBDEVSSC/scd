@@ -166,6 +166,8 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('admin/documentosRecibidos',[DocumentoRecibidoController::class, 'documentosRecibidos'])->name('documentosRecibidos');
 
+  Route::get('admin/documentosRecibidosIndex',[DocumentoRecibidoController::class, 'documentosRecibidosIndex'])->name('documentosRecibidosIndex');
+
   Route::get('admin/documentosRecibidosTurnados',[DocumentoRecibidoController::class, 'documentosRecibidosTurnados'])->name('documentosRecibidosTurnados');
 
   Route::get('admin/documentosRecibidosTurnadosRespuestaCreate/{id}',[DocumentoRecibidoController::class, 'documentosRecibidosTurnadosRespuestaCreate'])->name('documentosRecibidosTurnadosRespuestaCreate');
