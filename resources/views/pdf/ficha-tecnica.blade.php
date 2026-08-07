@@ -1,177 +1,301 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Ficha Técnica</title>
+    <title>Ficha Técnica - SISDOC</title>
 
     <style>
+        @page {
+            margin: 25px 35px 40px 35px;
+        }
+
         body {
-            font-family: DejaVu Sans, Arial, sans-serif;
-            font-size: 10px;
-            color: #333;
-            margin: 30px;
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            font-size: 9px;
+            color: #2c3e50;
+            line-height: 1.4;
         }
 
-        .titulo {
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .subtitulo {
-            font-size: 13px;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #999;
-            padding-bottom: 3px;
-        }
-
-        table {
+        /* Encabezado */
+        .header-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 5px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #6f42c1;
+            padding-bottom: 8px;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .header-table td {
+            border: none;
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .brand-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #6f42c1;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+
+        .doc-type {
+            text-align: right;
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        /* Secciones y Subtítulos */
+        .subtitulo {
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #6f42c1;
+            padding: 4px 8px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tablas */
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6px;
+            table-layout: fixed;
+        }
+
+        table.data-table th {
+            background-color: #f1f3f5;
+            color: #495057;
             text-align: left;
             font-weight: bold;
-            padding: 6px;
-            border: 1px solid #ccc;
+            font-size: 8.5px;
+            padding: 5px 6px;
+            border: 1px solid #dee2e6;
+            text-transform: uppercase;
         }
 
-        td {
-            padding: 6px;
-            border: 1px solid #ccc;
+        table.data-table td {
+            padding: 5px 6px;
+            border: 1px solid #dee2e6;
+            vertical-align: top;
+            word-wrap: break-word;
         }
 
-        .sin-borde td {
-            border: none;
-            padding: 3px 0;
-        }
-
-        .label {
+        /* Badges / Etiquetas de Estatus */
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 8px;
             font-weight: bold;
-            width: 30%;
-        }
-
-        .valor {
-            width: 70%;
-        }
-
-        .footer {
-            margin-top: 30px;
-            font-size: 9px;
+            color: #ffffff;
+            border-radius: 3px;
             text-align: center;
-            color: #777;
+        }
+        .badge-purple { background-color: #6f42c1; }
+        .badge-secondary { background-color: #6c757d; }
+
+        /* Helpers de Texto */
+        .font-weight-bold { font-weight: bold; }
+        .text-purple { color: #6f42c1; }
+        .text-muted { color: #6c757d; }
+        .text-center { text-align: center; }
+
+        /* Pie de página */
+        .footer {
+            position: fixed;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            font-size: 8px;
+            text-align: center;
+            color: #adb5bd;
+            border-top: 1px solid #e9ecef;
+            padding-top: 5px;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="titulo">S.I.S.D.O.C.</div>
-
-    <!-- DATOS GENERALES -->
-    <div class="subtitulo">DATOS GENERALES</div>
-
-    <table>
+    <!-- ENCABEZADO INSTITUCIONAL -->
+    <table class="header-table">
         <tr>
-            <th>FOLIO</th>
-            <th>STATUS</th>
-            <th>CONSECUTIVO</th>
-            <th>FECHA DOCUMENTO</th>
-            <th>FECHA RECEPCION</th>
-            <th>TIPO</th>
-        </tr>
-        <tr>
-            <td>{{ $documentoRecibido->folio }}</td>
-            <td>{{ $documentoRecibido->status }}</td>
-            <td>{{ $documentoRecibido->consecutivo }}</td>
-            <td>{{ $documentoRecibido->fecha_documento ? \Carbon\Carbon::parse($documentoRecibido->fecha_documento)->format('d-m-Y') : 'N/A' }}</td>
-            <td>{{ $documentoRecibido->fecha_recepcion ? \Carbon\Carbon::parse($documentoRecibido->fecha_recepcion)->format('d-m-Y H:i') : 'N/A' }}</td>
-            <td>{{ $documentoRecibido->tipo }}</td>
+            <td style="width: 60%;">
+                <div class="brand-title">SISDOC</div>
+                <div class="brand-subtitle">Sistema de Documentación y Control | Servicios de Salud de Coahuila</div>
+            </td>
+            <td style="width: 40%;" class="doc-type">
+                Ficha Técnica de Documento
+            </td>
         </tr>
     </table>
 
-    <table>
-        <tr>
-            <th>FECHA LIMITE</th>
-            <th>ANEXOS</th>
-        </tr>
-        <tr>
-            <td>{{ $documentoRecibido->fecha_limite }}</td>
-            <td>{{ $documentoRecibido->anexo }} - {{ $documentoRecibido->anexo_descripcion }}</td>
-        </tr>
+    <!-- DATOS GENERALES -->
+    <div class="subtitulo">Datos Generales</div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 18%;">FOLIO</th>
+                <th style="width: 14%;">ESTATUS</th>
+                <th style="width: 14%;">CONSECUTIVO</th>
+                <th style="width: 18%;">FECHA DOC.</th>
+                <th style="width: 18%;">FECHA RECEPCIÓN</th>
+                <th style="width: 18%;">TIPO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold text-purple">{{ $documentoRecibido->folio }}</td>
+                <td>
+                    <span class="badge badge-purple">{{ strtoupper($documentoRecibido->status ?? 'REGISTRADO') }}</span>
+                </td>
+                <td>{{ $documentoRecibido->consecutivo }}</td>
+                <td>{{ $documentoRecibido->fecha_documento ? \Carbon\Carbon::parse($documentoRecibido->fecha_documento)->format('d/m/Y') : 'N/A' }}</td>
+                <td>{{ $documentoRecibido->fecha_recepcion ? \Carbon\Carbon::parse($documentoRecibido->fecha_recepcion)->format('d/m/Y H:i') : 'N/A' }}</td>
+                <td>{{ $documentoRecibido->tipo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 30%;">FECHA LÍMITE DE ATENCIÓN</th>
+                <th style="width: 70%;">ANEXOS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold" style="color: #d9534f;">
+                    {{ $documentoRecibido->fecha_limite ? \Carbon\Carbon::parse($documentoRecibido->fecha_limite)->format('d/m/Y') : 'Sin fecha límite' }}
+                </td>
+                <td>
+                    @if($documentoRecibido->anexo)
+                        {{ $documentoRecibido->anexo }} {{ $documentoRecibido->anexo_descripcion ? ' - ' . $documentoRecibido->anexo_descripcion : '' }}
+                    @else
+                        <span class="text-muted">Sin anexos registrados</span>
+                    @endif
+                </td>
+            </tr>
+        </tbody>
     </table>
 
     <!-- EMISOR -->
-    <div class="subtitulo">EMISOR</div>
+    <div class="subtitulo">Información del Emisor</div>
 
-    <table>
-        <tr>
-            <td>{{ $documentoRecibido->emisor }} - {{ $documentoRecibido->emisor_encargado }}</td>
-        </tr>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 50%;">INSTITUCIÓN / DEPENDENCIA EMISORA</th>
+                <th style="width: 50%;">SERVIDOR PÚBLICO / ENCARGADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold">{{ $documentoRecibido->emisor }}</td>
+                <td>{{ $documentoRecibido->emisor_encargado ?? 'No especificado' }}</td>
+            </tr>
+        </tbody>
     </table>
 
-    <!-- SEGUIMIENTO -->
-    <div class="subtitulo">SEGUIMIENTO</div>
+    <!-- ASUNTO -->
+    <div class="subtitulo">Asunto del Documento</div>
 
-    <table>
-        <tr>
-            <th>TURNADO A</th>
-            <th>FECHA</th>
-        </tr>
-        <tr>
-            <td>{{ $documentoRecibido->turnado_area_label }} <strong>{{ $documentoRecibido->turnado_area_encargado }}</strong></td>
-            <td>{{ $documentoRecibido->turnado_area_fecha }}</td>
-            
-        </tr>
+    <table class="data-table">
+        <tbody>
+            <tr>
+                <td style="background-color: #fafafa; padding: 8px;">
+                    {{ $documentoRecibido->asunto }}
+                </td>
+            </tr>
+        </tbody>
     </table>
 
-    <table>
-        <tr>
-            <th>OBSERVACIONES</th>
-        </tr>
-        <tr>
-            <td>{!! $documentoRecibido->turnado_area_observaciones !!}</td>
-        </tr>
+    <!-- OBSERVACIONES GENERALES DE CAPTURA -->
+    @if($documentoRecibido->contenido)
+    <div class="subtitulo">Observaciones de Recepción</div>
+
+    <table class="data-table">
+        <tbody>
+            <tr>
+                <td style="background-color: #fafafa; padding: 8px;">
+                    {!! $documentoRecibido->contenido !!}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @endif
+
+    <!-- SEGUIMIENTO Y TURNADO -->
+    <div class="subtitulo">Seguimiento y Atención</div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 70%;">ÁREA / DEPARTAMENTO TURNADO</th>
+                <th style="width: 30%;">FECHA DE TURNADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <strong>{{ $documentoRecibido->turnado_area_label ?? 'Sin turnar' }}</strong>
+                    @if($documentoRecibido->turnado_area_encargado)
+                        <br><span class="text-muted">Atención: {{ $documentoRecibido->turnado_area_encargado }}</span>
+                    @endif
+                </td>
+                <td>{{ $documentoRecibido->turnado_area_fecha ? \Carbon\Carbon::parse($documentoRecibido->turnado_area_fecha)->format('d/m/Y H:i') : 'N/A' }}</td>
+            </tr>
+        </tbody>
     </table>
 
-    <table>
-        <tr>
-            <th>RESPUESTA</th>
-        </tr>
-        <tr>
-            <td>{!! $documentoRecibido->turnado_area_respuesta !!}</td>
-        </tr>
+    @if($documentoRecibido->turnado_area_observaciones)
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>INSTRUCCIONES / OBSERVACIONES DE TURNADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{!! $documentoRecibido->turnado_area_observaciones !!}</td>
+            </tr>
+        </tbody>
     </table>
+    @endif
 
-    <div class="subtitulo">ASUNTO</div>
-
-    <table>
-        <tr>
-            <td>{{ $documentoRecibido->asunto }}</td>
-        </tr>
+    @if($documentoRecibido->turnado_area_respuesta)
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="background-color: #e8f5e9; color: #2e7d32;">RESPUESTA / ESTATUS DE ATENCIÓN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color: #f1f8e9;">{!! $documentoRecibido->turnado_area_respuesta !!}</td>
+            </tr>
+        </tbody>
     </table>
+    @endif
 
-    
-
-    <!-- CONTENIDO -->
-    <div class="subtitulo">OBSERVACIONES</div>
-
-    <table>
-        <tr>
-            <td>{!! $documentoRecibido->contenido !!}</td>
-        </tr>
-    </table>
-
-    
-    <!-- FOOTER -->
+    <!-- PIE DE PÁGINA -->
     <div class="footer">
-        Documento generado automáticamente - {{ now()->format('d/m/Y H:i') }}
+        SISDOC — Documento impreso automáticamente el {{ now()->format('d/m/Y \a \l\a\s H:i') }} hrs.
     </div>
 
 </body>
