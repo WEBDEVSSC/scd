@@ -12,7 +12,7 @@
         body {
             font-family: 'DejaVu Sans', Arial, sans-serif;
             font-size: 9px;
-            color: #2c3e50;
+            color: #000000;
             line-height: 1.4;
         }
 
@@ -21,7 +21,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 15px;
-            border-bottom: 2px solid #6f42c1;
+            border-bottom: 2px solid #000000;
             padding-bottom: 8px;
         }
 
@@ -34,14 +34,14 @@
         .brand-title {
             font-size: 16px;
             font-weight: bold;
-            color: #6f42c1;
+            color: #000000;
             margin: 0;
             letter-spacing: 1px;
         }
 
         .brand-subtitle {
             font-size: 9px;
-            color: #6c757d;
+            color: #333333;
             margin-top: 2px;
         }
 
@@ -49,7 +49,7 @@
             text-align: right;
             font-size: 12px;
             font-weight: bold;
-            color: #333;
+            color: #000000;
             text-transform: uppercase;
         }
 
@@ -58,11 +58,10 @@
             font-size: 10px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #6f42c1;
+            background-color: #333333;
             padding: 4px 8px;
             margin-top: 12px;
             margin-bottom: 6px;
-            border-radius: 2px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -76,40 +75,37 @@
         }
 
         table.data-table th {
-            background-color: #f1f3f5;
-            color: #495057;
+            background-color: #f2f2f2;
+            color: #000000;
             text-align: left;
             font-weight: bold;
             font-size: 8.5px;
             padding: 5px 6px;
-            border: 1px solid #dee2e6;
+            border: 1px solid #777777;
             text-transform: uppercase;
         }
 
         table.data-table td {
             padding: 5px 6px;
-            border: 1px solid #dee2e6;
+            border: 1px solid #777777;
             vertical-align: top;
             word-wrap: break-word;
         }
 
         /* Badges / Etiquetas de Estatus */
-        .badge {
+        .badge-bw {
             display: inline-block;
             padding: 2px 6px;
             font-size: 8px;
             font-weight: bold;
             color: #ffffff;
-            border-radius: 3px;
+            background-color: #555555;
             text-align: center;
         }
-        .badge-purple { background-color: #6f42c1; }
-        .badge-secondary { background-color: #6c757d; }
 
         /* Helpers de Texto */
         .font-weight-bold { font-weight: bold; }
-        .text-purple { color: #6f42c1; }
-        .text-muted { color: #6c757d; }
+        .text-muted { color: #555555; }
         .text-center { text-align: center; }
 
         /* Pie de página */
@@ -121,8 +117,8 @@
             height: 20px;
             font-size: 8px;
             text-align: center;
-            color: #adb5bd;
-            border-top: 1px solid #e9ecef;
+            color: #555555;
+            border-top: 1px solid #777777;
             padding-top: 5px;
         }
     </style>
@@ -159,9 +155,9 @@
         </thead>
         <tbody>
             <tr>
-                <td class="font-weight-bold text-purple">{{ $documentoRecibido->folio }}</td>
+                <td class="font-weight-bold">{{ $documentoRecibido->folio }}</td>
                 <td>
-                    <span class="badge badge-purple">{{ strtoupper($documentoRecibido->status ?? 'REGISTRADO') }}</span>
+                    <span class="badge-bw">{{ strtoupper($documentoRecibido->status ?? 'REGISTRADO') }}</span>
                 </td>
                 <td>{{ $documentoRecibido->consecutivo }}</td>
                 <td>{{ $documentoRecibido->fecha_documento ? \Carbon\Carbon::parse($documentoRecibido->fecha_documento)->format('d/m/Y') : 'N/A' }}</td>
@@ -180,7 +176,7 @@
         </thead>
         <tbody>
             <tr>
-                <td class="font-weight-bold" style="color: #d9534f;">
+                <td class="font-weight-bold">
                     {{ $documentoRecibido->fecha_limite ? \Carbon\Carbon::parse($documentoRecibido->fecha_limite)->format('d/m/Y') : 'Sin fecha límite' }}
                 </td>
                 <td>
@@ -218,7 +214,7 @@
     <table class="data-table">
         <tbody>
             <tr>
-                <td style="background-color: #fafafa; padding: 8px;">
+                <td style="padding: 8px;">
                     {{ $documentoRecibido->asunto }}
                 </td>
             </tr>
@@ -232,7 +228,7 @@
     <table class="data-table">
         <tbody>
             <tr>
-                <td style="background-color: #fafafa; padding: 8px;">
+                <td style="padding: 8px;">
                     {!! $documentoRecibido->contenido !!}
                 </td>
             </tr>
@@ -282,12 +278,12 @@
     <table class="data-table">
         <thead>
             <tr>
-                <th style="background-color: #e8f5e9; color: #2e7d32;">RESPUESTA / ESTATUS DE ATENCIÓN</th>
+                <th>RESPUESTA / ESTATUS DE ATENCIÓN</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td style="background-color: #f1f8e9;">{!! $documentoRecibido->turnado_area_respuesta !!}</td>
+                <td>{!! $documentoRecibido->turnado_area_respuesta !!}</td>
             </tr>
         </tbody>
     </table>
