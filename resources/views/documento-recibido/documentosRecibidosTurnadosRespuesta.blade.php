@@ -1,126 +1,152 @@
 @extends('adminlte::page')
 
-@section('title', 'Cargar Documento')
+@section('title', 'Cargar Documento | Panel de Control')
+
+@section('plugins.Sweetalert2', true)
 
 @section('content_header')
-    <h1>
-        <strong>Documentos Recibidos</strong>
-        <small class="text-muted">Respuesta</small>
-    </h1>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+            <h1 class="m-0 text-dark font-weight-bold">Documentos Recibidos</h1>
+            <small class="text-muted">Respuesta</small>
+        </div>
+        <div>
+            <a href="{{ route('documentosRecibidosIndex') }}" class="btn btn-outline-secondary font-weight-bold shadow-sm">
+                <i class="fas fa-arrow-left mr-1"></i> REGRESAR
+            </a>
+        </div>
+    </div>
 @stop
 
 @section('content')
 
-<div class="row">
+    <!-- Alertas SweetAlert2 -->
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: '¡Registro completado!',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonColor: '#6f42c1',
+                    confirmButtonText: 'Aceptar'
+                });
+            });
+        </script>
+    @endif
 
-    {{-- ======================= CARGA DE DOCUMENTO ======================= --}}
-    <div class="col-md-6">
+    <div class="row">
 
-        <form action="{{ route('documentosRecibidosTurnadosRespuestaStore', $documento->id) }}" method="POST" enctype="multipart/form-data">
+        {{-- ======================= CARGA DE DOCUMENTO ======================= --}}
+        <div class="col-md-6">
 
-            @csrf
-            @method('PUT')
+            <form action="{{ route('documentosRecibidosTurnadosRespuestaStore', $documento->id) }}" 
+                  method="POST" 
+                  enctype="multipart/form-data">
 
-            <div class="card card-info card-outline">
+                @csrf
+                @method('PUT')
 
-                <div class="card-header">
-                    <p class="mb-1"><strong>Folio:</strong> {{ $documento->folio }}</p>
-                    <p class="mb-1"><strong>Emisor:</strong> {{ $documento->emisor }}</p>
-                    <p class="mb-0"><strong>Asunto:</strong> {{ $documento->asunto }}</p>
-                </div>
+                <div class="card card-outline card-purple shadow-sm border-0">
 
-                <div class="card-body">
+                    <div class="card-header bg-white py-3">
+                        <h3 class="card-title font-weight-bold text-dark mb-0">
+                            <i class="fas fa-reply text-purple mr-2"></i> Registrar Respuesta
+                        </h3>
+                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
+                    <div class="card-body p-4">
 
-                            <p><strong>Respuesta</strong></p>
+                        <div class="bg-light p-3 rounded mb-4 border">
+                            <p class="mb-2"><strong>Folio:</strong> <span class="text-purple font-weight-bold">{{ $documento->folio }}</span></p>
+                            <p class="mb-2"><strong>Emisor:</strong> {{ $documento->emisor }}</p>
+                            <p class="mb-0"><strong>Asunto:</strong> {{ $documento->asunto }}</p>
+                        </div>
 
-                            <textarea name="contenido" id="contenido" class="form-control" rows="10">{{ old('contenido') }}</textarea>
-                            
+                        <div class="form-group mb-4">
+                            <label for="contenido" class="font-weight-bold text-dark">Respuesta</label>
+                            <textarea name="contenido" 
+                                      id="contenido" 
+                                      class="form-control @error('contenido') is-invalid @enderror" 
+                                      rows="10">{{ old('contenido') }}</textarea>
+
                             @error('contenido')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback d-block mt-2">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="documento">Selecciona documento en PDF</label>
+                        <div class="form-group mb-3">
+                            <label for="documento" class="font-weight-bold text-dark">Selecciona documento en PDF</label>
+                            <div class="custom-file">
                                 <input type="file"
-                                    name="documento"
-                                    id="documento"
-                                    class="form-control-file"
-                                    accept="application/pdf"
-                                    required>
-
-                                @error('documento')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                       name="documento"
+                                       id="documento"
+                                       class="custom-file-input @error('documento') is-invalid @enderror"
+                                       accept="application/pdf"
+                                       required>
+                                <label class="custom-file-label" for="documento" data-browse="Buscar">Elegir archivo PDF...</label>
                             </div>
+
+                            @error('documento')
+                                <span class="invalid-feedback d-block mt-2">{{ $message }}</span>
+                            @enderror
                         </div>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger mt-3 mb-0">
+                                <ul class="mb-0 pl-3">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
 
-                    
+                    <div class="card-footer bg-white text-right py-3">
+                        <button type="submit" class="btn btn-purple font-weight-bold px-4 shadow-sm">
+                            <i class="fas fa-check-circle mr-1"></i> REGISTRAR RESPUESTA
+                        </button>
+                    </div>
 
-                    
+                </div>
+            </form>
+        </div>
 
-                    
+        {{-- ======================= VISTA PREVIA ======================= --}}
+        <div class="col-md-6">
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger mt-2">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+            <div class="card card-outline card-purple shadow-sm border-0">
+
+                <div class="card-header bg-white py-3">
+                    <h3 class="card-title font-weight-bold text-dark mb-0">
+                        <i class="fas fa-file-pdf text-purple mr-2"></i> Vista Previa del Documento
+                    </h3>
+                </div>
+
+                <div class="card-body p-0">
+
+                    @if ($documento->documento)
+                        <iframe
+                            src="{{ route('verDocumento', $documento->id) }}"
+                            width="100%"
+                            height="600"
+                            style="border: none;">
+                        </iframe>
+                    @else
+                        <div class="p-5 text-center text-muted">
+                            <i class="fas fa-file-pdf fa-4x text-purple mb-3 opacity-50"></i>
+                            <p class="h6 text-secondary mb-0">No hay documento cargado actualmente.</p>
                         </div>
                     @endif
 
                 </div>
 
-                <div class="card-footer text-right">
-                    <button type="submit" class="btn btn-info">
-                        <i class="fa fa-check-circle"></i> Registrar respuesta
-                    </button>
-                </div>
-
             </div>
-        </form>
-    </div>
-
-    {{-- ======================= VISTA PREVIA ======================= --}}
-    <div class="col-md-6">
-
-        <div class="card card-secondary card-outline">
-
-            <div class="card-header">
-                <strong>Vista previa del documento</strong>
-            </div>
-
-            <div class="card-body p-0">
-
-                @if ($documento->documento)
-                    <iframe
-                        src="{{ route('verDocumento', $documento->id) }}"
-                        width="100%"
-                        height="600"
-                        style="border: none;">
-                    </iframe>
-                @else
-                    <div class="p-4 text-center text-muted">
-                        <i class="fa fa-file-pdf fa-3x mb-2"></i>
-                        <p>No hay documento cargado.</p>
-                    </div>
-                @endif
-
-            </div>
-
         </div>
-    </div>
 
-</div>
+    </div>
 
 @stop
 
@@ -129,32 +155,73 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <style>
+        /* Identidad Morada Institucional */
+        .text-purple { color: #6f42c1 !important; }
+
+        .card-purple.card-outline {
+            border-top: 3px solid #6f42c1;
+        }
+
+        .btn-purple {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+            color: #ffffff;
+        }
+
+        .btn-purple:hover {
+            background-color: #5a32a3;
+            border-color: #5a32a3;
+            color: #ffffff;
+        }
+
+        .custom-file-input:focus ~ .custom-file-label {
+            border-color: #6f42c1;
+            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+        }
+
+        .custom-file-label::after {
+            background-color: #6f42c1;
+            color: #ffffff;
+        }
+
+        /* Estilos Summernote integrados */
+        .note-editor.note-frame {
+            border-color: #ced4da;
+            border-radius: 0.25rem;
+        }
+
+        .note-editor.note-frame:focus-within {
+            border-color: #6f42c1;
+            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+        }
+    </style>
 @stop
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
 
-
     <script>
-    $(document).ready(function() {
+        $(document).ready(function() {
+            // Inicialización de Summernote
+            $('#contenido').summernote({
+                height: 200,
+                lang: 'es-ES',
+                toolbar: [
+                    ['font', ['bold', 'italic', 'underline']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']]
+                ]
+            });
 
-        $('#contenido').summernote({
-            height: 200,
-            lang: 'es-ES',
-            toolbar: [
-                ['font', ['bold', 'italic', 'underline']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']]
-            ]
+            // Mostrar el nombre del archivo seleccionado en el input de BS4
+            $('.custom-file-input').on('change', function () {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
         });
-
-    });
     </script>
-
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
 @stop
-

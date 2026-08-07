@@ -1,92 +1,107 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Mis Áreas | Panel de Control')
 
 @section('plugins.Sweetalert2', true)
+@section('plugins.Datatables', true)
 
 @section('content_header')
-<h1><strong>Configuración</strong><small> Mis Áreas</small></h1>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+            <h1 class="m-0 text-dark font-weight-bold">Configuración</h1>
+            <small class="text-muted">Mis Áreas</small>
+        </div>
+        <div>
+            <a href="{{ route('createArea') }}" class="btn btn-purple font-weight-bold shadow-sm">
+                <i class="fas fa-plus-circle mr-1"></i> NUEVA ÁREA
+            </a>
+        </div>
+    </div>
 @stop
 
 @section('content')
 
-<!-- ---------------------------------------------------------------- -->
-
+    <!-- Alertas SweetAlert2 -->
     @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: '¡Registro completado! ',
+                    title: '¡Registro completado!',
                     text: "{{ session('success') }}",
                     icon: 'success',
-                    confirmButtonText: 'Ok'
+                    confirmButtonColor: '#6f42c1',
+                    confirmButtonText: 'Aceptar'
                 });
             });
         </script>
     @endif
 
-<!-- ---------------------------------------------------------------- -->
+    <div class="card card-outline card-purple shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h3 class="card-title font-weight-bold text-dark mb-0">
+                <i class="fas fa-sitemap text-purple mr-2"></i> Listado de Áreas Registradas
+            </h3>
+        </div>
 
-<div class="card card-info card-outline">
-    <div class="card-body">
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>NOMBRE</th>
-                    <th>RESPONSABLE</th>
-                    <th>SIGLAS</th>
-                    <th>CORREO</th>
-                    <th>EXTENSIÓN</th> 
-                    <th>TIPO</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($areas as $area)
-                    <tr>
-                        <td>{{ $area->id }}</td>
-                        <td>{{ $area->nombre }}</td>
-                        <td>{{ $area->responsable }}</td>
-                        <td>{{ $area->siglas }}</td>
-                        <td>{{ $area->correo }}</td>
-                        <td>{{ $area->extension }}</td>
-                        <td>
-                        <!-- DESPACHO -->
-                        @if($area->tipo == 1)
-                            <button class="btn btn-sx btn-primary btn-sm btn-block">SECRETARIO DE SALUD</button>
-                        <!-- SUBSECRETARIA -->
-                        @elseif($area->tipo == 2)
-                            <button class="btn btn-sx btn-secondary btn-sm btn-block">SUBSECRETARIA</button>
-                        <!-- SUBDIRECCION -->
-                        @elseif($area->tipo == 3)
-                            <button class="btn btn-sx btn-success btn-sm btn-block">SUBDIRECCIÓN</button>
-                        <!-- JEFATURA -->
-                        @elseif($area->tipo == 4)
-                            <button class="btn btn-sx btn-info btn-sm btn-block">JEFATURA</button>
-                        <!-- AREA / PROGRAMA -->
-                        @elseif($area->tipo == 5)
-                            <button class="btn btn-sx btn-dark btn-sm btn-block">PROGRAMA / AREA</button>
-                        <!-- UNIDAD -->
-                        @elseif($area->tipo == 6)
-                            <button class="btn btn-sx btn-warning btn-sm btn-block">UNIDAD</button>
-                        @else
-                            <button class="btn btn-sx btn-danger btn-block">ERROR : SIN TIPO </button>
-                        @endif
-                    </td>
-                        <td>
-
-                            <a href="{{ route('editArea', $area->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Actualizar Registro"><i class="fa-solid fa-pen-to-square"></i></a>
-
-                        </td> 
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tabla-areas" class="table table-hover table-striped align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="text-center" style="width: 50px;">ID</th>
+                            <th>NOMBRE</th>
+                            <th>RESPONSABLE</th>
+                            <th>SIGLAS</th>
+                            <th>CORREO</th>
+                            <th>EXTENSIÓN</th> 
+                            <th class="text-center" style="width: 160px;">TIPO</th>
+                            <th class="text-center" style="width: 80px;">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($areas as $area)
+                            <tr>
+                                <td class="text-center font-weight-bold text-secondary">{{ $area->id }}</td>
+                                <td class="font-weight-bold text-dark">{{ $area->nombre }}</td>
+                                <td class="text-secondary">{{ $area->responsable }}</td>
+                                <td>
+                                    <span class="badge badge-light border text-dark font-weight-bold">{{ $area->siglas }}</span>
+                                </td>
+                                <td class="text-secondary">{{ $area->correo }}</td>
+                                <td class="text-secondary">{{ $area->extension }}</td>
+                                <td class="text-center">
+                                    @if($area->tipo == 1)
+                                        <span class="badge badge-purple px-2 py-1 d-block">SECRETARIO DE SALUD</span>
+                                    @elseif($area->tipo == 2)
+                                        <span class="badge badge-secondary px-2 py-1 d-block">SUBSECRETARÍA</span>
+                                    @elseif($area->tipo == 3)
+                                        <span class="badge badge-success px-2 py-1 d-block">SUBDIRECCIÓN</span>
+                                    @elseif($area->tipo == 4)
+                                        <span class="badge badge-info px-2 py-1 d-block">JEFATURA</span>
+                                    @elseif($area->tipo == 5)
+                                        <span class="badge badge-dark px-2 py-1 d-block">PROGRAMA / ÁREA</span>
+                                    @elseif($area->tipo == 6)
+                                        <span class="badge badge-warning px-2 py-1 d-block text-dark">UNIDAD</span>
+                                    @else
+                                        <span class="badge badge-danger px-2 py-1 d-block">SIN TIPO</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('editArea', $area->id) }}" 
+                                       class="btn btn-outline-purple btn-sm shadow-sm" 
+                                       data-toggle="tooltip" 
+                                       data-placement="top" 
+                                       title="Editar Registro">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                </td> 
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
     
 @stop
 
@@ -95,16 +110,67 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    <link rel="stylesheet" href="/css/admin_custom.css"> 
+    <style>
+        /* Identidad Morada Institucional */
+        .text-purple { color: #6f42c1 !important; }
+        .bg-purple { background-color: #6f42c1 !important; }
+
+        .card-purple.card-outline {
+            border-top: 3px solid #6f42c1;
+        }
+
+        .badge-purple {
+            background-color: #6f42c1;
+            color: #ffffff;
+        }
+
+        .btn-purple {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+            color: #ffffff;
+        }
+
+        .btn-purple:hover {
+            background-color: #5a32a3;
+            border-color: #5a32a3;
+            color: #ffffff;
+        }
+
+        .btn-outline-purple {
+            color: #6f42c1;
+            border-color: #6f42c1;
+            background-color: transparent;
+        }
+
+        .btn-outline-purple:hover {
+            background-color: #6f42c1;
+            color: #ffffff;
+        }
+
+        /* Estilos DataTables */
+        .page-item.active .page-link {
+            background-color: #6f42c1 !important;
+            border-color: #6f42c1 !important;
+        }
+    </style>
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
-
     <script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+        $(document).ready(function () {
+            // Inicialización de Tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Inicialización de DataTables
+            $('#tabla-areas').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+                "responsive": true,
+                "autoWidth": false,
+                "pageLength": 10,
+                "order": [[ 0, "desc" ]]
+            });
+        });
     </script>
 @stop

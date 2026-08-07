@@ -50,5 +50,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('titularUnidad', function ($user) {
             return $user->role === 'titularUnidad';
         });
+
+        // Menu para DESPACHO
+        Gate::define('despacho', function ($user) {
+            return $user->role === 'despacho';
+        });
     }
 }

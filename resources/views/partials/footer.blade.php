@@ -1,1 +1,5 @@
-<p><strong>SISDOC</strong>  Sistema de Documentación y Control<strong> | <small>Copyright © <?php echo date('Y'); ?> Servicios de Salud de Coahuila de Zaragoza </small></p>
+<p class="mb-0 text-muted">
+    <strong>SISDOC</strong> Sistema de Documentación y Control
+    <span class="mx-1">|</span>
+    <small>Copyright &copy; {{ date('Y') }} Servicios de Salud de Coahuila de Zaragoza</small>
+</p>

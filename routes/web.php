@@ -241,6 +241,17 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('admin/info',[DirectorioController::class,'phpInfo'])->name('phpInfo');
 
+  /*******************************************************************************************
+   * 
+   * 
+   * SALA DE JUNTAS
+   * 
+   * 
+    ******************************************************************************************/
+
+  Route::get('admin/despacho/sala-de-juntas',[DirectorioController::class,'salaDeJuntasIndex'])->name('salaDeJuntasIndex');
+
+
 
 });
 
