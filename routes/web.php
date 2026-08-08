@@ -58,10 +58,6 @@ Route::middleware(['auth'])->group(function ()
 
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-  Route::get('admin/phpinfo', function () {
-      return phpinfo();
-  })->name('phpInfo');
-
   /*******************************************************************************************
    * 
    * 
@@ -244,8 +240,6 @@ Route::middleware(['auth'])->group(function ()
   Route::get('admin/sirectorio/edit/{id}',[DirectorioController::class,'directorioEdit'])->name('directorioEdit');
 
   Route::put('admin/sirectorio/update/{id}',[DirectorioController::class,'directorioUpdate'])->name('directorioUpdate');
-
-  Route::get('admin/info',[DirectorioController::class,'phpInfo'])->name('phpInfo');
 
   /*******************************************************************************************
    * 
