@@ -74,6 +74,11 @@
       color: #64748b;
     }
 
+    /* Manejo visual cuando hay error en el input-group */
+    .form-control.is-invalid ~ .input-group-append .input-group-text {
+      border-color: #dc3545;
+    }
+
     .custom-control-input:checked ~ .custom-control-label::before {
       border-color: #6f42c1;
       background-color: #6f42c1;
@@ -134,34 +139,67 @@
     </div>
     
     <div class="card-body login-card-body p-4">
+
+      {{-- Alerta general de errores (credenciales incorrectas) --}}
+      @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show text-sm py-2 px-3 mb-3" role="alert">
+          <i class="fas fa-exclamation-circle mr-1"></i>
+          <strong>Error de autenticación:</strong>
+          <ul class="mb-0 pl-3 mt-1">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+
       <form action="{{ route('login') }}" method="POST">
-        <!-- Token CSRF requerido para evitar el error 419 -->
         @csrf
         
         <!-- Campo Email -->
         <div class="form-group mb-3">
           <label class="text-secondary small font-weight-bold">Correo Electrónico</label>
           <div class="input-group">
-            <input type="email" name="email" class="form-control" placeholder="nombre@ejemplo.com" value="{{ old('email') }}" required autofocus>
+            <input type="email" 
+                   name="email" 
+                   class="form-control @error('email') is-invalid @enderror" 
+                   placeholder="nombre@ejemplo.com" 
+                   value="{{ old('email') }}" 
+                   required 
+                   autofocus>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
+          @error('email')
+            <span class="text-danger small font-weight-bold d-block mt-1">
+              <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+            </span>
+          @enderror
         </div>
 
         <!-- Campo Contraseña -->
         <div class="form-group mb-3">
           <label class="text-secondary small font-weight-bold">Contraseña</label>
           <div class="input-group">
-            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+            <input type="password" 
+                   name="password" 
+                   class="form-control @error('password') is-invalid @enderror" 
+                   placeholder="••••••••" 
+                   required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
+          @error('password')
+            <span class="text-danger small font-weight-bold d-block mt-1">
+              <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+            </span>
+          @enderror
         </div>
 
         <!-- Opciones adicionales -->
@@ -189,7 +227,7 @@
     </div>
     
     <div class="card-footer text-center bg-white border-0 pb-4">
-      <small class="text-muted">© 2026 SISDOC. Todos los derechos reservados.</small>
+      <small class="text-muted">© {{ date('Y') }} SISDOC. Todos los derechos reservados.</small>
     </div>
   </div>
 
