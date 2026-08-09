@@ -40,17 +40,17 @@
     <tbody>
         @foreach($documentos as $doc)
             <tr>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->consecutivo }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->folio }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->anio }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->status }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->fecha_documento->format('d-m-Y') }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->fecha_recepcion->format('d-m-Y H:i') }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->fecha_limite?->format('d-m-Y') }}</td>
+                <td style="vertical-align: middle;">{{ $doc->consecutivo }}</td>
+                <td style="vertical-align: middle;">{{ $doc->folio }}</td>
+                <td style="vertical-align: middle;">{{ $doc->anio }}</td>
+                <td style="vertical-align: middle;">{{ $doc->status }}</td>
+                <td style="vertical-align: middle;">{{ $doc->fecha_documento->format('d-m-Y') }}</td>
+                <td style="vertical-align: middle;">{{ $doc->fecha_recepcion->format('d-m-Y H:i') }}</td>
+                <td style="vertical-align: middle;">{{ $doc->fecha_limite?->format('d-m-Y') }}</td>
                 <td style="vertical-align: middle;">{{ $doc->asunto }}</td>
                 <td style="vertical-align: middle;">{{ $doc->turnado_area_label }}</td>
                 <td style="vertical-align: middle;">{{ $doc->turnado_area_encargado }}</td>
-                <td style="text-align: center; vertical-align: middle;">{{ $doc->turnado_area_fecha?->format('d-m-Y') }}</td>
+                <td style="vertical-align: middle;">{{ $doc->turnado_area_fecha?->format('d-m-Y') }}</td>
                 <td style="vertical-align: middle;">{{ strip_tags($doc->turnado_area_observaciones) }}</td>
             </tr>
         @endforeach
