@@ -642,20 +642,26 @@ class DocumentoRecibidoController extends Controller
     {
         $user = Auth::user();  
         
-        if ($user->nivel == 3) {            
+        // REPORTE PARA SUBDIRECTOR - TODOS LOS REGISTROS
+        if ($user->nivel == 3) 
+        {            
             $documentos = DocumentoRecibido::where('subdireccion_id', $user->id_area)
                 ->orderBy('created_at', 'DESC')
                 ->get();
-        } elseif ($user->nivel == 6) {
+        } 
+        elseif ($user->nivel == 6) 
+        {
             $documentos = DocumentoRecibido::where('titular_id', $user->id_area)   
                 ->orderBy('id', 'DESC')
                 ->get();
-        } else {
+        } 
+        else 
+        {
             $documentos = collect();
         }
 
         // Se pasan la colección $documentos como argumento a la clase del Export
-        return Excel::download(new DocumentosRecibidosExport($documentos), 'documentos_recibidos.xlsx');
+        return Excel::download(new DocumentosRecibidosExport($documentos, $user), 'documentos_recibidos.xlsx');
     }
 
     public function documentosRecibidosDestroy($id)
