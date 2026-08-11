@@ -12,9 +12,13 @@
             <small class="text-muted">Mis Áreas</small>
         </div>
         <div>
-            <a href="{{ route('createArea') }}" class="btn btn-purple font-weight-bold shadow-sm">
-                <i class="fas fa-plus-circle mr-1"></i> NUEVA ÁREA
-            </a>
+
+            @if(auth()->user()->role == 'admin')
+                <a href="{{ route('createArea') }}" class="btn btn-purple font-weight-bold shadow-sm">
+                    <i class="fas fa-plus-circle mr-1"></i> NUEVA ÁREA
+                </a>
+            @endif
+            
         </div>
     </div>
 @stop
