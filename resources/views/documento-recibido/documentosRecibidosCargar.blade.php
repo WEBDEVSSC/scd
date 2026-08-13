@@ -65,15 +65,13 @@
 
                         <div class="form-group mb-3">
                             <label for="documento" class="font-weight-bold text-dark">Selecciona documento en PDF</label>
-                            <div class="custom-file">
-                                <input type="file"
-                                       name="documento"
-                                       id="documento"
-                                       class="custom-file-input @error('documento') is-invalid @enderror"
-                                       accept="application/pdf"
-                                       required>
-                                <label class="custom-file-label" for="documento" data-browse="Buscar">Elegir archivo PDF...</label>
-                            </div>
+
+                            <!-- INPUT DE FILEPOND -->
+                            <input type="file" 
+                                   name="documento" 
+                                   id="documento" 
+                                   accept="application/pdf"
+                                   required />
 
                             @error('documento')
                                 <span class="invalid-feedback d-block mt-2">{{ $message }}</span>
@@ -102,14 +100,14 @@
             </form>
         </div>
 
-        {{-- ======================= VISTA PREVIA ======================= --}}
+        {{-- ======================= VISTA PREVIA ACTUAL ======================= --}}
         <div class="col-md-6">
 
             <div class="card card-outline card-purple shadow-sm border-0">
 
                 <div class="card-header bg-white py-3">
                     <h3 class="card-title font-weight-bold text-dark mb-0">
-                        <i class="fas fa-file-pdf text-purple mr-2"></i> Vista Previa del Documento
+                        <i class="fas fa-file-pdf text-purple mr-2"></i> Documento Almacenado
                     </h3>
                 </div>
 
@@ -143,6 +141,11 @@
 @stop
 
 @section('css')
+    <!-- FilePond Core CSS -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <!-- FilePond Plugin PDF Preview CSS -->
+    <link href="https://unpkg.com/filepond-plugin-pdf-preview/dist/filepond-plugin-pdf-preview.min.css" rel="stylesheet">
+
     <style>
         /* Identidad Morada Institucional */
         .text-purple { color: #6f42c1 !important; }
@@ -163,25 +166,63 @@
             color: #ffffff;
         }
 
-        .custom-file-input:focus ~ .custom-file-label {
-            border-color: #6f42c1;
-            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+        /* Estilos personalizados para acoplar FilePond al tema Morado */
+        .filepond--root {
+            font-family: inherit;
         }
-
-        .custom-file-label::after {
+        .filepond--panel-root {
+            background-color: #f8f9fa;
+            border: 2px dashed #6f42c1;
+            border-radius: 8px;
+        }
+        .filepond--drop-label {
+            color: #495057;
+        }
+        .filepond--label-action {
+            text-decoration-color: #6f42c1;
+            color: #6f42c1;
+            font-weight: bold;
+        }
+        .filepond--item-panel {
             background-color: #6f42c1;
-            color: #ffffff;
         }
     </style>
 @stop
 
 @section('js')
+    <!-- FilePond Core JS -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <!-- FilePond Plugin Validate Size -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <!-- FilePond Plugin Validate Type -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <!-- FilePond Plugin PDF Preview JS -->
+    <script src="https://unpkg.com/filepond-plugin-pdf-preview/dist/filepond-plugin-pdf-preview.min.js"></script>
+
     <script>
-        $(document).ready(function () {
-            // Mostrar el nombre del archivo seleccionado en el input de BS4
-            $('.custom-file-input').on('change', function () {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        document.addEventListener('DOMContentLoaded', function () {
+            // Registrar los Plugins requeridos
+            FilePond.registerPlugin(
+                FilePondPluginFileValidateType,
+                FilePondPluginFileValidateSize,
+                FilePondPluginPdfPreview
+            );
+
+            // Obtener el elemento input
+            const inputElement = document.querySelector('input[id="documento"]');
+
+            // Crear la instancia de FilePond
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true, // IMPORTANTE: Permite enviar el archivo tradicionalmente vía POST/PUT en el form
+                allowMultiple: false,
+                maxFileSize: '10MB',
+                acceptedFileTypes: ['application/pdf'],
+                labelIdle: 'Arrastra tu archivo PDF o <span class="filepond--label-action">Examinar</span>',
+                labelFileTypeNotAllowed: 'Archivo no válido. Solo se permiten PDF.',
+                fileValidateTypeLabelExpectedTypes: 'Se espera {allTypes}',
+                allowPdfPreview: true,
+                pdfPreviewHeight: 220,
+                pdfComponentExtraParams: 'toolbar=0&navpanes=0&scrollbar=0'
             });
         });
     </script>

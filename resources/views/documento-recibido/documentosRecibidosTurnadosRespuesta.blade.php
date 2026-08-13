@@ -77,15 +77,13 @@
 
                         <div class="form-group mb-3">
                             <label for="documento" class="font-weight-bold text-dark">Selecciona documento en PDF</label>
-                            <div class="custom-file">
-                                <input type="file"
-                                       name="documento"
-                                       id="documento"
-                                       class="custom-file-input @error('documento') is-invalid @enderror"
-                                       accept="application/pdf"
-                                       required>
-                                <label class="custom-file-label" for="documento" data-browse="Buscar">Elegir archivo PDF...</label>
-                            </div>
+                            
+                            <!-- INPUT ADAPTADO PARA FILEPOND -->
+                            <input type="file"
+                                   name="documento"
+                                   id="documento"
+                                   accept="application/pdf"
+                                   required>
 
                             @error('documento')
                                 <span class="invalid-feedback d-block mt-2">{{ $message }}</span>
@@ -155,7 +153,13 @@
 @stop
 
 @section('css')
+    <!-- Summernote CSS -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    
+    <!-- FilePond CSS -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-pdf-preview/dist/filepond-plugin-pdf-preview.min.css" rel="stylesheet">
+
     <style>
         /* Identidad Morada Institucional */
         .text-purple { color: #6f42c1 !important; }
@@ -176,17 +180,7 @@
             color: #ffffff;
         }
 
-        .custom-file-input:focus ~ .custom-file-label {
-            border-color: #6f42c1;
-            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
-        }
-
-        .custom-file-label::after {
-            background-color: #6f42c1;
-            color: #ffffff;
-        }
-
-        /* Estilos Summernote integrados */
+        /* Estilos Summernote */
         .note-editor.note-frame {
             border-color: #ced4da;
             border-radius: 0.25rem;
@@ -196,16 +190,45 @@
             border-color: #6f42c1;
             box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
         }
+
+        /* Estilos personalizados para FilePond */
+        .filepond--root {
+            font-family: inherit;
+        }
+        .filepond--panel-root {
+            background-color: #f8f9fa;
+            border: 2px dashed #6f42c1;
+            border-radius: 8px;
+        }
+        .filepond--drop-label {
+            color: #495057;
+        }
+        .filepond--label-action {
+            text-decoration-color: #6f42c1;
+            color: #6f42c1;
+            font-weight: bold;
+        }
+        .filepond--item-panel {
+            background-color: #6f42c1;
+        }
     </style>
 @stop
 
 @section('js')
+    <!-- Summernote JS -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-es-ES.min.js"></script>
 
+    <!-- FilePond Core JS -->
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <!-- FilePond Plugins -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-pdf-preview/dist/filepond-plugin-pdf-preview.min.js"></script>
+
     <script>
         $(document).ready(function() {
-            // Inicialización de Summernote
+            // 1. Inicialización de Summernote
             $('#contenido').summernote({
                 height: 200,
                 lang: 'es-ES',
@@ -217,10 +240,26 @@
                 ]
             });
 
-            // Mostrar el nombre del archivo seleccionado en el input de BS4
-            $('.custom-file-input').on('change', function () {
-                let fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            // 2. Inicialización de FilePond
+            FilePond.registerPlugin(
+                FilePondPluginFileValidateType,
+                FilePondPluginFileValidateSize,
+                FilePondPluginPdfPreview
+            );
+
+            const inputElement = document.querySelector('input[id="documento"]');
+
+            const pond = FilePond.create(inputElement, {
+                storeAsFile: true, // Envía el archivo adjunto dentro del submit del formulario
+                allowMultiple: false,
+                maxFileSize: '10MB',
+                acceptedFileTypes: ['application/pdf'],
+                labelIdle: 'Arrastra tu archivo PDF o <span class="filepond--label-action">Examinar</span>',
+                labelFileTypeNotAllowed: 'Archivo no válido. Solo se permiten PDF.',
+                fileValidateTypeLabelExpectedTypes: 'Se espera {allTypes}',
+                allowPdfPreview: true,
+                pdfPreviewHeight: 220,
+                pdfComponentExtraParams: 'toolbar=0&navpanes=0&scrollbar=0'
             });
         });
     </script>

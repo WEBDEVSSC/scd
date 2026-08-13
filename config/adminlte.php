@@ -418,21 +418,7 @@ return [
                     'url'  => 'admin/documentosRecibidos/documentosRecibidosPanelDeControl',
                     'icon' => 'fa-solid fa-file-circle-plus',
                 ],
-                [
-                    'text' => 'Documentos Nuevos',
-                    'url'  => 'admin/documentosRecibidos',
-                    'icon' => 'fa-solid fa-file-circle-plus',
-                ],
-                [
-                    'text' => 'Documentos Turnados',
-                    'url'  => 'admin/documentosRecibidosTurnados',
-                    'icon' => 'fa-solid fa-box-archive',
-                ],
-                [
-                    'text' => 'Documentos Atendidos',
-                    'url'  => 'admin/documentosRecibidosAtendidos',
-                    'icon' => 'fa-solid fa-box-archive',
-                ],
+                
             ],
         ],
 
