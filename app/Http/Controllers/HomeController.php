@@ -5,25 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\DocumentoRecibido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\WeatherService;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function index(WeatherService $weatherService)
     {
         $user = Auth::user();
 
@@ -31,12 +22,14 @@ class HomeController extends Controller
             return redirect()->route('login');
         }
 
-        // Si por alguna razón no hay usuario autenticado, redirigir
-        if (!$user) {
-            return redirect()->route('login');
+        // 1. Obtener la información del clima (Inyección automática de Laravel)
+        $climaData = $weatherService->getWeatherByCity('Saltillo');
+
+        if ($climaData) {
+            $climaData['estado'] = $weatherService->parseWeatherCode($climaData['current']['weather_code']);
         }
 
-        // Realizamos una sola consulta para obtener los conteos filtrados por status
+        // 2. Consultas de documentos
         $subdireccionId = $user->id_area;
 
         $totalRegistrosSubdireccion = DocumentoRecibido::where('subdireccion_id', $subdireccionId)->count();
@@ -53,8 +46,10 @@ class HomeController extends Controller
         $totalRegistrosSubdireccionTurnados = $counts->turnados ?? 0;
         $totalRegistrosSubdireccionAtendidos = $counts->atendidos ?? 0;
 
+        // 3. Enviar todo a la vista
         return view('home', compact(
             'user', 
+            'climaData',
             'totalRegistrosSubdireccion', 
             'totalRegistrosSubdireccionNuevos', 
             'totalRegistrosSubdireccionTurnados', 

@@ -8,8 +8,42 @@
             <h1 class="m-0 font-weight-bold text-dark">Panel de Control</h1>
             <p class="text-muted mb-0">Bienvenido(a), <strong>{{ $user->name }}</strong></p>
         </div>
-        <div>
-            <button class="btn btn-outline-secondary btn-sm" onclick="window.location.reload();">
+        <div class="d-flex align-items-center">
+            @if($climaData)
+                <!-- WIDGET CLIMA MÁS ANCHO Y ALTO -->
+                <div class="weather-header-widget d-none d-sm-flex align-items-center bg-white border rounded-lg px-3 py-2 shadow-sm mr-3">
+                    <!-- Ciudad, Icono y Temperatura -->
+                    <div class="d-flex align-items-center pr-3 border-right mr-3">
+                        <span class="mr-2" style="font-size: 1.6rem; line-height: 1;">{{ $climaData['estado']['icon'] }}</span>
+                        <div>
+                            <span class="font-weight-bold d-block text-dark line-height-1" style="font-size: 0.95rem;">
+                                {{ $climaData['city'] }}
+                            </span>
+                            <small class="text-muted font-weight-bold line-height-1" style="font-size: 0.85rem;">
+                                {{ round($climaData['current']['temperature_2m']) }}{{ $climaData['units']['temperature_2m'] }}
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Detalles: Humedad, Viento, Sensación -->
+                    <div class="d-flex align-items-center text-muted font-weight-normal" style="font-size: 0.82rem; gap: 14px;">
+                        <span title="Humedad" class="d-flex align-items-center">
+                            <i class="fas fa-tint text-info mr-1.5 fa-fw"></i>
+                            <strong class="text-dark ml-1">{{ $climaData['current']['relative_humidity_2m'] }}{{ $climaData['units']['relative_humidity_2m'] }}</strong>
+                        </span>
+                        <span title="Viento" class="d-flex align-items-center">
+                            <i class="fas fa-wind text-secondary mr-1.5 fa-fw"></i>
+                            <strong class="text-dark ml-1">{{ round($climaData['current']['wind_speed_10m']) }} {{ $climaData['units']['wind_speed_10m'] }}</strong>
+                        </span>
+                        <span title="Sensación Térmica" class="d-flex align-items-center">
+                            <i class="fas fa-thermometer-half text-warning mr-1.5 fa-fw"></i>
+                            <strong class="text-dark ml-1">{{ round($climaData['current']['apparent_temperature'] ?? $climaData['current']['temperature_2m']) }}°</strong>
+                        </span>
+                    </div>
+                </div>
+            @endif
+
+            <button class="btn btn-outline-secondary btn-md shadow-sm px-3" onclick="window.location.reload();">
                 <i class="fas fa-sync-alt mr-1"></i> Actualizar
             </button>
         </div>
@@ -17,6 +51,7 @@
 @stop
 
 @section('content')
+
     <!-- 1. TARJETAS MÉTRICAS PRINCIPALES -->
     <div class="row">
         <!-- Total Registros -->
@@ -108,19 +143,19 @@
                     </h3>
                 </div>
                 <div class="card-body d-flex flex-column justify-content-around">
-                    <a href="#" class="btn btn-outline-primary btn-block text-left p-3 mb-2 shadow-sm">
+                    <a href="#" class="btn btn-outline-primary btn-block text-left p-3 mb-2 shadow-sm action-btn">
                         <i class="fas fa-plus-circle fa-lg mr-2 text-primary"></i>
                         <strong> Registrar Nuevo Documento</strong>
                         <span class="float-right text-muted"><i class="fas fa-chevron-right"></i></span>
                     </a>
-                    
-                    <a href="#" class="btn btn-outline-warning btn-block text-left p-3 mb-2 shadow-sm">
+
+                    <a href="#" class="btn btn-outline-warning btn-block text-left p-3 mb-2 shadow-sm action-btn">
                         <i class="fas fa-search fa-lg mr-2 text-warning"></i>
                         <strong> Consultar / Buscar Expediente</strong>
                         <span class="float-right text-muted"><i class="fas fa-chevron-right"></i></span>
                     </a>
 
-                    <a href="#" class="btn btn-outline-success btn-block text-left p-3 mb-0 shadow-sm">
+                    <a href="#" class="btn btn-outline-success btn-block text-left p-3 mb-0 shadow-sm action-btn">
                         <i class="fas fa-file-excel fa-lg mr-2 text-success"></i>
                         <strong> Exportar Reporte a Excel</strong>
                         <span class="float-right text-muted"><i class="fas fa-chevron-right"></i></span>
@@ -141,9 +176,9 @@
                 </div>
                 <div class="card-body">
                     @php
-                        $total = $totalRegistrosSubdireccion ?? 1; // Evitar división entre 0
+                        $total = $totalRegistrosSubdireccion ?? 1;
                         $total = $total == 0 ? 1 : $total;
-                        
+
                         $pctNuevos = round((($totalRegistrosSubdireccionNuevos ?? 0) / $total) * 100);
                         $pctTurnados = round((($totalRegistrosSubdireccionTurnados ?? 0) / $total) * 100);
                         $pctAtendidos = round((($totalRegistrosSubdireccionAtendidos ?? 0) / $total) * 100);
@@ -187,25 +222,41 @@
 @section('css')
     <style>
         .small-box {
-            border-radius: 8px;
+            border-radius: 12px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .small-box:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+        }
+        .line-height-1 {
+            line-height: 1.1;
+        }
+        .action-btn {
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            transform: translateX(4px);
+        }
+        .weather-header-widget {
+            min-height: 48px;
+            border-color: #e2e8f0 !important;
+        }
+        .mr-1-5 {
+            margin-right: 0.375rem;
         }
     </style>
 @stop
 
 @section('js')
-    <!-- Chart.js (Viene integrado en AdminLTE) -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Renderizar la Gráfica de Dona
             const ctx = document.getElementById('documentosStatusChart').getContext('2d');
-            
+
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
